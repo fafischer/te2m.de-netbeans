@@ -1,0 +1,4 @@
+Manifest-Version: 1.0
+OpenIDE-Module-Layer: de/te2m/tools/netbeans/palette/layer.xml
+OpenIDE-Module-Localizing-Bundle: de/te2m/tools/netbeans/palette/Bundle.properties
+

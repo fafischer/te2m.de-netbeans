@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE codetemplates PUBLIC "-//NetBeans//DTD Editor Code Templates settings 1.0//EN" "http://www.netbeans.org/dtds/EditorCodeTemplates-1_0.dtd">
+<codetemplates>
+    <codetemplate abbreviation="pfp" xml:space="preserve">
+        <code><![CDATA[<!-- PrimeFaces Panel -->
+<p:panel header="${header}" >
+    <!-- panel content -->
+    ${cursor}
+</p:panel>
+]]></code>
+        <description>PrimeFaces panel</description>
+    </codetemplate>
+    <codetemplate abbreviation="pfcal" xml:space="preserve">
+        <code><![CDATA[<!-- Date input field for ${id} -->
+<h:outputLabel value="${description}" for="${id}" />
+<p:calendar id="${id}" value="#{${value}}" title="${description}"/>
+${cursor}
+]]></code>
+        <description><![CDATA[PrimeFaces calendar]]></description>
+    </codetemplate>
+    <codetemplate abbreviation="pfta" xml:space="preserve">
+        <code>
+            &lt;!-- Textarea for ${id} --&gt;
+            &lt;h:outputLabel value=&apos;${description}&apos; for=&apos;${id}&apos; /&gt;
+            &lt;p:inputTextarea id=&apos;${id}&apos; value=&apos;${value}&apos; title=&apos;${description}&apos;/&gt;
+            ${cursor}
+        </code>
+        <description>PrimeFaces Textarea with label</description>
+    </codetemplate>
+    <codetemplate abbreviation="pfac" xml:space="preserve">
+        <code>&lt;p:accordionPanel&gt;
+	&lt;p:tab title="${tabTitle}"&gt;
+	
+	${cursor}
+	
+	&lt;/p:tab&gt;
+	
+	&lt;!-- TODO: Add additional tabs as required --&gt;
+
+&lt;/p:accordionPanel&gt;</code>
+        <description><![CDATA[PrimeFaces Accordeon Panel with some testdata]]></description>
+    </codetemplate>
+    <codetemplate abbreviation="pfg" xml:space="preserve">
+        <code>&lt;p:galleria value="${values}" var="${loopVar}" panelWidth="${width}" panelHeight="${heigth}" showCaption="true"&gt;
+    &lt;p:graphicImage name="${imagePath}/#{${loopVar}}" alt="Image Description for #{${loopVar}}" title="#{${loopVar}}"/&gt;
+&lt;/p:galleria&gt;</code>
+        <description>PrimeFaces Galleria with some testdata</description>
+    </codetemplate>
+    <codetemplate abbreviation="pfdlg" xml:space="preserve">
+        <code><![CDATA[<!-- Dialog ${dlg_id} -->
+<p:dialog header="#{bundle.${dlg_id}_${title}}" widgetVar="${dlg_id}" showEffect="bounce" hideEffect="explode" height="200">
+	${cursor}
+</p:dialog>
+]]></code>
+        <description><![CDATA[PrimeFaces Dialog with some effects]]></description>
+    </codetemplate>
+    <codetemplate abbreviation="pftv" xml:space="preserve">
+        <code>&lt;p:tabView&gt;
+	&lt;p:tab title="${tabTitle}"&gt;
+	
+	${cursor}
+	
+	&lt;/p:tab&gt;
+	
+	&lt;!-- TODO: Add additional tabs as required --&gt;
+
+&lt;/p:tabView&gt;</code>
+        <description>PrimeFaces Tab View</description>
+    </codetemplate>
+    <codetemplate abbreviation="pft" xml:space="preserve">
+        <code>&lt;p:tab id="${tabID}" title="${tabTitle}"&gt;
+
+	${cursor}
+
+&lt;/p:tab&gt;</code>
+        <description>PrimeFaces Tab</description>
+    </codetemplate>
+    <codetemplate abbreviation="pfm" xml:space="preserve">
+        <code>&lt;p:menubar&gt;
+	${cursor}
+&lt;/p:menubar&gt;</code>
+        <description>PrimeFaces Menu Bar</description>
+    </codetemplate>
+    <codetemplate abbreviation="pfmi" xml:space="preserve">
+        <code>&lt;p:menuitem value="${value}" action="${action}"/&gt;</code>
+        <description>PrimeFaces Menu Item</description>
+    </codetemplate>
+    <codetemplate abbreviation="pfsm" xml:space="preserve">
+        <code>&lt;p:submenu label="${label}"&gt;
+	${cursor}
+&lt;/p:submenu&gt;</code>
+        <description>PrimeFaces Sub Menu</description>
+    </codetemplate>
+    <codetemplate abbreviation="pfg" xml:space="preserve">
+        <code>&lt;p:growl id="${id}"/&gt;</code>
+        <description>PrimeFaces Growl</description>
+    </codetemplate>
+    <codetemplate abbreviation="pfdt" xml:space="preserve">
+        <code>&lt;p:dataTable value="${value}" var="${loopvar}" emptyMessage="${emptyMsg}"&gt;
+
+	${cursor}
+
+&lt;/p:dataTable&gt;</code>
+        <description>PrimeFaces Data Table</description>
+    </codetemplate>
+    <codetemplate abbreviation="pfc" xml:space="preserve">
+        <code>&lt;p:column&gt;
+	&lt;f:facet name="header"&gt;
+		&lt;h:outputText value="${columnName}"/&gt;
+    &lt;/f:facet&gt;
+    &lt;h:outputText value="${value}"/&gt;
+&lt;/p:column&gt;</code>
+        <description>PrimeFaces Table Column</description>
+    </codetemplate>
+</codetemplates>

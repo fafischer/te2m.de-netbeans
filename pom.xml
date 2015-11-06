@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>de.te2m.tools</groupId>
+    <artifactId>netbeans</artifactId>
+    <version>1.0-SNAPSHOT</version>
+	<packaging>pom</packaging>
+    <name>te2m.de netbeans tools</name>
+	    <developers>
+        <developer>
+            <id>ffi</id>
+            <name>Frank Fischer</name>
+            <email>frank@te2m.de</email>
+            <roles>
+                <role>Project Manager</role>
+                <role>Architect</role>
+				<role>Developer</role>
+            </roles>
+            <organization>te2m.de</organization>
+            <timezone>+2</timezone>
+        </developer>         
+    </developers>
+	<url>http://te2m.de</url>
+    <modules>
+		<module>de.te2m.tools.netbeans.jsfutils</module>
+        <module>de.te2m.tools.netbeans.vertx</module>
+    </modules>
+</project>
