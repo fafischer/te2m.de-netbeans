@@ -5,7 +5,7 @@ This repository contains several Netbeans Modules provided by te2m.de
 
 ### de.te2m.tools.netbeans.jsfutils
 
-Provides 
+Provides code templates for JSF 2.x and PrimeFaces
 
 ### de.te2m.tools.netbeans.vertx
 
