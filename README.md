@@ -1,6 +1,22 @@
 # te2m.de-netbeans
 This repository contains several Netbeans Modules provided by te2m.de
 
+## About te2m.de
+
+This project has initially started on SourceFoge in 2009. 
+
+The initial project name was built based on the first letter of the name of the most important persons in my life:
+* _T_obias
+* _E_mily
+* _M_elina
+
+Since then the number of most important persons of my life has increased by 1: 
+
+* _M_arlon
+
+Thats why the project name has changed from temtools to te(2*m).
+  
+
 ## Modules
 
 ### de.te2m.tools.netbeans.jsfutils
