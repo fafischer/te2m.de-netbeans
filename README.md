@@ -15,7 +15,7 @@ Provides a project template and several code templates relatred to vertx.io
 
 1. Create an new (empty) Maven bsed project
 
-![Create new Project][img/NewProject.png]
+![Create new Project](img/NewProject.png)
 
 
 ### VertxProjectTemplate
