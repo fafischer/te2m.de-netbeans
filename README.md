@@ -13,6 +13,10 @@ Provides code templates for JSF 2.x and PrimeFaces
 
 ![Insert Code](img/PFInsertCode.png)
 
+1. Add PrimeFaces components via "Palette"
+
+![Insert Code](img/PFPalette.png)
+
 ### de.te2m.tools.netbeans.vertx
 
 Provides a project template and several code templates relatred to vertx.io
