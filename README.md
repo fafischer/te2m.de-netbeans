@@ -13,7 +13,7 @@ Provides a project template and several code templates relatred to vertx.io
 
 #### Features
 
-1. Create an new (empty) Maven bsed project
+1. Create an new (empty) Maven based project
 
 ![Create new Project](img/NewProject.png)
 
