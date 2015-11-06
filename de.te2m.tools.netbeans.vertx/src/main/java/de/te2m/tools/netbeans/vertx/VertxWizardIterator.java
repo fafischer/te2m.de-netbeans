@@ -38,8 +38,8 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 
 // TODO define position attribute
-@TemplateRegistration(folder = "Project/APISupport", displayName = "#Vertx_displayName", description = "VertxDescription.html", iconBase = "de/te2m/tools/netbeans/vertx/Vertx.png", content = "VertxProject.zip")
-@Messages("Vertx_displayName=Create a empty Vertx Project")
+@TemplateRegistration(folder = "Project/vertx.io", displayName = "#Vertx_displayName", description = "VertxDescription.html", iconBase = "de/te2m/tools/netbeans/vertx/Vertx.png", content = "VertxProject.zip")
+@Messages("Vertx_displayName=Create a empty Vertx.io 3.1 Project")
 public class VertxWizardIterator implements WizardDescriptor./*Progress*/InstantiatingIterator {
 
     private int index;

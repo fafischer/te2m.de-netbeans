@@ -7,6 +7,12 @@ This repository contains several Netbeans Modules provided by te2m.de
 
 Provides code templates for JSF 2.x and PrimeFaces
 
+#### Features
+
+1. Add PrimeFaces components via "Insert Code"
+
+![Insert Code](img/PFInsertCode.png)
+
 ### de.te2m.tools.netbeans.vertx
 
 Provides a project template and several code templates relatred to vertx.io

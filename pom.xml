@@ -4,9 +4,9 @@
     <groupId>de.te2m.tools</groupId>
     <artifactId>netbeans</artifactId>
     <version>1.0-SNAPSHOT</version>
-	<packaging>pom</packaging>
+    <packaging>pom</packaging>
     <name>te2m.de netbeans tools</name>
-	    <developers>
+    <developers>
         <developer>
             <id>ffi</id>
             <name>Frank Fischer</name>
@@ -14,15 +14,30 @@
             <roles>
                 <role>Project Manager</role>
                 <role>Architect</role>
-				<role>Developer</role>
+                <role>Developer</role>
             </roles>
             <organization>te2m.de</organization>
             <timezone>+2</timezone>
         </developer>         
     </developers>
-	<url>http://te2m.de</url>
+    <url>http://te2m.de</url>
+    <properties> 
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <junit.version>4.12</junit.version>
+        <netbeans.version>RELEASE80</netbeans.version>
+    </properties>
+    <repositories>
+        <repository>
+            <id>netbeans</id>
+            <name>Repository hosting NetBeans modules</name>
+            <url>http://bits.netbeans.org/nexus/content/groups/netbeans</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
     <modules>
-		<module>de.te2m.tools.netbeans.jsfutils</module>
+        <module>de.te2m.tools.netbeans.jsfutils</module>
         <module>de.te2m.tools.netbeans.vertx</module>
     </modules>
 </project>
