@@ -97,17 +97,17 @@
         <dependency>
             <groupId>org.netbeans.api</groupId>
             <artifactId>org-netbeans-modules-java-project</artifactId>
-            <version>RELEASE80</version>
+            <version>${netbeans.version}</version>
         </dependency>
         <dependency>
             <groupId>org.netbeans.api</groupId>
             <artifactId>org-netbeans-spi-palette</artifactId>
-            <version>RELEASE80</version>
+            <version>${netbeans.version}</version>
         </dependency>
         <dependency>
             <groupId>org.netbeans.api</groupId>
             <artifactId>org-netbeans-modules-editor-lib2</artifactId>
-            <version>RELEASE80</version>
+            <version>${netbeans.version}</version>
         </dependency>
     </dependencies>
 </project>

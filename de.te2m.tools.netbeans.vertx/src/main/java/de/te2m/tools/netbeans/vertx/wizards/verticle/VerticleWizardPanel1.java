@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package de.te2m.tools.netbeans.vertx;
+package de.te2m.tools.netbeans.vertx.wizards.verticle;
 
+import de.te2m.tools.netbeans.vertx.wizards.TemplateKeys;
 import javax.swing.event.ChangeListener;
 import org.openide.WizardDescriptor;
 import org.openide.util.HelpCtx;
@@ -62,7 +63,36 @@ public class VerticleWizardPanel1 implements WizardDescriptor.Panel<WizardDescri
 
     @Override
     public void storeSettings(WizardDescriptor wiz) {
-        // use wiz.putProperty to remember current panel state
+        wiz.putProperty(TemplateKeys.PROPERTY_NAME, getNameFromVisualPanel());
+        wiz.putProperty(TemplateKeys.PROPERTY_DECRIPTION, getDescriptionFromVisualPanel());
+        wiz.putProperty(TemplateKeys.PROPERTY_PACKAGE, getPackageFromVisualPanel());
+    }
+
+    /**
+     * Gets the name from visual panel.
+     *
+     * @return the name from visual panel
+     */
+    private String getNameFromVisualPanel() {
+        return ((VerticleVisualPanel1) component).getTargetName();
+    }
+
+    /**
+     * Gets the description from visual panel.
+     *
+     * @return the description from visual panel
+     */
+    private String getDescriptionFromVisualPanel() {
+        return ((VerticleVisualPanel1) component).getTargetDescription();
+    }
+
+    /**
+     * Gets the folder from visual panel.
+     *
+     * @return the folder from visual panel
+     */
+    private String getPackageFromVisualPanel() {
+        return ((VerticleVisualPanel1) component).getTargetPackage();
     }
 
 }

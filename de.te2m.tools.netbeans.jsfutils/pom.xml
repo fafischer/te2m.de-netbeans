@@ -8,7 +8,7 @@
         <groupId>de.te2m.tools</groupId>
         <artifactId>netbeans</artifactId>
         <version>1.0-SNAPSHOT</version>
-    </parent>
+    </parent> 
     <packaging>nbm</packaging>
     <name>JSF Extensions Netbeans Module</name>
     <description>JSF Extensions Netbeans Module provided by te2m.de</description>
