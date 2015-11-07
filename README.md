@@ -29,7 +29,7 @@ Provides code templates for JSF 2.x and PrimeFaces
 
 ![Insert Code](img/PFInsertCode.png)
 
-1. Add PrimeFaces components via "Palette"
+2. Add PrimeFaces components via "Palette"
 
 ![Insert Code](img/PFPalette.png)
 
@@ -43,6 +43,13 @@ Provides a project template and several code templates relatred to vertx.io
 
 ![Create new Project](img/NewProject.png)
 
+2. Add code snippets components via "Insert Code"
+
+![Insert Code](img/VInsertCode.png)
+
+3. Add code snippets via "Palette"
+
+![Insert Code](img/VPalette.png)
 
 ### VertxProjectTemplate
 
