@@ -1,21 +1,35 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+* VerticleVisualPanel1.java
+*   
+* Copyright 2009 - 2015 Frank Fischer (email: frank@te2m.de)
+*
+* This file is part of the de.te2m.tools.netbeans.vertx project which is a sub project of the te2m.de Netbeans modules 
+* (https://github.com/fafischer/te2m.de-netbeans).
+* 
+*/
 package de.te2m.tools.netbeans.vertx.wizards.verticle;
 
 import javax.swing.JPanel;
 
+/**
+ * The Class VerticleVisualPanel1.
+ *
+ * @author ffischer
+ * @version 1.0
+ * @since 1.0
+ */
 public final class VerticleVisualPanel1 extends JPanel {
 
     /**
-     * Creates new form VerticleVisualPanel1
+     * Creates new form VerticleVisualPanel1.
      */
     public VerticleVisualPanel1() {
         initComponents();
     }
 
+    /* (non-Javadoc)
+     * @see java.awt.Component#getName()
+     */
     @Override
     public String getName() {
         return "Step #1";
@@ -124,17 +138,49 @@ public final class VerticleVisualPanel1 extends JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Package text field action performed.
+     *
+     * @param evt the evt
+     */
     private void packageTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_packageTextFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_packageTextFieldActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    /**
+     * The description text area.
+     */
     private javax.swing.JTextArea descriptionTextArea;
+    
+    /**
+     * The j label1.
+     */
     private javax.swing.JLabel jLabel1;
+    
+    /**
+     * The j label2.
+     */
     private javax.swing.JLabel jLabel2;
+    
+    /**
+     * The j label3.
+     */
     private javax.swing.JLabel jLabel3;
+    
+    /**
+     * The j scroll pane1.
+     */
     private javax.swing.JScrollPane jScrollPane1;
+    
+    /**
+     * The name text field.
+     */
     private javax.swing.JTextField nameTextField;
+    
+    /**
+     * The package text field.
+     */
     private javax.swing.JTextField packageTextField;
     // End of variables declaration//GEN-END:variables
 }

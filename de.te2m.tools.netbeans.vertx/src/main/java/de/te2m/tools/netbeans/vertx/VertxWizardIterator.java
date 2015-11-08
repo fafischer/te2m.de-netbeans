@@ -1,3 +1,12 @@
+/*
+* VertxWizardIterator.java
+*   
+* Copyright 2009 - 2015 Frank Fischer (email: frank@te2m.de)
+*
+* This file is part of the de.te2m.tools.netbeans.vertx project which is a sub project of the te2m.de Netbeans modules 
+* (https://github.com/fafischer/te2m.de-netbeans).
+* 
+*/
 package de.te2m.tools.netbeans.vertx;
 
 import java.awt.Component;
@@ -33,32 +42,72 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 
 // TODO define position attribute
+/**
+ * The Class VertxWizardIterator.
+ *
+ * @author ffischer
+ * @version 1.0
+ * @since 1.0
+ */
 @TemplateRegistration(folder = "Project/vertx.io", displayName = "#Vertx_displayName", description = "VertxDescription.html", iconBase = "de/te2m/tools/netbeans/vertx/icons/logo16.png", content = "VertxProject.zip")
 @Messages("Vertx_displayName=Create a empty Vertx.io 3.1 Project")
 public class VertxWizardIterator implements WizardDescriptor./*Progress*/InstantiatingIterator {
 
+    /**
+     * The index.
+     */
     private int index;
+    
+    /**
+     * The panels.
+     */
     private WizardDescriptor.Panel[] panels;
+    
+    /**
+     * The wiz.
+     */
     private WizardDescriptor wiz;
 
+    /**
+     * Instantiates a new vertx wizard iterator.
+     */
     public VertxWizardIterator() {
     }
 
+    /**
+     * Creates the iterator.
+     *
+     * @return the vertx wizard iterator
+     */
     public static VertxWizardIterator createIterator() {
         return new VertxWizardIterator();
     }
 
+    /**
+     * Creates the panels.
+     *
+     * @return the wizard descriptor. panel[]
+     */
     private WizardDescriptor.Panel[] createPanels() {
         return new WizardDescriptor.Panel[]{
             new VertxWizardPanel(),};
     }
 
+    /**
+     * Creates the steps.
+     *
+     * @return the string[]
+     */
     private String[] createSteps() {
         return new String[]{
             NbBundle.getMessage(VertxWizardIterator.class, "LBL_CreateProjectStep")
         };
     }
 
+    /* (non-Javadoc)
+     * @see org.openide.WizardDescriptor.InstantiatingIterator#instantiate()
+     */
+    @Override
     public Set/*<FileObject>*/ instantiate(/*ProgressHandle handle*/) throws IOException {
         Set<FileObject> resultSet = new LinkedHashSet<FileObject>();
         File dirF = FileUtil.normalizeFile((File) wiz.getProperty("projdir"));
@@ -87,6 +136,10 @@ public class VertxWizardIterator implements WizardDescriptor./*Progress*/Instant
         return resultSet;
     }
 
+    /* (non-Javadoc)
+     * @see org.openide.WizardDescriptor.InstantiatingIterator#initialize(org.openide.WizardDescriptor)
+     */
+    @Override
     public void initialize(WizardDescriptor wiz) {
         this.wiz = wiz;
         index = 0;
@@ -112,6 +165,10 @@ public class VertxWizardIterator implements WizardDescriptor./*Progress*/Instant
         }
     }
 
+    /* (non-Javadoc)
+     * @see org.openide.WizardDescriptor.InstantiatingIterator#uninitialize(org.openide.WizardDescriptor)
+     */
+    @Override
     public void uninitialize(WizardDescriptor wiz) {
         this.wiz.putProperty("projdir", null);
         this.wiz.putProperty("name", null);
@@ -119,19 +176,35 @@ public class VertxWizardIterator implements WizardDescriptor./*Progress*/Instant
         panels = null;
     }
 
+    /* (non-Javadoc)
+     * @see org.openide.WizardDescriptor.Iterator#name()
+     */
+    @Override
     public String name() {
         return MessageFormat.format("{0} of {1}",
                 new Object[]{new Integer(index + 1), new Integer(panels.length)});
     }
 
+    /* (non-Javadoc)
+     * @see org.openide.WizardDescriptor.Iterator#hasNext()
+     */
+    @Override
     public boolean hasNext() {
         return index < panels.length - 1;
     }
 
+    /* (non-Javadoc)
+     * @see org.openide.WizardDescriptor.Iterator#hasPrevious()
+     */
+    @Override
     public boolean hasPrevious() {
         return index > 0;
     }
 
+    /* (non-Javadoc)
+     * @see org.openide.WizardDescriptor.Iterator#nextPanel()
+     */
+    @Override
     public void nextPanel() {
         if (!hasNext()) {
             throw new NoSuchElementException();
@@ -139,6 +212,10 @@ public class VertxWizardIterator implements WizardDescriptor./*Progress*/Instant
         index++;
     }
 
+    /* (non-Javadoc)
+     * @see org.openide.WizardDescriptor.Iterator#previousPanel()
+     */
+    @Override
     public void previousPanel() {
         if (!hasPrevious()) {
             throw new NoSuchElementException();
@@ -146,17 +223,36 @@ public class VertxWizardIterator implements WizardDescriptor./*Progress*/Instant
         index--;
     }
 
+    /* (non-Javadoc)
+     * @see org.openide.WizardDescriptor.Iterator#current()
+     */
+    @Override
     public WizardDescriptor.Panel current() {
         return panels[index];
     }
 
     // If nothing unusual changes in the middle of the wizard, simply:
+    /* (non-Javadoc)
+     * @see org.openide.WizardDescriptor.Iterator#addChangeListener(javax.swing.event.ChangeListener)
+     */
+    @Override
     public final void addChangeListener(ChangeListener l) {
     }
 
+    /* (non-Javadoc)
+     * @see org.openide.WizardDescriptor.Iterator#removeChangeListener(javax.swing.event.ChangeListener)
+     */
+    @Override
     public final void removeChangeListener(ChangeListener l) {
     }
 
+    /**
+     * Un zip file.
+     *
+     * @param source the source
+     * @param projectRoot the project root
+     * @throws IOException Signals that an I/O exception has occurred.
+     */
     private static void unZipFile(InputStream source, FileObject projectRoot) throws IOException {
         try {
             ZipInputStream str = new ZipInputStream(source);
@@ -179,6 +275,13 @@ public class VertxWizardIterator implements WizardDescriptor./*Progress*/Instant
         }
     }
 
+    /**
+     * Write file.
+     *
+     * @param str the str
+     * @param fo the fo
+     * @throws IOException Signals that an I/O exception has occurred.
+     */
     private static void writeFile(ZipInputStream str, FileObject fo) throws IOException {
         OutputStream out = fo.getOutputStream();
         try {
@@ -188,6 +291,14 @@ public class VertxWizardIterator implements WizardDescriptor./*Progress*/Instant
         }
     }
 
+    /**
+     * Filter project xml.
+     *
+     * @param fo the fo
+     * @param str the str
+     * @param name the name
+     * @throws IOException Signals that an I/O exception has occurred.
+     */
     private static void filterProjectXML(FileObject fo, ZipInputStream str, String name) throws IOException {
         try {
             ByteArrayOutputStream baos = new ByteArrayOutputStream();

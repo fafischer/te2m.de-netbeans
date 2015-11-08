@@ -1,8 +1,12 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+* JavaSourceFileLayerPaletteFactory.java
+*   
+* Copyright 2009 - 2015 Frank Fischer (email: frank@te2m.de)
+*
+* This file is part of the de.te2m.tools.netbeans.vertx project which is a sub project of the te2m.de Netbeans modules 
+* (https://github.com/fafischer/te2m.de-netbeans).
+* 
+*/
 package de.te2m.tools.netbeans.vertx.palette;
 
 import java.io.IOException;
@@ -16,10 +20,21 @@ import org.openide.util.Exceptions;
 import org.openide.util.Lookup;
 import org.openide.util.datatransfer.ExTransferable;
 
+/**
+ * A factory for creating JavaSourceFileLayerPalette objects.
+ */
 public class JavaSourceFileLayerPaletteFactory {
 
+    /**
+     * The palette.
+     */
     private static PaletteController palette = null;
 
+    /**
+     * Creates a new JavaSourceFileLayerPalette object.
+     *
+     * @return the palette controller
+     */
     @MimeRegistration(mimeType = "text/x-java", service = PaletteController.class)
     public static PaletteController createPalette() {
         try {

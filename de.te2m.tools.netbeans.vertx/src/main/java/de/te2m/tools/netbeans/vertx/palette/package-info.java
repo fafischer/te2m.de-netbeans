@@ -10,6 +10,15 @@
             name = "HTTP-Server"),
     @PaletteItemRegistration(
             paletteid = "VertxIOPalette",
+            category = "vertx.io",
+            itemid = "DeploymentOptions",
+            icon16 = "de/te2m/tools/netbeans/vertx/icons/logo16.png",
+            icon32 = "de/te2m/tools/netbeans/vertx/icons/logo32.png",
+            body = Templates.DEPLOYMENT_OPTIONS,
+            tooltip = "Initialize options",
+            name = "Deployment-Options"),
+    @PaletteItemRegistration(
+            paletteid = "VertxIOPalette",
             category = "vertx.io - Integration",
             itemid = "Mail",
             icon16 = "de/te2m/tools/netbeans/vertx/icons/logo16.png",

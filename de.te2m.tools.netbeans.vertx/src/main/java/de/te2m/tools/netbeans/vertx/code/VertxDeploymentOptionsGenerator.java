@@ -1,5 +1,5 @@
 /*
-* VertxJDBCGetConnectionGenerator.java
+* VertxDeploymentOptionsGenerator.java
 *   
 * Copyright 2009 - 2015 Frank Fischer (email: frank@te2m.de)
 *
@@ -25,7 +25,7 @@ import org.openide.util.Lookup;
  * @version 1.0
  * @since 1.0
  */
-public class VertxJDBCGetConnectionGenerator extends AbstractCodeGenerator implements CodeGenerator {
+public class VertxDeploymentOptionsGenerator extends AbstractCodeGenerator implements CodeGenerator {
 
     /**
      * Instantiates a new PF tab generator.
@@ -33,7 +33,7 @@ public class VertxJDBCGetConnectionGenerator extends AbstractCodeGenerator imple
      * @param context containing JTextComponent and possibly other items
      * registered by {@link CodeGeneratorContextProvider}
      */
-    private VertxJDBCGetConnectionGenerator(Lookup context) { // Good practice is not to save Lookup outside ctor
+    private VertxDeploymentOptionsGenerator(Lookup context) { // Good practice is not to save Lookup outside ctor
         textComp = context.lookup(JTextComponent.class);
     }
 
@@ -41,7 +41,7 @@ public class VertxJDBCGetConnectionGenerator extends AbstractCodeGenerator imple
      * @see de.te2m.tools.netbeans.code.AbstractCodeGenerator#getContent()
      */
     protected String getContent() {
-        return Templates.JDBC_GET_CONNECTION;
+        return Templates.DEPLOYMENT_OPTIONS;
     }
 
     /**
@@ -58,7 +58,7 @@ public class VertxJDBCGetConnectionGenerator extends AbstractCodeGenerator imple
          * @see org.netbeans.spi.editor.codegen.CodeGenerator.Factory#create(org.openide.util.Lookup)
          */
         public List<? extends CodeGenerator> create(Lookup context) {
-            return Collections.singletonList(new VertxJDBCGetConnectionGenerator(context));
+            return Collections.singletonList(new VertxDeploymentOptionsGenerator(context));
         }
     }
 
@@ -68,7 +68,7 @@ public class VertxJDBCGetConnectionGenerator extends AbstractCodeGenerator imple
      * @return the display name
      */
     public String getDisplayName() {
-        return "vertx.io JDBC Get Connection";
+        return "vertx.io Deployment Options";
     }
 
 }

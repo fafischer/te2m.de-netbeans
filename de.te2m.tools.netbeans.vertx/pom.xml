@@ -6,7 +6,7 @@
     <version>1.0-SNAPSHOT</version>
     <packaging>nbm</packaging>
     <name>vertx.io Netbeans Module</name>
-    <description>vertx.io Netbeans Module provided by te2m.de</description>
+    <description>Netbeans Module for vertx.io provided by te2m.de</description>
     <parent>
         <groupId>de.te2m.tools</groupId>
         <artifactId>netbeans</artifactId>
@@ -107,6 +107,11 @@
         <dependency>
             <groupId>org.netbeans.api</groupId>
             <artifactId>org-netbeans-modules-editor-lib2</artifactId>
+            <version>${netbeans.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.netbeans.api</groupId>
+            <artifactId>org-netbeans-modules-options-api</artifactId>
             <version>${netbeans.version}</version>
         </dependency>
     </dependencies>

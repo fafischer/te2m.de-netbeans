@@ -1,8 +1,12 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+* VerticleWizardPanel1.java
+*   
+* Copyright 2009 - 2015 Frank Fischer (email: frank@te2m.de)
+*
+* This file is part of the de.te2m.tools.netbeans.vertx project which is a sub project of the te2m.de Netbeans modules 
+* (https://github.com/fafischer/te2m.de-netbeans).
+* 
+*/
 package de.te2m.tools.netbeans.vertx.wizards.testcase;
 
 import de.te2m.tools.netbeans.vertx.wizards.verticle.*;
@@ -11,6 +15,13 @@ import javax.swing.event.ChangeListener;
 import org.openide.WizardDescriptor;
 import org.openide.util.HelpCtx;
 
+/**
+ * The Class VerticleWizardPanel1.
+ *
+ * @author ffischer
+ * @version 1.0
+ * @since 1.0
+ */
 public class VerticleWizardPanel1 implements WizardDescriptor.Panel<WizardDescriptor> {
 
     /**
@@ -23,6 +34,9 @@ public class VerticleWizardPanel1 implements WizardDescriptor.Panel<WizardDescri
     // is kept separate. This can be more efficient: if the wizard is created
     // but never displayed, or not all panels are displayed, it is better to
     // create only those which really need to be visible.
+    /* (non-Javadoc)
+     * @see org.openide.WizardDescriptor.Panel#getComponent()
+     */
     @Override
     public VerticleVisualPanel1 getComponent() {
         if (component == null) {
@@ -31,6 +45,9 @@ public class VerticleWizardPanel1 implements WizardDescriptor.Panel<WizardDescri
         return component;
     }
 
+    /* (non-Javadoc)
+     * @see org.openide.WizardDescriptor.Panel#getHelp()
+     */
     @Override
     public HelpCtx getHelp() {
         // Show no Help button for this panel:
@@ -39,6 +56,9 @@ public class VerticleWizardPanel1 implements WizardDescriptor.Panel<WizardDescri
         // return new HelpCtx("help.key.here");
     }
 
+    /* (non-Javadoc)
+     * @see org.openide.WizardDescriptor.Panel#isValid()
+     */
     @Override
     public boolean isValid() {
         // If it is always OK to press Next or Finish, then:
@@ -49,19 +69,31 @@ public class VerticleWizardPanel1 implements WizardDescriptor.Panel<WizardDescri
         // WizardDescriptor.ERROR/WARNING/INFORMATION_MESSAGE will also be useful.
     }
 
+    /* (non-Javadoc)
+     * @see org.openide.WizardDescriptor.Panel#addChangeListener(javax.swing.event.ChangeListener)
+     */
     @Override
     public void addChangeListener(ChangeListener l) {
     }
 
+    /* (non-Javadoc)
+     * @see org.openide.WizardDescriptor.Panel#removeChangeListener(javax.swing.event.ChangeListener)
+     */
     @Override
     public void removeChangeListener(ChangeListener l) {
     }
 
+    /* (non-Javadoc)
+     * @see org.openide.WizardDescriptor.Panel#readSettings(java.lang.Object)
+     */
     @Override
     public void readSettings(WizardDescriptor wiz) {
         // use wiz.getProperty to retrieve previous panel state
     }
 
+    /* (non-Javadoc)
+     * @see org.openide.WizardDescriptor.Panel#storeSettings(java.lang.Object)
+     */
     @Override
     public void storeSettings(WizardDescriptor wiz) {
         wiz.putProperty(TemplateKeys.PROPERTY_NAME, getNameFromVisualPanel());

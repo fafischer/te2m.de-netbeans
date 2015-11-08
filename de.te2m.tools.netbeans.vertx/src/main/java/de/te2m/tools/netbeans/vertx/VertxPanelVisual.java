@@ -1,3 +1,12 @@
+/*
+* VertxPanelVisual.java
+*   
+* Copyright 2009 - 2015 Frank Fischer (email: frank@te2m.de)
+*
+* This file is part of the de.te2m.tools.netbeans.vertx project which is a sub project of the te2m.de Netbeans modules 
+* (https://github.com/fafischer/te2m.de-netbeans).
+* 
+*/
 package de.te2m.tools.netbeans.vertx;
 
 import java.io.File;
@@ -11,12 +20,30 @@ import org.openide.WizardDescriptor;
 import org.openide.WizardValidationException;
 import org.openide.filesystems.FileUtil;
 
+/**
+ * The Class VertxPanelVisual.
+ *
+ * @author ffischer
+ * @version 1.0
+ * @since 1.0
+ */
 public class VertxPanelVisual extends JPanel implements DocumentListener {
 
+    /**
+     * The Constant PROP_PROJECT_NAME.
+     */
     public static final String PROP_PROJECT_NAME = "projectName";
 
+    /**
+     * The panel.
+     */
     private VertxWizardPanel panel;
 
+    /**
+     * Instantiates a new vertx panel visual.
+     *
+     * @param panel the panel
+     */
     public VertxPanelVisual(VertxWizardPanel panel) {
         initComponents();
         this.panel = panel;
@@ -25,6 +52,11 @@ public class VertxPanelVisual extends JPanel implements DocumentListener {
         projectLocationTextField.getDocument().addDocumentListener(this);
     }
 
+    /**
+     * Gets the project name.
+     *
+     * @return the project name
+     */
     public String getProjectName() {
         return this.projectNameTextField.getText();
     }
@@ -103,6 +135,11 @@ public class VertxPanelVisual extends JPanel implements DocumentListener {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Browse button action performed.
+     *
+     * @param evt the evt
+     */
     private void browseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_browseButtonActionPerformed
         String command = evt.getActionCommand();
         if ("BROWSE".equals(command)) {
@@ -127,15 +164,45 @@ public class VertxPanelVisual extends JPanel implements DocumentListener {
     }//GEN-LAST:event_browseButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    /**
+     * The browse button.
+     */
     private javax.swing.JButton browseButton;
+    
+    /**
+     * The created folder label.
+     */
     private javax.swing.JLabel createdFolderLabel;
+    
+    /**
+     * The created folder text field.
+     */
     private javax.swing.JTextField createdFolderTextField;
+    
+    /**
+     * The project location label.
+     */
     private javax.swing.JLabel projectLocationLabel;
+    
+    /**
+     * The project location text field.
+     */
     private javax.swing.JTextField projectLocationTextField;
+    
+    /**
+     * The project name label.
+     */
     private javax.swing.JLabel projectNameLabel;
+    
+    /**
+     * The project name text field.
+     */
     private javax.swing.JTextField projectNameTextField;
     // End of variables declaration//GEN-END:variables
 
+    /* (non-Javadoc)
+     * @see javax.swing.JComponent#addNotify()
+     */
     @Override
     public void addNotify() {
         super.addNotify();
@@ -143,6 +210,12 @@ public class VertxPanelVisual extends JPanel implements DocumentListener {
         projectNameTextField.requestFocus();
     }
 
+    /**
+     * Valid.
+     *
+     * @param wizardDescriptor the wizard descriptor
+     * @return true, if successful
+     */
     boolean valid(WizardDescriptor wizardDescriptor) {
 
         if (projectNameTextField.getText().length() == 0) {
@@ -186,6 +259,11 @@ public class VertxPanelVisual extends JPanel implements DocumentListener {
         return true;
     }
 
+    /**
+     * Store.
+     *
+     * @param d the d
+     */
     void store(WizardDescriptor d) {
         String name = projectNameTextField.getText().trim();
         String folder = createdFolderTextField.getText().trim();
@@ -194,6 +272,11 @@ public class VertxPanelVisual extends JPanel implements DocumentListener {
         d.putProperty("name", name);
     }
 
+    /**
+     * Read.
+     *
+     * @param settings the settings
+     */
     void read(WizardDescriptor settings) {
         File projectLocation = (File) settings.getProperty("projdir");
         if (projectLocation == null || projectLocation.getParentFile() == null || !projectLocation.getParentFile().isDirectory()) {
@@ -211,11 +294,20 @@ public class VertxPanelVisual extends JPanel implements DocumentListener {
         this.projectNameTextField.selectAll();
     }
 
+    /**
+     * Validate.
+     *
+     * @param d the d
+     * @throws WizardValidationException the wizard validation exception
+     */
     void validate(WizardDescriptor d) throws WizardValidationException {
         // nothing to validate
     }
 
     // Implementation of DocumentListener --------------------------------------
+    /* (non-Javadoc)
+     * @see javax.swing.event.DocumentListener#changedUpdate(javax.swing.event.DocumentEvent)
+     */
     public void changedUpdate(DocumentEvent e) {
         updateTexts(e);
         if (this.projectNameTextField.getDocument() == e.getDocument()) {
@@ -223,6 +315,9 @@ public class VertxPanelVisual extends JPanel implements DocumentListener {
         }
     }
 
+    /* (non-Javadoc)
+     * @see javax.swing.event.DocumentListener#insertUpdate(javax.swing.event.DocumentEvent)
+     */
     public void insertUpdate(DocumentEvent e) {
         updateTexts(e);
         if (this.projectNameTextField.getDocument() == e.getDocument()) {
@@ -230,6 +325,9 @@ public class VertxPanelVisual extends JPanel implements DocumentListener {
         }
     }
 
+    /* (non-Javadoc)
+     * @see javax.swing.event.DocumentListener#removeUpdate(javax.swing.event.DocumentEvent)
+     */
     public void removeUpdate(DocumentEvent e) {
         updateTexts(e);
         if (this.projectNameTextField.getDocument() == e.getDocument()) {
@@ -238,7 +336,9 @@ public class VertxPanelVisual extends JPanel implements DocumentListener {
     }
 
     /**
-     * Handles changes in the Project name and project directory,
+     * Handles changes in the Project name and project directory,.
+     *
+     * @param e the e
      */
     private void updateTexts(DocumentEvent e) {
 

@@ -3,6 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>my.group.id</groupId>
     <artifactId>MyArtifactID</artifactId>
+	<name>Vertx.io based Sample Project</name>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
     <properties>

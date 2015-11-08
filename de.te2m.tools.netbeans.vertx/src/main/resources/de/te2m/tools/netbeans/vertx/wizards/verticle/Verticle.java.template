@@ -9,16 +9,20 @@ import io.vertx.core.Future;
 * ${TargetDescription}
 * created on ${CreationDate}
 *
-* @author ${CurrentUser}
+* @author ${CurrentUser} 
 * @since ${Version}
 */
 public class ${TargetName} extends AbstractVerticle {
 
+    @Override
+    public void start(Future<Void> future) {
 
-  @Override
-  public void start(Future<Void> future) {
+        // @TODO Add business logic here
+    }
 
-    // TODO Add business logic here
-
-  }
+    @Override
+    public void stop() {
+        // Optional - called when verticle is undeployed
+        // @TODO Add cleanup as required
+    }
 }

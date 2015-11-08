@@ -1,13 +1,18 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+* VerticleWizardIterator.java
+*   
+* Copyright 2009 - 2015 Frank Fischer (email: frank@te2m.de)
+*
+* This file is part of the de.te2m.tools.netbeans.vertx project which is a sub project of the te2m.de Netbeans modules 
+* (https://github.com/fafischer/te2m.de-netbeans).
+* 
+*/
 package de.te2m.tools.netbeans.vertx.wizards.testcase;
 
 import de.te2m.tools.netbeans.vertx.wizards.TemplateKeys;
 import java.awt.Component;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -33,16 +38,38 @@ import org.openide.util.Exceptions;
 import org.openide.util.NbBundle.Messages;
 
 // TODO define position attribute
+/**
+ * The Class VerticleWizardIterator.
+ *
+ * @author ffischer
+ * @version 1.0
+ * @since 1.0
+ */
 @TemplateRegistration(folder = "Vertx.io", displayName = "#VerticleWizardIterator_displayName", iconBase = "de/te2m/tools/netbeans/vertx/icons/logo16.png", description = "verticleTest.html",
         content = "VerticleUnitTest.java.template", scriptEngine = "freemarker")
 @Messages("VerticleWizardIterator_displayName=Testcase for Verticle")
 public final class VerticleWizardIterator implements WizardDescriptor.InstantiatingIterator<WizardDescriptor> {
 
+    /**
+     * The index.
+     */
     private int index;
 
+    /**
+     * The wizard.
+     */
     private WizardDescriptor wizard;
+    
+    /**
+     * The panels.
+     */
     private List<WizardDescriptor.Panel<WizardDescriptor>> panels;
 
+    /**
+     * Gets the panels.
+     *
+     * @return the panels
+     */
     private List<WizardDescriptor.Panel<WizardDescriptor>> getPanels() {
         if (panels == null) {
             panels = new ArrayList<WizardDescriptor.Panel<WizardDescriptor>>();
@@ -69,6 +96,9 @@ public final class VerticleWizardIterator implements WizardDescriptor.Instantiat
         return panels;
     }
 
+    /* (non-Javadoc)
+     * @see org.openide.WizardDescriptor.InstantiatingIterator#instantiate()
+     */
     @Override
     public Set<?> instantiate() throws IOException {
 
@@ -78,11 +108,19 @@ public final class VerticleWizardIterator implements WizardDescriptor.Instantiat
 
         String packName = (String) wizard.getProperty(TemplateKeys.PROPERTY_PACKAGE);
 
+        // Replace with lookup to options
+        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
+        // Replace with lookup to options
+        String defaultVersion = "1.0";
+        // Replace with lookup to options
+        String username = System.getProperty("user.name");
+
         params.put(TemplateKeys.PROPERTY_NAME, fName);
         params.put(TemplateKeys.PROPERTY_PACKAGE, packName);
         params.put(TemplateKeys.PROPERTY_DECRIPTION, wizard.getProperty(TemplateKeys.PROPERTY_DECRIPTION));
-        params.put(TemplateKeys.PROPERTY_USER, System.getProperty("user.name"));
-        params.put(TemplateKeys.PROPERTY_CREATION_DATE, new Date());
+        params.put(TemplateKeys.PROPERTY_USER, username);
+        params.put(TemplateKeys.PROPERTY_CREATION_DATE, sdf.format(new Date()));
+        params.put(TemplateKeys.PROPERTY_VERSION, defaultVersion);
         //Get the template and convert it:
         FileObject template = Templates.getTemplate(wizard);
         DataObject dTemplate = DataObject.find(template);
@@ -115,36 +153,57 @@ public final class VerticleWizardIterator implements WizardDescriptor.Instantiat
         return Collections.singleton(createdFile);
     }
 
+    /* (non-Javadoc)
+     * @see org.openide.WizardDescriptor.InstantiatingIterator#initialize(org.openide.WizardDescriptor)
+     */
     @Override
     public void initialize(WizardDescriptor wizard) {
         this.wizard = wizard;
     }
 
+    /* (non-Javadoc)
+     * @see org.openide.WizardDescriptor.InstantiatingIterator#uninitialize(org.openide.WizardDescriptor)
+     */
     @Override
     public void uninitialize(WizardDescriptor wizard) {
         panels = null;
     }
 
+    /* (non-Javadoc)
+     * @see org.openide.WizardDescriptor.Iterator#current()
+     */
     @Override
     public WizardDescriptor.Panel<WizardDescriptor> current() {
         return getPanels().get(index);
     }
 
+    /* (non-Javadoc)
+     * @see org.openide.WizardDescriptor.Iterator#name()
+     */
     @Override
     public String name() {
         return index + 1 + ". from " + getPanels().size();
     }
 
+    /* (non-Javadoc)
+     * @see org.openide.WizardDescriptor.Iterator#hasNext()
+     */
     @Override
     public boolean hasNext() {
         return index < getPanels().size() - 1;
     }
 
+    /* (non-Javadoc)
+     * @see org.openide.WizardDescriptor.Iterator#hasPrevious()
+     */
     @Override
     public boolean hasPrevious() {
         return index > 0;
     }
 
+    /* (non-Javadoc)
+     * @see org.openide.WizardDescriptor.Iterator#nextPanel()
+     */
     @Override
     public void nextPanel() {
         if (!hasNext()) {
@@ -153,6 +212,9 @@ public final class VerticleWizardIterator implements WizardDescriptor.Instantiat
         index++;
     }
 
+    /* (non-Javadoc)
+     * @see org.openide.WizardDescriptor.Iterator#previousPanel()
+     */
     @Override
     public void previousPanel() {
         if (!hasPrevious()) {
@@ -162,10 +224,16 @@ public final class VerticleWizardIterator implements WizardDescriptor.Instantiat
     }
 
     // If nothing unusual changes in the middle of the wizard, simply:
+    /* (non-Javadoc)
+     * @see org.openide.WizardDescriptor.Iterator#addChangeListener(javax.swing.event.ChangeListener)
+     */
     @Override
     public void addChangeListener(ChangeListener l) {
     }
 
+    /* (non-Javadoc)
+     * @see org.openide.WizardDescriptor.Iterator#removeChangeListener(javax.swing.event.ChangeListener)
+     */
     @Override
     public void removeChangeListener(ChangeListener l) {
     }
@@ -178,6 +246,11 @@ public final class VerticleWizardIterator implements WizardDescriptor.Instantiat
     // there before this wizard was instantiated. It should be better handled
     // by NetBeans Wizard API itself rather than needed to be implemented by a
     // client code.
+    /**
+     * Creates the steps.
+     *
+     * @return the string[]
+     */
     private String[] createSteps() {
         String[] beforeSteps = (String[]) wizard.getProperty("WizardPanel_contentData");
         assert beforeSteps != null : "This wizard may only be used embedded in the template wizard";
