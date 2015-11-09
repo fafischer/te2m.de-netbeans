@@ -34,7 +34,7 @@ Provides a project template and several code templates related to vertx.io
 
 ![Create new Java Files](img/VNewFile)
 
-3. Add code snippets components via "Insert Code"
+3. Add code snippets via "Insert Code"
 
 ![Insert Code](img/VInsertCode.png)
 
