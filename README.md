@@ -32,7 +32,7 @@ Provides a project template and several code templates related to vertx.io
 
 2. New File Wizards
 
-![Create new Java Files](img/VNewFile)
+![Create new Java Files](img/VNewFile.png)
 
 3. Add code snippets via "Insert Code"
 
