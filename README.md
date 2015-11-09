@@ -50,7 +50,7 @@ Provides code templates for JSF 2.x and PrimeFaces
 
 1. New File Wizards 
 
-![Create new JSF Files](img/JSFNewFile)
+![Create new JSF Files](img/JSFNewFile.png)
 
 2. Add PrimeFaces components via "Insert Code"
 
