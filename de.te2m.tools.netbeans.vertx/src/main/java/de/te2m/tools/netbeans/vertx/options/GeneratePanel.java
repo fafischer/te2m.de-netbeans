@@ -7,7 +7,7 @@
 * (https://github.com/fafischer/te2m.de-netbeans).
 * 
 */
-package de.te2m.tools.netbeans.de.te2m.tools.netbeans.vertx.options;
+package de.te2m.tools.netbeans.vertx.options;
 
 /**
  * The Class GeneratePanel.

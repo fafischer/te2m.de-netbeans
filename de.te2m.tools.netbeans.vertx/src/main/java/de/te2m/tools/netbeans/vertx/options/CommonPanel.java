@@ -7,7 +7,7 @@
 * (https://github.com/fafischer/te2m.de-netbeans).
 * 
 */
-package de.te2m.tools.netbeans.de.te2m.tools.netbeans.vertx.options;
+package de.te2m.tools.netbeans.vertx.options;
 
 /**
  * The Class CommonPanel.
@@ -134,34 +134,11 @@ final class CommonPanel extends javax.swing.JPanel {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    /**
-     * The default company name text.
-     */
     private javax.swing.JTextField defaultCompanyNameText;
-    
-    /**
-     * The default user name text.
-     */
     private javax.swing.JTextField defaultUserNameText;
-    
-    /**
-     * The default version text.
-     */
     private javax.swing.JTextField defaultVersionText;
-    
-    /**
-     * The j label1.
-     */
     private javax.swing.JLabel jLabel1;
-    
-    /**
-     * The j label2.
-     */
     private javax.swing.JLabel jLabel2;
-    
-    /**
-     * The j label3.
-     */
     private javax.swing.JLabel jLabel3;
     // End of variables declaration//GEN-END:variables
 }

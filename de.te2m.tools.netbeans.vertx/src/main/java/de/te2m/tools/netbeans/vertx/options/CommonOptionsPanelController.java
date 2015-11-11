@@ -1,5 +1,5 @@
 /*
-* GenerateOptionsPanelController.java
+* CommonOptionsPanelController.java
 *   
 * Copyright 2009 - 2015 Frank Fischer (email: frank@te2m.de)
 *
@@ -7,7 +7,7 @@
 * (https://github.com/fafischer/te2m.de-netbeans).
 * 
 */
-package de.te2m.tools.netbeans.de.te2m.tools.netbeans.vertx.options;
+package de.te2m.tools.netbeans.vertx.options;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -18,7 +18,7 @@ import org.openide.util.HelpCtx;
 import org.openide.util.Lookup;
 
 /**
- * The Class GenerateOptionsPanelController.
+ * The Class CommonOptionsPanelController.
  *
  * @author ffischer
  * @version 1.0
@@ -26,17 +26,17 @@ import org.openide.util.Lookup;
  */
 @OptionsPanelController.SubRegistration(
         location = "Te2m",
-        displayName = "#AdvancedOption_DisplayName_Gererate",
-        keywords = "#AdvancedOption_Keywords_Gererate",
-        keywordsCategory = "Te2m/Generate"
+        displayName = "#AdvancedOption_DisplayName_Common",
+        keywords = "#AdvancedOption_Keywords_Common",
+        keywordsCategory = "Te2m/Common"
 )
-@org.openide.util.NbBundle.Messages({"AdvancedOption_DisplayName_Gererate=Generate", "AdvancedOption_Keywords_Gererate=JSF, VERTX"})
-public final class GenerateOptionsPanelController extends OptionsPanelController {
+@org.openide.util.NbBundle.Messages({"AdvancedOption_DisplayName_Common=Common", "AdvancedOption_Keywords_Common=JSF,vertx"})
+public final class CommonOptionsPanelController extends OptionsPanelController {
 
     /**
      * The panel.
      */
-    private GeneratePanel panel;
+    private CommonPanel panel;
     
     /**
      * The pcs.
@@ -132,9 +132,9 @@ public final class GenerateOptionsPanelController extends OptionsPanelController
      *
      * @return the panel
      */
-    private GeneratePanel getPanel() {
+    private CommonPanel getPanel() {
         if (panel == null) {
-            panel = new GeneratePanel(this);
+            panel = new CommonPanel(this);
         }
         return panel;
     }
