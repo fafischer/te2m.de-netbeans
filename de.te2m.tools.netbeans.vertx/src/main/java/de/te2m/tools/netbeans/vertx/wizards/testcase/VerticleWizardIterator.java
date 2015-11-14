@@ -117,7 +117,7 @@ public final class VerticleWizardIterator implements WizardDescriptor.Instantiat
 
         params.put(TemplateKeys.PROPERTY_NAME, fName);
         params.put(TemplateKeys.PROPERTY_PACKAGE, packName);
-        params.put(TemplateKeys.PROPERTY_DECRIPTION, wizard.getProperty(TemplateKeys.PROPERTY_DECRIPTION));
+        params.put(TemplateKeys.PROPERTY_DESCRIPTION, wizard.getProperty(TemplateKeys.PROPERTY_DESCRIPTION));
         params.put(TemplateKeys.PROPERTY_USER, username);
         params.put(TemplateKeys.PROPERTY_CREATION_DATE, sdf.format(new Date()));
         params.put(TemplateKeys.PROPERTY_VERSION, defaultVersion);

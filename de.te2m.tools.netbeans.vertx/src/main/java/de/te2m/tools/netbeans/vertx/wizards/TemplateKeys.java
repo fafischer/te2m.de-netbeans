@@ -16,43 +16,45 @@ package de.te2m.tools.netbeans.vertx.wizards;
  */
 public interface TemplateKeys {
 
+    public static final String POM_INFO="pomInfo";
+
     /**
      * The property decription.
      */
-    String PROPERTY_DECRIPTION = "TargetDescription";
+    public static final String PROPERTY_DESCRIPTION = "TargetDescription";
 
     /**
      * The property folder.
      */
-    String PROPERTY_FOLDER = "TargetFolder";
+    public static final String PROPERTY_FOLDER = "TargetFolder";
 
     /**
      * The property name.
      */
-    String PROPERTY_NAME = "TargetName";
+    public static final String PROPERTY_NAME = "TargetName";
 
     /**
      * The property package.
      */
-    String PROPERTY_PACKAGE = "TargetPackage";
+    public static final String PROPERTY_PACKAGE = "TargetPackage";
 
     /**
      * The property name space.
      */
-    String PROPERTY_NAME_SPACE = "TargetNameSpace";
+    public static final String PROPERTY_NAME_SPACE = "TargetNameSpace";
 
     /**
      * The property user.
      */
-    String PROPERTY_USER = "CurrentUser";
+    public static final String PROPERTY_USER = "CurrentUser";
 
     /**
      * The property creation date.
      */
-    String PROPERTY_CREATION_DATE = "CreationDate";
+    public static final String PROPERTY_CREATION_DATE = "CreationDate";
 
     /**
      * The property version.
      */
-    String PROPERTY_VERSION = "Version";
+    public static final String PROPERTY_VERSION = "Version";
 }

@@ -1,5 +1,5 @@
 /*
-* VertxWizardPanel.java
+* VertxWizardPanel1.java
 *   
 * Copyright 2009 - 2015 Frank Fischer (email: frank@te2m.de)
 *
@@ -7,7 +7,7 @@
 * (https://github.com/fafischer/te2m.de-netbeans).
 * 
 */
-package de.te2m.tools.netbeans.vertx;
+package de.te2m.tools.netbeans.vertx.wizards.project;
 
 import java.awt.Component;
 import java.util.HashSet;
@@ -26,7 +26,7 @@ import org.openide.util.NbBundle;
  * @version 1.0
  * @since 1.0
  */
-public class VertxWizardPanel implements WizardDescriptor.Panel,
+public class VertxWizardMavenPanel implements WizardDescriptor.Panel,
         WizardDescriptor.ValidatingPanel, WizardDescriptor.FinishablePanel {
 
     /**
@@ -37,12 +37,12 @@ public class VertxWizardPanel implements WizardDescriptor.Panel,
     /**
      * The component.
      */
-    private VertxPanelVisual component;
+    private VertxMavenPanelVisual component;
 
     /**
      * Instantiates a new vertx wizard panel.
      */
-    public VertxWizardPanel() {
+    public VertxWizardMavenPanel() {
     }
 
     /* (non-Javadoc)
@@ -50,8 +50,8 @@ public class VertxWizardPanel implements WizardDescriptor.Panel,
      */
     public Component getComponent() {
         if (component == null) {
-            component = new VertxPanelVisual(this);
-            component.setName(NbBundle.getMessage(VertxWizardPanel.class, "LBL_CreateProjectStep"));
+            component = new VertxMavenPanelVisual(this);
+            component.setName(NbBundle.getMessage(VertxWizardMavenPanel.class, "LBL_CreateMavenStep"));
         }
         return component;
     }
@@ -60,7 +60,7 @@ public class VertxWizardPanel implements WizardDescriptor.Panel,
      * @see org.openide.WizardDescriptor.Panel#getHelp()
      */
     public HelpCtx getHelp() {
-        return new HelpCtx(VertxWizardPanel.class);
+        return new HelpCtx(VertxWizardMavenPanel.class);
     }
 
     /* (non-Javadoc)

@@ -96,7 +96,7 @@ public class VerticleWizardPanel1 implements WizardDescriptor.Panel<WizardDescri
     @Override
     public void storeSettings(WizardDescriptor wiz) {
         wiz.putProperty(TemplateKeys.PROPERTY_NAME, getNameFromVisualPanel());
-        wiz.putProperty(TemplateKeys.PROPERTY_DECRIPTION, getDescriptionFromVisualPanel());
+        wiz.putProperty(TemplateKeys.PROPERTY_DESCRIPTION, getDescriptionFromVisualPanel());
         wiz.putProperty(TemplateKeys.PROPERTY_PACKAGE, getPackageFromVisualPanel());
     }
 

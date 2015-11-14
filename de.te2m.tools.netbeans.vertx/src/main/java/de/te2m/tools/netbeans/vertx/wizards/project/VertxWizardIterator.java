@@ -1,27 +1,30 @@
 /*
 * VertxWizardIterator.java
-*   
+*
 * Copyright 2009 - 2015 Frank Fischer (email: frank@te2m.de)
 *
-* This file is part of the de.te2m.tools.netbeans.vertx project which is a sub project of the te2m.de Netbeans modules 
+* This file is part of the de.te2m.tools.netbeans.vertx project which is a sub project of the te2m.de Netbeans modules
 * (https://github.com/fafischer/te2m.de-netbeans).
-* 
-*/
-package de.te2m.tools.netbeans.vertx;
+*
+ */
+package de.te2m.tools.netbeans.vertx.wizards.project;
 
+import de.te2m.tools.netbeans.vertx.internal.model.PomInfo;
+import de.te2m.tools.netbeans.vertx.wizards.TemplateKeys;
 import java.awt.Component;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStream;
 import java.text.MessageFormat;
-import java.util.Enumeration;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.LinkedHashSet;
+import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Set;
-import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 import javax.swing.JComponent;
 import javax.swing.event.ChangeListener;
@@ -32,6 +35,8 @@ import org.netbeans.spi.project.ui.templates.support.Templates;
 import org.openide.WizardDescriptor;
 import org.openide.filesystems.FileObject;
 import org.openide.filesystems.FileUtil;
+import org.openide.loaders.DataFolder;
+import org.openide.loaders.DataObject;
 import org.openide.util.Exceptions;
 import org.openide.util.NbBundle;
 import org.openide.util.NbBundle.Messages;
@@ -49,20 +54,20 @@ import org.xml.sax.InputSource;
  * @version 1.0
  * @since 1.0
  */
-@TemplateRegistration(folder = "Project/vertx.io", displayName = "#Vertx_displayName", description = "VertxDescription.html", iconBase = "de/te2m/tools/netbeans/vertx/icons/logo16.png", content = "VertxProject.zip")
-@Messages("Vertx_displayName=Create a empty Vertx.io 3.1 Project")
+@TemplateRegistration(folder = "Project/vertx.io", displayName = "#Vertx_displayName", description = "VertxDescription.html", iconBase = "de/te2m/tools/netbeans/vertx/icons/logo16.png", content = "pom.xml.template", scriptEngine = "freemarker")
+@Messages("Vertx_displayName=Create a new Vertx.io 3.1 Project")
 public class VertxWizardIterator implements WizardDescriptor./*Progress*/InstantiatingIterator {
 
     /**
      * The index.
      */
     private int index;
-    
+
     /**
      * The panels.
      */
     private WizardDescriptor.Panel[] panels;
-    
+
     /**
      * The wiz.
      */
@@ -90,7 +95,7 @@ public class VertxWizardIterator implements WizardDescriptor./*Progress*/Instant
      */
     private WizardDescriptor.Panel[] createPanels() {
         return new WizardDescriptor.Panel[]{
-            new VertxWizardPanel(),};
+            new VertxWizardProjectPanel(),new VertxWizardMavenPanel(),new VertxWizardPackagingPanel()};
     }
 
     /**
@@ -100,7 +105,9 @@ public class VertxWizardIterator implements WizardDescriptor./*Progress*/Instant
      */
     private String[] createSteps() {
         return new String[]{
-            NbBundle.getMessage(VertxWizardIterator.class, "LBL_CreateProjectStep")
+            NbBundle.getMessage(VertxWizardIterator.class, "LBL_CreateProjectStep"),
+            NbBundle.getMessage(VertxWizardIterator.class, "LBL_CreateMavenStep"),
+            NbBundle.getMessage(VertxWizardIterator.class, "LBL_CreatePackagingStep")
         };
     }
 
@@ -109,28 +116,44 @@ public class VertxWizardIterator implements WizardDescriptor./*Progress*/Instant
      */
     @Override
     public Set/*<FileObject>*/ instantiate(/*ProgressHandle handle*/) throws IOException {
+        // Replace with lookup to options
+        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
+        // Replace with lookup to options
+        String defaultVersion = "1.0";
+        // Replace with lookup to options
+        String username = System.getProperty("user.name");
+        Map<String, Object> params = new HashMap<String, Object>();
+        PomInfo pInfo = new PomInfo();
+        pInfo.setName((String) wiz.getProperty(TemplateKeys.PROPERTY_NAME));
+        pInfo.setDescription((String) wiz.getProperty(TemplateKeys.PROPERTY_DESCRIPTION));
+        pInfo.setUserID(username);
+        params.put(TemplateKeys.PROPERTY_CREATION_DATE, sdf.format(new Date()));
+        params.put(TemplateKeys.POM_INFO, pInfo);
         Set<FileObject> resultSet = new LinkedHashSet<FileObject>();
         File dirF = FileUtil.normalizeFile((File) wiz.getProperty("projdir"));
         dirF.mkdirs();
 
         FileObject template = Templates.getTemplate(wiz);
+        DataObject dTemplate = DataObject.find(template);
         FileObject dir = FileUtil.toFileObject(dirF);
-        unZipFile(template.getInputStream(), dir);
 
         // Always open top dir as a project:
         resultSet.add(dir);
-        // Look for nested projects to open as well:
-        Enumeration<? extends FileObject> e = dir.getFolders(true);
-        while (e.hasMoreElements()) {
-            FileObject subfolder = e.nextElement();
-            if (ProjectManager.getDefault().isProject(subfolder)) {
-                resultSet.add(subfolder);
-            }
-        }
+
+        DataObject dobj = dTemplate.createFromTemplate(DataFolder.findFolder(dir), "pom.xml", params);
+
+        //Obtain a FileObject:
+        FileObject createdFile = dobj.getPrimaryFile();
+
+        resultSet.add(createdFile);
 
         File parent = dirF.getParentFile();
         if (parent != null && parent.exists()) {
             ProjectChooser.setProjectsFolder(parent);
+        }
+
+        if (ProjectManager.getDefault().isProject(dir)) {
+            resultSet.add(dir);
         }
 
         return resultSet;
@@ -244,35 +267,6 @@ public class VertxWizardIterator implements WizardDescriptor./*Progress*/Instant
      */
     @Override
     public final void removeChangeListener(ChangeListener l) {
-    }
-
-    /**
-     * Un zip file.
-     *
-     * @param source the source
-     * @param projectRoot the project root
-     * @throws IOException Signals that an I/O exception has occurred.
-     */
-    private static void unZipFile(InputStream source, FileObject projectRoot) throws IOException {
-        try {
-            ZipInputStream str = new ZipInputStream(source);
-            ZipEntry entry;
-            while ((entry = str.getNextEntry()) != null) {
-                if (entry.isDirectory()) {
-                    FileUtil.createFolder(projectRoot, entry.getName());
-                } else {
-                    FileObject fo = FileUtil.createData(projectRoot, entry.getName());
-                    if ("nbproject/project.xml".equals(entry.getName())) {
-                        // Special handling for setting name of Ant-based projects; customize as needed:
-                        filterProjectXML(fo, str, projectRoot.getName());
-                    } else {
-                        writeFile(str, fo);
-                    }
-                }
-            }
-        } finally {
-            source.close();
-        }
     }
 
     /**

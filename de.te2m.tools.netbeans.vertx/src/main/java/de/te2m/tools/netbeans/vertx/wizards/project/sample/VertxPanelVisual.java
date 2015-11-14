@@ -7,8 +7,9 @@
 * (https://github.com/fafischer/te2m.de-netbeans).
 * 
 */
-package de.te2m.tools.netbeans.vertx;
+package de.te2m.tools.netbeans.vertx.wizards.project.sample;
 
+import de.te2m.tools.netbeans.vertx.*;
 import java.io.File;
 import javax.swing.JFileChooser;
 import javax.swing.JPanel;
@@ -164,39 +165,12 @@ public class VertxPanelVisual extends JPanel implements DocumentListener {
     }//GEN-LAST:event_browseButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    /**
-     * The browse button.
-     */
     private javax.swing.JButton browseButton;
-    
-    /**
-     * The created folder label.
-     */
     private javax.swing.JLabel createdFolderLabel;
-    
-    /**
-     * The created folder text field.
-     */
     private javax.swing.JTextField createdFolderTextField;
-    
-    /**
-     * The project location label.
-     */
     private javax.swing.JLabel projectLocationLabel;
-    
-    /**
-     * The project location text field.
-     */
     private javax.swing.JTextField projectLocationTextField;
-    
-    /**
-     * The project name label.
-     */
     private javax.swing.JLabel projectNameLabel;
-    
-    /**
-     * The project name text field.
-     */
     private javax.swing.JTextField projectNameTextField;
     // End of variables declaration//GEN-END:variables
 
