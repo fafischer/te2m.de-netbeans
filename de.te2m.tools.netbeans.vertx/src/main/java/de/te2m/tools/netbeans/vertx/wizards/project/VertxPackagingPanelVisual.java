@@ -6,9 +6,10 @@
 * This file is part of the de.te2m.tools.netbeans.vertx project which is a sub project of the te2m.de Netbeans modules 
 * (https://github.com/fafischer/te2m.de-netbeans).
 * 
-*/
+ */
 package de.te2m.tools.netbeans.vertx.wizards.project;
 
+import de.te2m.tools.netbeans.vertx.wizards.TemplateKeys;
 import javax.swing.JPanel;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -36,13 +37,8 @@ public class VertxPackagingPanelVisual extends JPanel implements DocumentListene
     private VertxWizardPackagingPanel panel;
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    /**
-     * The j check box1.
-     */
-    private javax.swing.JCheckBox jCheckBox1;
+    private javax.swing.JCheckBox createFatJarCheckBox;
     // End of variables declaration//GEN-END:variables
-
-
 
     /**
      * Instantiates a new vertx panel visual.
@@ -73,7 +69,7 @@ public class VertxPackagingPanelVisual extends JPanel implements DocumentListene
      */
     public void changedUpdate(DocumentEvent e) {
         updateTexts(e);
-
+        
     }
 
     /**
@@ -84,12 +80,12 @@ public class VertxPackagingPanelVisual extends JPanel implements DocumentListene
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jCheckBox1 = new javax.swing.JCheckBox();
+        createFatJarCheckBox = new javax.swing.JCheckBox();
 
-        org.openide.awt.Mnemonics.setLocalizedText(jCheckBox1, org.openide.util.NbBundle.getMessage(VertxPackagingPanelVisual.class, "VertxPackagingPanelVisual.jCheckBox1.text")); // NOI18N
-        jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
+        org.openide.awt.Mnemonics.setLocalizedText(createFatJarCheckBox, org.openide.util.NbBundle.getMessage(VertxPackagingPanelVisual.class, "VertxPackagingPanelVisual.createFatJarCheckBox.text")); // NOI18N
+        createFatJarCheckBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBox1ActionPerformed(evt);
+                createFatJarCheckBoxActionPerformed(evt);
             }
         });
 
@@ -99,14 +95,14 @@ public class VertxPackagingPanelVisual extends JPanel implements DocumentListene
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(28, 28, 28)
-                .addComponent(jCheckBox1)
+                .addComponent(createFatJarCheckBox)
                 .addContainerGap(527, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(32, 32, 32)
-                .addComponent(jCheckBox1)
+                .addComponent(createFatJarCheckBox)
                 .addContainerGap(252, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -123,9 +119,9 @@ public class VertxPackagingPanelVisual extends JPanel implements DocumentListene
      *
      * @param evt the evt
      */
-    private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
+    private void createFatJarCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createFatJarCheckBoxActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jCheckBox1ActionPerformed
+    }//GEN-LAST:event_createFatJarCheckBoxActionPerformed
 
     /**
      * Read.
@@ -133,6 +129,12 @@ public class VertxPackagingPanelVisual extends JPanel implements DocumentListene
      * @param settings the settings
      */
     void read(WizardDescriptor settings) {
+        Boolean value = (Boolean) settings.getProperty(TemplateKeys.PKG_CREATE_FAT_JAR);
+        if (value == null) {
+            value = Boolean.FALSE;
+        }
+        
+        createFatJarCheckBox.setSelected(value);
     }
 
     /* (non-Javadoc)
@@ -148,6 +150,9 @@ public class VertxPackagingPanelVisual extends JPanel implements DocumentListene
      * @param d the d
      */
     void store(WizardDescriptor d) {
+        Boolean value = createFatJarCheckBox.isSelected();
+        
+        d.putProperty(TemplateKeys.PKG_CREATE_FAT_JAR, value);
     }
 
     /**
@@ -156,9 +161,9 @@ public class VertxPackagingPanelVisual extends JPanel implements DocumentListene
      * @param e the e
      */
     private void updateTexts(DocumentEvent e) {
-
+        
         Document doc = e.getDocument();
-
+        
         panel.fireChangeEvent(); // Notify that the panel changed
     }
 
@@ -169,7 +174,7 @@ public class VertxPackagingPanelVisual extends JPanel implements DocumentListene
      * @return true, if successful
      */
     boolean valid(WizardDescriptor wizardDescriptor) {
-
+        
         wizardDescriptor.putProperty("WizardPanel_errorMessage", "");
         return true;
     }
@@ -183,5 +188,5 @@ public class VertxPackagingPanelVisual extends JPanel implements DocumentListene
     void validate(WizardDescriptor d) throws WizardValidationException {
         // nothing to validate
     }
-
+    
 }

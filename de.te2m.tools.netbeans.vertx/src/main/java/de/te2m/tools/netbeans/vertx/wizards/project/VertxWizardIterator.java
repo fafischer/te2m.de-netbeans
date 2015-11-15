@@ -67,44 +67,6 @@ public class VertxWizardIterator implements WizardDescriptor./*Progress*/Instant
         return new VertxWizardIterator();
     }
 
-    /**
-     * Filter project xml.
-     *
-     * @param fo the fo
-     * @param str the str
-     * @param name the name
-     * @throws IOException Signals that an I/O exception has occurred.
-     */
-    private static void filterProjectXML(FileObject fo, ZipInputStream str, String name) throws IOException {
-        try {
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            FileUtil.copy(str, baos);
-            Document doc = XMLUtil.parse(new InputSource(new ByteArrayInputStream(baos.toByteArray())), false, false, null, null);
-            NodeList nl = doc.getDocumentElement().getElementsByTagName("name");
-            if (nl != null) {
-                for (int i = 0; i < nl.getLength(); i++) {
-                    Element el = (Element) nl.item(i);
-                    if (el.getParentNode() != null && "data".equals(el.getParentNode().getNodeName())) {
-                        NodeList nl2 = el.getChildNodes();
-                        if (nl2.getLength() > 0) {
-                            nl2.item(0).setNodeValue(name);
-                        }
-                        break;
-                    }
-                }
-            }
-            OutputStream out = fo.getOutputStream();
-            try {
-                XMLUtil.write(doc, out, "UTF-8");
-            } finally {
-                out.close();
-            }
-        } catch (Exception ex) {
-            Exceptions.printStackTrace(ex);
-            writeFile(str, fo);
-        }
-
-    }
 
     /**
      * Write file.
@@ -235,17 +197,19 @@ public class VertxWizardIterator implements WizardDescriptor./*Progress*/Instant
         // Replace with lookup to options
         SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
         // Replace with lookup to options
-        String defaultVersion = "1.0";
-        // Replace with lookup to options
         String username = System.getProperty("user.name");
-        Map<String, Object> params = new HashMap<String, Object>();
+        Map<String, Object> params = new HashMap<>();
         PomInfo pInfo = new PomInfo();
         pInfo.setName((String) wiz.getProperty(TemplateKeys.PROPERTY_NAME));
         pInfo.setDescription((String) wiz.getProperty(TemplateKeys.PROPERTY_DESCRIPTION));
+        pInfo.setGroupID((String) wiz.getProperty(TemplateKeys.MVN_GROUP_ID));
+        pInfo.setArtifactID((String) wiz.getProperty(TemplateKeys.MVN_ARTIFACT_ID));
+        pInfo.setVersion((String) wiz.getProperty(TemplateKeys.MVN_VERSION));
         pInfo.setUserID(username);
         params.put(TemplateKeys.PROPERTY_CREATION_DATE, sdf.format(new Date()));
+        params.put(TemplateKeys.PKG_CREATE_FAT_JAR, wiz.getProperty(TemplateKeys.PKG_CREATE_FAT_JAR));
         params.put(TemplateKeys.POM_INFO, pInfo);
-        Set<FileObject> resultSet = new LinkedHashSet<FileObject>();
+        Set<FileObject> resultSet = new LinkedHashSet<>();
         File dirF = FileUtil.normalizeFile((File) wiz.getProperty("projdir"));
         dirF.mkdirs();
 

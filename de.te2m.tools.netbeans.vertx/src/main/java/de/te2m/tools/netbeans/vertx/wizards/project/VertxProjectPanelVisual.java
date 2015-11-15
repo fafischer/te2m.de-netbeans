@@ -278,12 +278,14 @@ public class VertxProjectPanelVisual extends JPanel implements DocumentListener 
         }
         this.projectLocationTextField.setText(projectLocation.getAbsolutePath());
 
-        String projectName = (String) settings.getProperty("name");
+        String projectName = (String) settings.getProperty(TemplateKeys.PROPERTY_NAME);
         if (projectName == null) {
             projectName = "Vertx";
         }
         this.projectNameTextField.setText(projectName);
         this.projectNameTextField.selectAll();
+        
+        this.descriptionText.setText((String) settings.getProperty(TemplateKeys.PROPERTY_DESCRIPTION));
     }
 
     /* (non-Javadoc)
@@ -306,7 +308,7 @@ public class VertxProjectPanelVisual extends JPanel implements DocumentListener 
         String folder = createdFolderTextField.getText().trim();
         String desc = descriptionText.getText().trim();
         d.putProperty("projdir", new File(folder));
-        d.putProperty("name", name);
+        d.putProperty(TemplateKeys.PROPERTY_NAME, name);
         d.putProperty(TemplateKeys.PROPERTY_DESCRIPTION, desc!=null?desc:"");
     }
 

@@ -9,16 +9,12 @@
 */
 package de.te2m.tools.netbeans.vertx.wizards.project;
 
-import java.io.File;
-import javax.swing.JFileChooser;
+import de.te2m.tools.netbeans.vertx.wizards.TemplateKeys;
 import javax.swing.JPanel;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-import javax.swing.text.Document;
-import org.netbeans.spi.project.ui.support.ProjectChooser;
 import org.openide.WizardDescriptor;
 import org.openide.WizardValidationException;
-import org.openide.filesystems.FileUtil;
 
 /**
  * The Class VertxPanelVisual.
@@ -40,35 +36,12 @@ public class VertxMavenPanelVisual extends JPanel implements DocumentListener {
     private VertxWizardMavenPanel panel;
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    /**
-     * The created folder label.
-     */
+    private javax.swing.JTextField artifactIDTextField;
     private javax.swing.JLabel createdFolderLabel;
-
-    /**
-     * The created folder text field.
-     */
-    private javax.swing.JTextField createdFolderTextField;
-
-    /**
-     * The project location label.
-     */
+    private javax.swing.JTextField groupIDTextField;
     private javax.swing.JLabel projectLocationLabel;
-
-    /**
-     * The project location text field.
-     */
-    private javax.swing.JTextField projectLocationTextField;
-    
-    /**
-     * The project name label.
-     */
     private javax.swing.JLabel projectNameLabel;
-    
-    /**
-     * The project name text field.
-     */
-    private javax.swing.JTextField projectNameTextField;
+    private javax.swing.JTextField versionTextField;
     // End of variables declaration//GEN-END:variables
     
     /**
@@ -80,8 +53,8 @@ public class VertxMavenPanelVisual extends JPanel implements DocumentListener {
         initComponents();
         this.panel = panel;
         // Register listener on the textFields to make the automatic updates
-        projectNameTextField.getDocument().addDocumentListener(this);
-        projectLocationTextField.getDocument().addDocumentListener(this);
+        groupIDTextField.getDocument().addDocumentListener(this);
+        artifactIDTextField.getDocument().addDocumentListener(this);
     }
     
     /* (non-Javadoc)
@@ -91,19 +64,9 @@ public class VertxMavenPanelVisual extends JPanel implements DocumentListener {
     public void addNotify() {
         super.addNotify();
         //same problem as in 31086, initial focus on Cancel button
-        projectNameTextField.requestFocus();
+        groupIDTextField.requestFocus();
     }
     
-    // Implementation of DocumentListener --------------------------------------
-    /* (non-Javadoc)
-     * @see javax.swing.event.DocumentListener#changedUpdate(javax.swing.event.DocumentEvent)
-     */
-    public void changedUpdate(DocumentEvent e) {
-        updateTexts(e);
-        if (this.projectNameTextField.getDocument() == e.getDocument()) {
-            firePropertyChange(PROP_PROJECT_NAME, null, this.projectNameTextField.getText());
-        }
-    }
 
     /**
      * Gets the project name.
@@ -111,7 +74,7 @@ public class VertxMavenPanelVisual extends JPanel implements DocumentListener {
      * @return the project name
      */
     public String getProjectName() {
-        return this.projectNameTextField.getText();
+        return this.groupIDTextField.getText();
     }
 
     /**
@@ -123,22 +86,28 @@ public class VertxMavenPanelVisual extends JPanel implements DocumentListener {
     private void initComponents() {
 
         projectNameLabel = new javax.swing.JLabel();
-        projectNameTextField = new javax.swing.JTextField();
+        groupIDTextField = new javax.swing.JTextField();
         projectLocationLabel = new javax.swing.JLabel();
-        projectLocationTextField = new javax.swing.JTextField();
+        artifactIDTextField = new javax.swing.JTextField();
         createdFolderLabel = new javax.swing.JLabel();
-        createdFolderTextField = new javax.swing.JTextField();
+        versionTextField = new javax.swing.JTextField();
 
-        projectNameLabel.setLabelFor(projectNameTextField);
+        projectNameLabel.setLabelFor(groupIDTextField);
         org.openide.awt.Mnemonics.setLocalizedText(projectNameLabel, org.openide.util.NbBundle.getMessage(VertxMavenPanelVisual.class, "VertxMavenPanelVisual.projectNameLabel.text")); // NOI18N
 
-        projectLocationLabel.setLabelFor(projectLocationTextField);
+        projectLocationLabel.setLabelFor(artifactIDTextField);
         org.openide.awt.Mnemonics.setLocalizedText(projectLocationLabel, org.openide.util.NbBundle.getMessage(VertxMavenPanelVisual.class, "VertxMavenPanelVisual.projectLocationLabel.text")); // NOI18N
 
-        createdFolderLabel.setLabelFor(createdFolderTextField);
+        artifactIDTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                artifactIDTextFieldActionPerformed(evt);
+            }
+        });
+
+        createdFolderLabel.setLabelFor(versionTextField);
         org.openide.awt.Mnemonics.setLocalizedText(createdFolderLabel, org.openide.util.NbBundle.getMessage(VertxMavenPanelVisual.class, "VertxMavenPanelVisual.createdFolderLabel.text")); // NOI18N
 
-        createdFolderTextField.setEditable(false);
+        versionTextField.setEditable(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -152,9 +121,9 @@ public class VertxMavenPanelVisual extends JPanel implements DocumentListener {
                     .addComponent(createdFolderLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(projectLocationTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 323, Short.MAX_VALUE)
-                    .addComponent(projectNameTextField)
-                    .addComponent(createdFolderTextField))
+                    .addComponent(artifactIDTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 323, Short.MAX_VALUE)
+                    .addComponent(groupIDTextField)
+                    .addComponent(versionTextField))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -163,28 +132,22 @@ public class VertxMavenPanelVisual extends JPanel implements DocumentListener {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(projectNameLabel)
-                    .addComponent(projectNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(groupIDTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(projectLocationLabel)
-                    .addComponent(projectLocationTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(artifactIDTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(createdFolderLabel)
-                    .addComponent(createdFolderTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(versionTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(216, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    /* (non-Javadoc)
-     * @see javax.swing.event.DocumentListener#insertUpdate(javax.swing.event.DocumentEvent)
-     */
-    public void insertUpdate(DocumentEvent e) {
-        updateTexts(e);
-        if (this.projectNameTextField.getDocument() == e.getDocument()) {
-            firePropertyChange(PROP_PROJECT_NAME, null, this.projectNameTextField.getText());
-        }
-    }
+    private void artifactIDTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_artifactIDTextFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_artifactIDTextFieldActionPerformed
 
     /**
      * Read.
@@ -192,31 +155,25 @@ public class VertxMavenPanelVisual extends JPanel implements DocumentListener {
      * @param settings the settings
      */
     void read(WizardDescriptor settings) {
-        File projectLocation = (File) settings.getProperty("projdir");
-        if (projectLocation == null || projectLocation.getParentFile() == null || !projectLocation.getParentFile().isDirectory()) {
-            projectLocation = ProjectChooser.getProjectsFolder();
-        } else {
-            projectLocation = projectLocation.getParentFile();
-        }
-        this.projectLocationTextField.setText(projectLocation.getAbsolutePath());
 
-        String projectName = (String) settings.getProperty("name");
-        if (projectName == null) {
-            projectName = "Vertx";
+        String groupID = (String) settings.getProperty(TemplateKeys.MVN_GROUP_ID);
+        
+        this.groupIDTextField.setText(groupID);
+        
+        String artifactID = (String) settings.getProperty(TemplateKeys.MVN_ARTIFACT_ID);
+        
+        this.artifactIDTextField.setText(artifactID);
+        
+        String version = (String) settings.getProperty(TemplateKeys.MVN_VERSION);
+        
+        if(null==version||version.trim().length()==0)
+        {
+            version = "1.0-SNAPSHOT";
         }
-        this.projectNameTextField.setText(projectName);
-        this.projectNameTextField.selectAll();
+        
+        this.versionTextField.setText(version);
     }
 
-    /* (non-Javadoc)
-     * @see javax.swing.event.DocumentListener#removeUpdate(javax.swing.event.DocumentEvent)
-     */
-    public void removeUpdate(DocumentEvent e) {
-        updateTexts(e);
-        if (this.projectNameTextField.getDocument() == e.getDocument()) {
-            firePropertyChange(PROP_PROJECT_NAME, null, this.projectNameTextField.getText());
-        }
-    }
 
     /**
      * Store.
@@ -224,35 +181,16 @@ public class VertxMavenPanelVisual extends JPanel implements DocumentListener {
      * @param d the d
      */
     void store(WizardDescriptor d) {
-        String name = projectNameTextField.getText().trim();
-        String folder = createdFolderTextField.getText().trim();
+        String groupID = groupIDTextField.getText().trim();
+        String artifactID = artifactIDTextField.getText().trim();
+        String version = versionTextField.getText().trim();
 
-        d.putProperty("projdir", new File(folder));
-        d.putProperty("name", name);
+
+        d.putProperty(TemplateKeys.MVN_ARTIFACT_ID,artifactID);
+        d.putProperty(TemplateKeys.MVN_GROUP_ID,groupID);
+        d.putProperty(TemplateKeys.MVN_VERSION,version);
     }
 
-    /**
-     * Handles changes in the Project name and project directory,.
-     *
-     * @param e the e
-     */
-    private void updateTexts(DocumentEvent e) {
-
-        Document doc = e.getDocument();
-
-        if (doc == projectNameTextField.getDocument() || doc == projectLocationTextField.getDocument()) {
-            // Change in the project name
-
-            String projectName = projectNameTextField.getText();
-            String projectFolder = projectLocationTextField.getText();
-
-            //if (projectFolder.trim().length() == 0 || projectFolder.equals(oldName)) {
-            createdFolderTextField.setText(projectFolder + File.separatorChar + projectName);
-            //}
-
-        }
-        panel.fireChangeEvent(); // Notify that the panel changed
-    }
 
     /**
      * Valid.
@@ -262,43 +200,25 @@ public class VertxMavenPanelVisual extends JPanel implements DocumentListener {
      */
     boolean valid(WizardDescriptor wizardDescriptor) {
 
-        if (projectNameTextField.getText().length() == 0) {
+        if (groupIDTextField.getText().length() == 0) {
             // TODO if using org.openide.dialogs >= 7.8, can use WizardDescriptor.PROP_ERROR_MESSAGE:
             wizardDescriptor.putProperty("WizardPanel_errorMessage",
-                    "Project Name is not a valid folder name.");
+                    "Group ID must not be empty.");
             return false; // Display name not specified
         }
-        File f = FileUtil.normalizeFile(new File(projectLocationTextField.getText()).getAbsoluteFile());
-        if (!f.isDirectory()) {
-            String message = "Project Folder is not a valid path.";
-            wizardDescriptor.putProperty("WizardPanel_errorMessage", message);
-            return false;
-        }
-        final File destFolder = FileUtil.normalizeFile(new File(createdFolderTextField.getText()).getAbsoluteFile());
-
-        File projLoc = destFolder;
-        while (projLoc != null && !projLoc.exists()) {
-            projLoc = projLoc.getParentFile();
-        }
-        if (projLoc == null || !projLoc.canWrite()) {
+        if (artifactIDTextField.getText().length() == 0) {
+            // TODO if using org.openide.dialogs >= 7.8, can use WizardDescriptor.PROP_ERROR_MESSAGE:
             wizardDescriptor.putProperty("WizardPanel_errorMessage",
-                    "Project Folder cannot be created.");
-            return false;
+                    "Artifact ID must not be empty.");
+            return false; // Display name not specified
         }
-
-        if (FileUtil.toFileObject(projLoc) == null) {
-            String message = "Project Folder is not a valid path.";
-            wizardDescriptor.putProperty("WizardPanel_errorMessage", message);
-            return false;
-        }
-
-        File[] kids = destFolder.listFiles();
-        if (destFolder.exists() && kids != null && kids.length > 0) {
-            // Folder exists and is not empty
+        if (versionTextField.getText().length() == 0) {
+            // TODO if using org.openide.dialogs >= 7.8, can use WizardDescriptor.PROP_ERROR_MESSAGE:
             wizardDescriptor.putProperty("WizardPanel_errorMessage",
-                    "Project Folder already exists and is not empty.");
-            return false;
+                    "Version must not be empty.");
+            return false; // Display name not specified
         }
+
         wizardDescriptor.putProperty("WizardPanel_errorMessage", "");
         return true;
     }
@@ -311,6 +231,21 @@ public class VertxMavenPanelVisual extends JPanel implements DocumentListener {
      */
     void validate(WizardDescriptor d) throws WizardValidationException {
         // nothing to validate
+    }
+
+    @Override
+    public void insertUpdate(DocumentEvent e) {
+        panel.fireChangeEvent();
+    }
+
+    @Override
+    public void removeUpdate(DocumentEvent e) {
+        panel.fireChangeEvent();
+    }
+
+    @Override
+    public void changedUpdate(DocumentEvent e) {
+        panel.fireChangeEvent();
     }
 
 }

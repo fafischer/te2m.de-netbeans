@@ -12,6 +12,7 @@
         <vertx.version>3.1.0</vertx.version>
         <junit.version>4.12</junit.version>
     </properties>
+    <!--
     <developers>
         <developer>
             <id>${pomInfo.userID}</id>
@@ -21,7 +22,7 @@
             </roles>
         </developer>         
     </developers>
-
+    -->
     <dependencies>
         <dependency>
             <groupId>io.vertx</groupId>
@@ -44,6 +45,7 @@
 
     <build>
         <plugins>
+            <!-- Ensure JDK 8 is used -->
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.3</version>
@@ -52,7 +54,36 @@
                     <target>1.8</target>
                 </configuration>
             </plugin>
+            <#if createFatJar??><#if createFatJar>
+            <!-- Create a 'Fat'-Jar for easy deployment -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>2.3</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <transformers>
+                                <transformer
+                                    implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                    <manifestEntries>
+                                        <Main-Class>io.vertx.core.Starter</Main-Class>
+                                        <!-- TODO: Replace with the mane of the real main verticle -->
+                                        <Main-Verticle>todo.insert.name.of.main.verticle.here</Main-Verticle>
+                                    </manifestEntries>
+                                </transformer>
+                            </transformers>
+                            <artifactSet/>
+                            <outputFile>${r"${"}project.build.directory}/${r"${"}project.artifactId}-${r"${"}project.version}-fat.jar</outputFile>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin></#if></#if>
         </plugins>
     </build>
-
+	
 </project>
