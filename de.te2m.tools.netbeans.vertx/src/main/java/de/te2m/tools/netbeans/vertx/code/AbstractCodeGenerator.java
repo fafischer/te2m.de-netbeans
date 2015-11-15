@@ -34,6 +34,13 @@ public abstract class AbstractCodeGenerator {
     }
 
     /**
+     * Gets the content.
+     *
+     * @return the content
+     */
+    protected abstract String getContent();
+
+    /**
      * This will be invoked when user chooses this Generator from Insert Code
      * dialog.
      */
@@ -46,12 +53,5 @@ public abstract class AbstractCodeGenerator {
             Exceptions.printStackTrace(ex);
         }
     }
-
-    /**
-     * Gets the content.
-     *
-     * @return the content
-     */
-    protected abstract String getContent();
 
 }

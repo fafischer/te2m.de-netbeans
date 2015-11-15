@@ -1,5 +1,5 @@
 /*
-* VertxPanelVisual.java
+* VertxProjectPanelVisual.java
 *   
 * Copyright 2009 - 2015 Frank Fischer (email: frank@te2m.de)
 *
@@ -9,6 +9,7 @@
 */
 package de.te2m.tools.netbeans.vertx.wizards.project;
 
+import de.te2m.tools.netbeans.vertx.wizards.TemplateKeys;
 import java.io.File;
 import javax.swing.JFileChooser;
 import javax.swing.JPanel;
@@ -39,6 +40,58 @@ public class VertxProjectPanelVisual extends JPanel implements DocumentListener 
      */
     private VertxWizardProjectPanel panel;
 
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    /**
+     * The browse button.
+     */
+    private javax.swing.JButton browseButton;
+
+    /**
+     * The created folder label.
+     */
+    private javax.swing.JLabel createdFolderLabel;
+
+    /**
+     * The created folder text field.
+     */
+    private javax.swing.JTextField createdFolderTextField;
+
+    /**
+     * The description text.
+     */
+    private javax.swing.JTextArea descriptionText;
+
+    /**
+     * The j label1.
+     */
+    private javax.swing.JLabel jLabel1;
+    
+    /**
+     * The j scroll pane1.
+     */
+    private javax.swing.JScrollPane jScrollPane1;
+    
+    /**
+     * The project location label.
+     */
+    private javax.swing.JLabel projectLocationLabel;
+    
+    /**
+     * The project location text field.
+     */
+    private javax.swing.JTextField projectLocationTextField;
+    
+    /**
+     * The project name label.
+     */
+    private javax.swing.JLabel projectNameLabel;
+    
+    /**
+     * The project name text field.
+     */
+    private javax.swing.JTextField projectNameTextField;
+    // End of variables declaration//GEN-END:variables
+    
     /**
      * Instantiates a new vertx panel visual.
      *
@@ -50,6 +103,55 @@ public class VertxProjectPanelVisual extends JPanel implements DocumentListener 
         // Register listener on the textFields to make the automatic updates
         projectNameTextField.getDocument().addDocumentListener(this);
         projectLocationTextField.getDocument().addDocumentListener(this);
+    }
+    
+    /* (non-Javadoc)
+     * @see javax.swing.JComponent#addNotify()
+     */
+    @Override
+    public void addNotify() {
+        super.addNotify();
+        //same problem as in 31086, initial focus on Cancel button
+        projectNameTextField.requestFocus();
+    }
+    
+    /**
+     * Browse button action performed.
+     *
+     * @param evt the evt
+     */
+    private void browseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_browseButtonActionPerformed
+        String command = evt.getActionCommand();
+        if ("BROWSE".equals(command)) {
+            JFileChooser chooser = new JFileChooser();
+            FileUtil.preventFileChooserSymlinkTraversal(chooser, null);
+            chooser.setDialogTitle("Select Project Location");
+            chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+            String path = this.projectLocationTextField.getText();
+            if (path.length() > 0) {
+                File f = new File(path);
+                if (f.exists()) {
+                    chooser.setSelectedFile(f);
+                }
+            }
+            if (JFileChooser.APPROVE_OPTION == chooser.showOpenDialog(this)) {
+                File projectDir = chooser.getSelectedFile();
+                projectLocationTextField.setText(FileUtil.normalizeFile(projectDir).getAbsolutePath());
+            }
+            panel.fireChangeEvent();
+        }
+
+    }//GEN-LAST:event_browseButtonActionPerformed
+    
+    // Implementation of DocumentListener --------------------------------------
+    /* (non-Javadoc)
+     * @see javax.swing.event.DocumentListener#changedUpdate(javax.swing.event.DocumentEvent)
+     */
+    public void changedUpdate(DocumentEvent e) {
+        updateTexts(e);
+        if (this.projectNameTextField.getDocument() == e.getDocument()) {
+            firePropertyChange(PROP_PROJECT_NAME, null, this.projectNameTextField.getText());
+        }
     }
 
     /**
@@ -77,7 +179,7 @@ public class VertxProjectPanelVisual extends JPanel implements DocumentListener 
         createdFolderLabel = new javax.swing.JLabel();
         createdFolderTextField = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        descriptionText = new javax.swing.JTextArea();
         jLabel1 = new javax.swing.JLabel();
 
         projectNameLabel.setLabelFor(projectNameTextField);
@@ -99,9 +201,9 @@ public class VertxProjectPanelVisual extends JPanel implements DocumentListener 
 
         createdFolderTextField.setEditable(false);
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        descriptionText.setColumns(20);
+        descriptionText.setRows(5);
+        jScrollPane1.setViewportView(descriptionText);
 
         org.openide.awt.Mnemonics.setLocalizedText(jLabel1, org.openide.util.NbBundle.getMessage(VertxProjectPanelVisual.class, "VertxProjectPanelVisual.jLabel1.text")); // NOI18N
 
@@ -152,55 +254,83 @@ public class VertxProjectPanelVisual extends JPanel implements DocumentListener 
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-     * Browse button action performed.
-     *
-     * @param evt the evt
+    /* (non-Javadoc)
+     * @see javax.swing.event.DocumentListener#insertUpdate(javax.swing.event.DocumentEvent)
      */
-    private void browseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_browseButtonActionPerformed
-        String command = evt.getActionCommand();
-        if ("BROWSE".equals(command)) {
-            JFileChooser chooser = new JFileChooser();
-            FileUtil.preventFileChooserSymlinkTraversal(chooser, null);
-            chooser.setDialogTitle("Select Project Location");
-            chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-            String path = this.projectLocationTextField.getText();
-            if (path.length() > 0) {
-                File f = new File(path);
-                if (f.exists()) {
-                    chooser.setSelectedFile(f);
-                }
-            }
-            if (JFileChooser.APPROVE_OPTION == chooser.showOpenDialog(this)) {
-                File projectDir = chooser.getSelectedFile();
-                projectLocationTextField.setText(FileUtil.normalizeFile(projectDir).getAbsolutePath());
-            }
-            panel.fireChangeEvent();
+    public void insertUpdate(DocumentEvent e) {
+        updateTexts(e);
+        if (this.projectNameTextField.getDocument() == e.getDocument()) {
+            firePropertyChange(PROP_PROJECT_NAME, null, this.projectNameTextField.getText());
         }
+    }
 
-    }//GEN-LAST:event_browseButtonActionPerformed
+    /**
+     * Read.
+     *
+     * @param settings the settings
+     */
+    void read(WizardDescriptor settings) {
+        File projectLocation = (File) settings.getProperty("projdir");
+        if (projectLocation == null || projectLocation.getParentFile() == null || !projectLocation.getParentFile().isDirectory()) {
+            projectLocation = ProjectChooser.getProjectsFolder();
+        } else {
+            projectLocation = projectLocation.getParentFile();
+        }
+        this.projectLocationTextField.setText(projectLocation.getAbsolutePath());
 
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton browseButton;
-    private javax.swing.JLabel createdFolderLabel;
-    private javax.swing.JTextField createdFolderTextField;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JLabel projectLocationLabel;
-    private javax.swing.JTextField projectLocationTextField;
-    private javax.swing.JLabel projectNameLabel;
-    private javax.swing.JTextField projectNameTextField;
-    // End of variables declaration//GEN-END:variables
+        String projectName = (String) settings.getProperty("name");
+        if (projectName == null) {
+            projectName = "Vertx";
+        }
+        this.projectNameTextField.setText(projectName);
+        this.projectNameTextField.selectAll();
+    }
 
     /* (non-Javadoc)
-     * @see javax.swing.JComponent#addNotify()
+     * @see javax.swing.event.DocumentListener#removeUpdate(javax.swing.event.DocumentEvent)
      */
-    @Override
-    public void addNotify() {
-        super.addNotify();
-        //same problem as in 31086, initial focus on Cancel button
-        projectNameTextField.requestFocus();
+    public void removeUpdate(DocumentEvent e) {
+        updateTexts(e);
+        if (this.projectNameTextField.getDocument() == e.getDocument()) {
+            firePropertyChange(PROP_PROJECT_NAME, null, this.projectNameTextField.getText());
+        }
+    }
+
+    /**
+     * Store.
+     *
+     * @param d the d
+     */
+    void store(WizardDescriptor d) {
+        String name = projectNameTextField.getText().trim();
+        String folder = createdFolderTextField.getText().trim();
+        String desc = descriptionText.getText().trim();
+        d.putProperty("projdir", new File(folder));
+        d.putProperty("name", name);
+        d.putProperty(TemplateKeys.PROPERTY_DESCRIPTION, desc!=null?desc:"");
+    }
+
+    /**
+     * Handles changes in the Project name and project directory,.
+     *
+     * @param e the e
+     */
+    private void updateTexts(DocumentEvent e) {
+
+        Document doc = e.getDocument();
+
+        if (doc == projectNameTextField.getDocument() || doc == projectLocationTextField.getDocument()) {
+            // Change in the project name
+
+            String projectName = projectNameTextField.getText();
+            String projectFolder = projectLocationTextField.getText();
+
+            //if (projectFolder.trim().length() == 0 || projectFolder.equals(oldName)) {
+            createdFolderTextField.setText(projectFolder + File.separatorChar + projectName);
+            //}
+
+        }
+        panel.fireChangeEvent(); // Notify that the panel changed
     }
 
     /**
@@ -253,41 +383,6 @@ public class VertxProjectPanelVisual extends JPanel implements DocumentListener 
     }
 
     /**
-     * Store.
-     *
-     * @param d the d
-     */
-    void store(WizardDescriptor d) {
-        String name = projectNameTextField.getText().trim();
-        String folder = createdFolderTextField.getText().trim();
-
-        d.putProperty("projdir", new File(folder));
-        d.putProperty("name", name);
-    }
-
-    /**
-     * Read.
-     *
-     * @param settings the settings
-     */
-    void read(WizardDescriptor settings) {
-        File projectLocation = (File) settings.getProperty("projdir");
-        if (projectLocation == null || projectLocation.getParentFile() == null || !projectLocation.getParentFile().isDirectory()) {
-            projectLocation = ProjectChooser.getProjectsFolder();
-        } else {
-            projectLocation = projectLocation.getParentFile();
-        }
-        this.projectLocationTextField.setText(projectLocation.getAbsolutePath());
-
-        String projectName = (String) settings.getProperty("name");
-        if (projectName == null) {
-            projectName = "Vertx";
-        }
-        this.projectNameTextField.setText(projectName);
-        this.projectNameTextField.selectAll();
-    }
-
-    /**
      * Validate.
      *
      * @param d the d
@@ -295,60 +390,6 @@ public class VertxProjectPanelVisual extends JPanel implements DocumentListener 
      */
     void validate(WizardDescriptor d) throws WizardValidationException {
         // nothing to validate
-    }
-
-    // Implementation of DocumentListener --------------------------------------
-    /* (non-Javadoc)
-     * @see javax.swing.event.DocumentListener#changedUpdate(javax.swing.event.DocumentEvent)
-     */
-    public void changedUpdate(DocumentEvent e) {
-        updateTexts(e);
-        if (this.projectNameTextField.getDocument() == e.getDocument()) {
-            firePropertyChange(PROP_PROJECT_NAME, null, this.projectNameTextField.getText());
-        }
-    }
-
-    /* (non-Javadoc)
-     * @see javax.swing.event.DocumentListener#insertUpdate(javax.swing.event.DocumentEvent)
-     */
-    public void insertUpdate(DocumentEvent e) {
-        updateTexts(e);
-        if (this.projectNameTextField.getDocument() == e.getDocument()) {
-            firePropertyChange(PROP_PROJECT_NAME, null, this.projectNameTextField.getText());
-        }
-    }
-
-    /* (non-Javadoc)
-     * @see javax.swing.event.DocumentListener#removeUpdate(javax.swing.event.DocumentEvent)
-     */
-    public void removeUpdate(DocumentEvent e) {
-        updateTexts(e);
-        if (this.projectNameTextField.getDocument() == e.getDocument()) {
-            firePropertyChange(PROP_PROJECT_NAME, null, this.projectNameTextField.getText());
-        }
-    }
-
-    /**
-     * Handles changes in the Project name and project directory,.
-     *
-     * @param e the e
-     */
-    private void updateTexts(DocumentEvent e) {
-
-        Document doc = e.getDocument();
-
-        if (doc == projectNameTextField.getDocument() || doc == projectLocationTextField.getDocument()) {
-            // Change in the project name
-
-            String projectName = projectNameTextField.getText();
-            String projectFolder = projectLocationTextField.getText();
-
-            //if (projectFolder.trim().length() == 0 || projectFolder.equals(oldName)) {
-            createdFolderTextField.setText(projectFolder + File.separatorChar + projectName);
-            //}
-
-        }
-        panel.fireChangeEvent(); // Notify that the panel changed
     }
 
 }

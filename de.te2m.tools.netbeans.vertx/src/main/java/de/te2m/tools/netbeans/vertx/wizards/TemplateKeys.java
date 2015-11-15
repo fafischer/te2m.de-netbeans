@@ -11,12 +11,36 @@ package de.te2m.tools.netbeans.vertx.wizards;
 
 /**
  * The Interface TemplateKeys.
+ * Contains constants for accessing certain values in wizards and Freemarker templates.
  *
  * @author ffischer
  */
 public interface TemplateKeys {
 
+    /**
+     * The Constant POM_INFO.
+     */
     public static final String POM_INFO="pomInfo";
+    
+    /**
+     * The Constant PKG_CREATE_FAT_JAR.
+     */
+    public static final String PKG_CREATE_FAT_JAR="createFatJar";
+    
+    /**
+     * The Constant MVN_ARTIFACT_ID.
+     */
+    public static final String MVN_ARTIFACT_ID="artifactID";
+
+    /**
+     * The Constant MVN_GROUP_ID.
+     */
+    public static final String MVN_GROUP_ID="groupID";
+
+    /**
+     * The Constant MVN_VERSION.
+     */
+    public static final String MVN_VERSION="version";
 
     /**
      * The property decription.

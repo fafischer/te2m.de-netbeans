@@ -23,6 +23,38 @@ final class CommonPanel extends javax.swing.JPanel {
      */
     private final CommonOptionsPanelController controller;
 
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    /**
+     * The default company name text.
+     */
+    private javax.swing.JTextField defaultCompanyNameText;
+
+    /**
+     * The default user name text.
+     */
+    private javax.swing.JTextField defaultUserNameText;
+
+    /**
+     * The default version text.
+     */
+    private javax.swing.JTextField defaultVersionText;
+
+    /**
+     * The j label1.
+     */
+    private javax.swing.JLabel jLabel1;
+
+    /**
+     * The j label2.
+     */
+    private javax.swing.JLabel jLabel2;
+
+    /**
+     * The j label3.
+     */
+    private javax.swing.JLabel jLabel3;
+    // End of variables declaration//GEN-END:variables
+    
     /**
      * Instantiates a new common panel.
      *
@@ -33,7 +65,7 @@ final class CommonPanel extends javax.swing.JPanel {
         initComponents();
         // TODO listen to changes in form fields and call controller.changed()
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -96,7 +128,7 @@ final class CommonPanel extends javax.swing.JPanel {
                 .addContainerGap(161, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
-
+    
     /**
      * Load.
      */
@@ -109,7 +141,7 @@ final class CommonPanel extends javax.swing.JPanel {
         // or:
         // someTextField.setText(SomeSystemOption.getDefault().getSomeStringProperty());
     }
-
+    
     /**
      * Store.
      */
@@ -122,7 +154,7 @@ final class CommonPanel extends javax.swing.JPanel {
         // or:
         // SomeSystemOption.getDefault().setSomeStringProperty(someTextField.getText());
     }
-
+    
     /**
      * Valid.
      *
@@ -132,13 +164,4 @@ final class CommonPanel extends javax.swing.JPanel {
         // TODO check whether form is consistent and complete
         return true;
     }
-
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField defaultCompanyNameText;
-    private javax.swing.JTextField defaultUserNameText;
-    private javax.swing.JTextField defaultVersionText;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    // End of variables declaration//GEN-END:variables
 }

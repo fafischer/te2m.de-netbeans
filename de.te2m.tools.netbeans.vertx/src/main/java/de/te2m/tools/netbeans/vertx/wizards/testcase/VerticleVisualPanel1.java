@@ -20,13 +20,50 @@ import javax.swing.JPanel;
  */
 public final class VerticleVisualPanel1 extends JPanel {
 
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    /**
+     * The description text area.
+     */
+    private javax.swing.JTextArea descriptionTextArea;
+
+    /**
+     * The j label1.
+     */
+    private javax.swing.JLabel jLabel1;
+
+    /**
+     * The j label2.
+     */
+    private javax.swing.JLabel jLabel2;
+
+    /**
+     * The j label3.
+     */
+    private javax.swing.JLabel jLabel3;
+
+    /**
+     * The j scroll pane1.
+     */
+    private javax.swing.JScrollPane jScrollPane1;
+
+    /**
+     * The name text field.
+     */
+    private javax.swing.JTextField nameTextField;
+
+    /**
+     * The package text field.
+     */
+    private javax.swing.JTextField packageTextField;
+    // End of variables declaration//GEN-END:variables
+
     /**
      * Creates new form VerticleVisualPanel1.
      */
     public VerticleVisualPanel1() {
         initComponents();
     }
-
+    
     /* (non-Javadoc)
      * @see java.awt.Component#getName()
      */
@@ -34,16 +71,7 @@ public final class VerticleVisualPanel1 extends JPanel {
     public String getName() {
         return "Step #1";
     }
-
-    /**
-     * Gets the target name.
-     *
-     * @return the target name
-     */
-    public String getTargetName() {
-        return nameTextField.getText();
-    }
-
+    
     /**
      * Gets the target description.
      *
@@ -52,7 +80,16 @@ public final class VerticleVisualPanel1 extends JPanel {
     public String getTargetDescription() {
         return descriptionTextArea.getText();
     }
-
+    
+    /**
+     * Gets the target name.
+     *
+     * @return the target name
+     */
+    public String getTargetName() {
+        return nameTextField.getText();
+    }
+    
     /**
      * Gets the target folder.
      *
@@ -61,7 +98,7 @@ public final class VerticleVisualPanel1 extends JPanel {
     public String getTargetPackage() {
         return packageTextField.getText();
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -137,7 +174,7 @@ public final class VerticleVisualPanel1 extends JPanel {
                 .addContainerGap(127, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
-
+    
     /**
      * Package text field action performed.
      *
@@ -146,41 +183,4 @@ public final class VerticleVisualPanel1 extends JPanel {
     private void packageTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_packageTextFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_packageTextFieldActionPerformed
-
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    /**
-     * The description text area.
-     */
-    private javax.swing.JTextArea descriptionTextArea;
-    
-    /**
-     * The j label1.
-     */
-    private javax.swing.JLabel jLabel1;
-    
-    /**
-     * The j label2.
-     */
-    private javax.swing.JLabel jLabel2;
-    
-    /**
-     * The j label3.
-     */
-    private javax.swing.JLabel jLabel3;
-    
-    /**
-     * The j scroll pane1.
-     */
-    private javax.swing.JScrollPane jScrollPane1;
-    
-    /**
-     * The name text field.
-     */
-    private javax.swing.JTextField nameTextField;
-    
-    /**
-     * The package text field.
-     */
-    private javax.swing.JTextField packageTextField;
-    // End of variables declaration//GEN-END:variables
 }

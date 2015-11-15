@@ -28,23 +28,6 @@ import org.openide.util.Lookup;
 public class VertxJDBCInitGenerator extends AbstractCodeGenerator implements CodeGenerator {
 
     /**
-     * Instantiates a new PF tab generator.
-     *
-     * @param context containing JTextComponent and possibly other items
-     * registered by {@link CodeGeneratorContextProvider}
-     */
-    private VertxJDBCInitGenerator(Lookup context) { // Good practice is not to save Lookup outside ctor
-        textComp = context.lookup(JTextComponent.class);
-    }
-
-    /* (non-Javadoc)
-     * @see de.te2m.tools.netbeans.code.AbstractCodeGenerator#getContent()
-     */
-    protected String getContent() {
-        return Templates.JDBC_CREATE;
-    }
-
-    /**
      * The Class Factory.
      *
      * @author ffischer
@@ -60,6 +43,23 @@ public class VertxJDBCInitGenerator extends AbstractCodeGenerator implements Cod
         public List<? extends CodeGenerator> create(Lookup context) {
             return Collections.singletonList(new VertxJDBCInitGenerator(context));
         }
+    }
+
+    /**
+     * Instantiates a new PF tab generator.
+     *
+     * @param context containing JTextComponent and possibly other items
+     * registered by {@link CodeGeneratorContextProvider}
+     */
+    private VertxJDBCInitGenerator(Lookup context) { // Good practice is not to save Lookup outside ctor
+        textComp = context.lookup(JTextComponent.class);
+    }
+
+    /* (non-Javadoc)
+     * @see de.te2m.tools.netbeans.code.AbstractCodeGenerator#getContent()
+     */
+    protected String getContent() {
+        return Templates.JDBC_CREATE;
     }
 
     /**

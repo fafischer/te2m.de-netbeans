@@ -56,27 +56,6 @@ import org.xml.sax.InputSource;
 public class VertxWizardIterator implements WizardDescriptor./*Progress*/InstantiatingIterator {
 
     /**
-     * The index.
-     */
-    private int index;
-
-    /**
-     * The panels.
-     */
-    private WizardDescriptor.Panel[] panels;
-
-    /**
-     * The wiz.
-     */
-    private WizardDescriptor wiz;
-
-    /**
-     * Instantiates a new vertx wizard iterator.
-     */
-    public VertxWizardIterator() {
-    }
-
-    /**
      * Creates the iterator.
      *
      * @return the vertx wizard iterator
@@ -86,167 +65,42 @@ public class VertxWizardIterator implements WizardDescriptor./*Progress*/Instant
     }
 
     /**
-     * Creates the panels.
+     * Filter project xml.
      *
-     * @return the wizard descriptor. panel[]
+     * @param fo the fo
+     * @param str the str
+     * @param name the name
+     * @throws IOException Signals that an I/O exception has occurred.
      */
-    private WizardDescriptor.Panel[] createPanels() {
-        return new WizardDescriptor.Panel[]{
-            new VertxWizardPanel(),};
-    }
-
-    /**
-     * Creates the steps.
-     *
-     * @return the string[]
-     */
-    private String[] createSteps() {
-        return new String[]{
-            NbBundle.getMessage(VertxWizardIterator.class, "LBL_CreateProjectStep")
-        };
-    }
-
-    /* (non-Javadoc)
-     * @see org.openide.WizardDescriptor.InstantiatingIterator#instantiate()
-     */
-    @Override
-    public Set/*<FileObject>*/ instantiate(/*ProgressHandle handle*/) throws IOException {
-        Set<FileObject> resultSet = new LinkedHashSet<FileObject>();
-        File dirF = FileUtil.normalizeFile((File) wiz.getProperty("projdir"));
-        dirF.mkdirs();
-
-        FileObject template = Templates.getTemplate(wiz);
-        FileObject dir = FileUtil.toFileObject(dirF);
-        unZipFile(template.getInputStream(), dir);
-
-        // Always open top dir as a project:
-        resultSet.add(dir);
-        // Look for nested projects to open as well:
-        Enumeration<? extends FileObject> e = dir.getFolders(true);
-        while (e.hasMoreElements()) {
-            FileObject subfolder = e.nextElement();
-            if (ProjectManager.getDefault().isProject(subfolder)) {
-                resultSet.add(subfolder);
+    private static void filterProjectXML(FileObject fo, ZipInputStream str, String name) throws IOException {
+        try {
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            FileUtil.copy(str, baos);
+            Document doc = XMLUtil.parse(new InputSource(new ByteArrayInputStream(baos.toByteArray())), false, false, null, null);
+            NodeList nl = doc.getDocumentElement().getElementsByTagName("name");
+            if (nl != null) {
+                for (int i = 0; i < nl.getLength(); i++) {
+                    Element el = (Element) nl.item(i);
+                    if (el.getParentNode() != null && "data".equals(el.getParentNode().getNodeName())) {
+                        NodeList nl2 = el.getChildNodes();
+                        if (nl2.getLength() > 0) {
+                            nl2.item(0).setNodeValue(name);
+                        }
+                        break;
+                    }
+                }
             }
-        }
-        HashMap<String, Object> params = new HashMap<String, Object>();
-        System.out.println(FreemarkerUtils.generate(params, "de/te2m/tools/netbeans/vertx", "pom.xml.template"));
-        File parent = dirF.getParentFile();
-        if (parent != null && parent.exists()) {
-            ProjectChooser.setProjectsFolder(parent);
-        }
-
-        return resultSet;
-    }
-
-    /* (non-Javadoc)
-     * @see org.openide.WizardDescriptor.InstantiatingIterator#initialize(org.openide.WizardDescriptor)
-     */
-    @Override
-    public void initialize(WizardDescriptor wiz) {
-        this.wiz = wiz;
-        index = 0;
-        panels = createPanels();
-        // Make sure list of steps is accurate.
-        String[] steps = createSteps();
-        for (int i = 0; i < panels.length; i++) {
-            Component c = panels[i].getComponent();
-            if (steps[i] == null) {
-                // Default step name to component name of panel.
-                // Mainly useful for getting the name of the target
-                // chooser to appear in the list of steps.
-                steps[i] = c.getName();
+            OutputStream out = fo.getOutputStream();
+            try {
+                XMLUtil.write(doc, out, "UTF-8");
+            } finally {
+                out.close();
             }
-            if (c instanceof JComponent) { // assume Swing components
-                JComponent jc = (JComponent) c;
-                // Step #.
-                // TODO if using org.openide.dialogs >= 7.8, can use WizardDescriptor.PROP_*:
-                jc.putClientProperty("WizardPanel_contentSelectedIndex", new Integer(i));
-                // Step name (actually the whole list for reference).
-                jc.putClientProperty("WizardPanel_contentData", steps);
-            }
+        } catch (Exception ex) {
+            Exceptions.printStackTrace(ex);
+            writeFile(str, fo);
         }
-    }
 
-    /* (non-Javadoc)
-     * @see org.openide.WizardDescriptor.InstantiatingIterator#uninitialize(org.openide.WizardDescriptor)
-     */
-    @Override
-    public void uninitialize(WizardDescriptor wiz) {
-        this.wiz.putProperty("projdir", null);
-        this.wiz.putProperty("name", null);
-        this.wiz = null;
-        panels = null;
-    }
-
-    /* (non-Javadoc)
-     * @see org.openide.WizardDescriptor.Iterator#name()
-     */
-    @Override
-    public String name() {
-        return MessageFormat.format("{0} of {1}",
-                new Object[]{new Integer(index + 1), new Integer(panels.length)});
-    }
-
-    /* (non-Javadoc)
-     * @see org.openide.WizardDescriptor.Iterator#hasNext()
-     */
-    @Override
-    public boolean hasNext() {
-        return index < panels.length - 1;
-    }
-
-    /* (non-Javadoc)
-     * @see org.openide.WizardDescriptor.Iterator#hasPrevious()
-     */
-    @Override
-    public boolean hasPrevious() {
-        return index > 0;
-    }
-
-    /* (non-Javadoc)
-     * @see org.openide.WizardDescriptor.Iterator#nextPanel()
-     */
-    @Override
-    public void nextPanel() {
-        if (!hasNext()) {
-            throw new NoSuchElementException();
-        }
-        index++;
-    }
-
-    /* (non-Javadoc)
-     * @see org.openide.WizardDescriptor.Iterator#previousPanel()
-     */
-    @Override
-    public void previousPanel() {
-        if (!hasPrevious()) {
-            throw new NoSuchElementException();
-        }
-        index--;
-    }
-
-    /* (non-Javadoc)
-     * @see org.openide.WizardDescriptor.Iterator#current()
-     */
-    @Override
-    public WizardDescriptor.Panel current() {
-        return panels[index];
-    }
-
-    // If nothing unusual changes in the middle of the wizard, simply:
-    /* (non-Javadoc)
-     * @see org.openide.WizardDescriptor.Iterator#addChangeListener(javax.swing.event.ChangeListener)
-     */
-    @Override
-    public final void addChangeListener(ChangeListener l) {
-    }
-
-    /* (non-Javadoc)
-     * @see org.openide.WizardDescriptor.Iterator#removeChangeListener(javax.swing.event.ChangeListener)
-     */
-    @Override
-    public final void removeChangeListener(ChangeListener l) {
     }
 
     /**
@@ -295,42 +149,188 @@ public class VertxWizardIterator implements WizardDescriptor./*Progress*/Instant
     }
 
     /**
-     * Filter project xml.
-     *
-     * @param fo the fo
-     * @param str the str
-     * @param name the name
-     * @throws IOException Signals that an I/O exception has occurred.
+     * The index.
      */
-    private static void filterProjectXML(FileObject fo, ZipInputStream str, String name) throws IOException {
-        try {
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            FileUtil.copy(str, baos);
-            Document doc = XMLUtil.parse(new InputSource(new ByteArrayInputStream(baos.toByteArray())), false, false, null, null);
-            NodeList nl = doc.getDocumentElement().getElementsByTagName("name");
-            if (nl != null) {
-                for (int i = 0; i < nl.getLength(); i++) {
-                    Element el = (Element) nl.item(i);
-                    if (el.getParentNode() != null && "data".equals(el.getParentNode().getNodeName())) {
-                        NodeList nl2 = el.getChildNodes();
-                        if (nl2.getLength() > 0) {
-                            nl2.item(0).setNodeValue(name);
-                        }
-                        break;
-                    }
-                }
+    private int index;
+
+    /**
+     * The panels.
+     */
+    private WizardDescriptor.Panel[] panels;
+
+    /**
+     * The wiz.
+     */
+    private WizardDescriptor wiz;
+
+    /**
+     * Instantiates a new vertx wizard iterator.
+     */
+    public VertxWizardIterator() {
+    }
+
+    // If nothing unusual changes in the middle of the wizard, simply:
+    /* (non-Javadoc)
+     * @see org.openide.WizardDescriptor.Iterator#addChangeListener(javax.swing.event.ChangeListener)
+     */
+    @Override
+    public final void addChangeListener(ChangeListener l) {
+    }
+
+    /**
+     * Creates the panels.
+     *
+     * @return the wizard descriptor. panel[]
+     */
+    private WizardDescriptor.Panel[] createPanels() {
+        return new WizardDescriptor.Panel[]{
+            new VertxWizardPanel(),};
+    }
+
+    /**
+     * Creates the steps.
+     *
+     * @return the string[]
+     */
+    private String[] createSteps() {
+        return new String[]{
+            NbBundle.getMessage(VertxWizardIterator.class, "LBL_CreateProjectStep")
+        };
+    }
+
+    /* (non-Javadoc)
+     * @see org.openide.WizardDescriptor.Iterator#current()
+     */
+    @Override
+    public WizardDescriptor.Panel current() {
+        return panels[index];
+    }
+
+    /* (non-Javadoc)
+     * @see org.openide.WizardDescriptor.Iterator#hasNext()
+     */
+    @Override
+    public boolean hasNext() {
+        return index < panels.length - 1;
+    }
+
+    /* (non-Javadoc)
+     * @see org.openide.WizardDescriptor.Iterator#hasPrevious()
+     */
+    @Override
+    public boolean hasPrevious() {
+        return index > 0;
+    }
+
+    /* (non-Javadoc)
+     * @see org.openide.WizardDescriptor.InstantiatingIterator#initialize(org.openide.WizardDescriptor)
+     */
+    @Override
+    public void initialize(WizardDescriptor wiz) {
+        this.wiz = wiz;
+        index = 0;
+        panels = createPanels();
+        // Make sure list of steps is accurate.
+        String[] steps = createSteps();
+        for (int i = 0; i < panels.length; i++) {
+            Component c = panels[i].getComponent();
+            if (steps[i] == null) {
+                // Default step name to component name of panel.
+                // Mainly useful for getting the name of the target
+                // chooser to appear in the list of steps.
+                steps[i] = c.getName();
             }
-            OutputStream out = fo.getOutputStream();
-            try {
-                XMLUtil.write(doc, out, "UTF-8");
-            } finally {
-                out.close();
+            if (c instanceof JComponent) { // assume Swing components
+                JComponent jc = (JComponent) c;
+                // Step #.
+                // TODO if using org.openide.dialogs >= 7.8, can use WizardDescriptor.PROP_*:
+                jc.putClientProperty("WizardPanel_contentSelectedIndex", new Integer(i));
+                // Step name (actually the whole list for reference).
+                jc.putClientProperty("WizardPanel_contentData", steps);
             }
-        } catch (Exception ex) {
-            Exceptions.printStackTrace(ex);
-            writeFile(str, fo);
+        }
+    }
+
+    /* (non-Javadoc)
+     * @see org.openide.WizardDescriptor.InstantiatingIterator#instantiate()
+     */
+    @Override
+    public Set/*<FileObject>*/ instantiate(/*ProgressHandle handle*/) throws IOException {
+        Set<FileObject> resultSet = new LinkedHashSet<FileObject>();
+        File dirF = FileUtil.normalizeFile((File) wiz.getProperty("projdir"));
+        dirF.mkdirs();
+
+        FileObject template = Templates.getTemplate(wiz);
+        FileObject dir = FileUtil.toFileObject(dirF);
+        unZipFile(template.getInputStream(), dir);
+
+        // Always open top dir as a project:
+        resultSet.add(dir);
+        // Look for nested projects to open as well:
+        Enumeration<? extends FileObject> e = dir.getFolders(true);
+        while (e.hasMoreElements()) {
+            FileObject subfolder = e.nextElement();
+            if (ProjectManager.getDefault().isProject(subfolder)) {
+                resultSet.add(subfolder);
+            }
+        }
+        HashMap<String, Object> params = new HashMap<String, Object>();
+        System.out.println(FreemarkerUtils.generate(params, "de/te2m/tools/netbeans/vertx", "pom.xml.template"));
+        File parent = dirF.getParentFile();
+        if (parent != null && parent.exists()) {
+            ProjectChooser.setProjectsFolder(parent);
         }
 
+        return resultSet;
+    }
+
+    /* (non-Javadoc)
+     * @see org.openide.WizardDescriptor.Iterator#name()
+     */
+    @Override
+    public String name() {
+        return MessageFormat.format("{0} of {1}",
+                new Object[]{new Integer(index + 1), new Integer(panels.length)});
+    }
+
+    /* (non-Javadoc)
+     * @see org.openide.WizardDescriptor.Iterator#nextPanel()
+     */
+    @Override
+    public void nextPanel() {
+        if (!hasNext()) {
+            throw new NoSuchElementException();
+        }
+        index++;
+    }
+
+    /* (non-Javadoc)
+     * @see org.openide.WizardDescriptor.Iterator#previousPanel()
+     */
+    @Override
+    public void previousPanel() {
+        if (!hasPrevious()) {
+            throw new NoSuchElementException();
+        }
+        index--;
+    }
+
+    /* (non-Javadoc)
+     * @see org.openide.WizardDescriptor.Iterator#removeChangeListener(javax.swing.event.ChangeListener)
+     */
+    @Override
+    public final void removeChangeListener(ChangeListener l) {
+    }
+
+    /* (non-Javadoc)
+     * @see org.openide.WizardDescriptor.InstantiatingIterator#uninitialize(org.openide.WizardDescriptor)
+     */
+    @Override
+    public void uninitialize(WizardDescriptor wiz) {
+        this.wiz.putProperty("projdir", null);
+        this.wiz.putProperty("name", null);
+        this.wiz = null;
+        panels = null;
     }
 
 }

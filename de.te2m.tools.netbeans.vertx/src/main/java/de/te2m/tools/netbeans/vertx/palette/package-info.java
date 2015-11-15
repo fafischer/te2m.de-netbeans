@@ -1,3 +1,8 @@
+/**
+ * Defines all palette entries related to this Netbeans module.
+ * Provides also all required code related to it.
+ * 
+ */
 @PaletteItemRegistrations({
     @PaletteItemRegistration(
             paletteid = "VertxIOPalette",

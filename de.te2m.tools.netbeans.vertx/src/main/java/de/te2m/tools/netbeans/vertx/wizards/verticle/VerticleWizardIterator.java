@@ -65,6 +65,45 @@ public final class VerticleWizardIterator implements WizardDescriptor.Instantiat
      */
     private List<WizardDescriptor.Panel<WizardDescriptor>> panels;
 
+    // If nothing unusual changes in the middle of the wizard, simply:
+    /* (non-Javadoc)
+     * @see org.openide.WizardDescriptor.Iterator#addChangeListener(javax.swing.event.ChangeListener)
+     */
+    @Override
+    public void addChangeListener(ChangeListener l) {
+    }
+
+    // You could safely ignore this method. Is is here to keep steps which were
+    // there before this wizard was instantiated. It should be better handled
+    // by NetBeans Wizard API itself rather than needed to be implemented by a
+    // client code.
+    /**
+     * Creates the steps.
+     *
+     * @return the string[]
+     */
+    private String[] createSteps() {
+        String[] beforeSteps = (String[]) wizard.getProperty("WizardPanel_contentData");
+        assert beforeSteps != null : "This wizard may only be used embedded in the template wizard";
+        String[] res = new String[(beforeSteps.length - 1) + panels.size()];
+        for (int i = 0; i < res.length; i++) {
+            if (i < (beforeSteps.length - 1)) {
+                res[i] = beforeSteps[i];
+            } else {
+                res[i] = panels.get(i - beforeSteps.length + 1).getComponent().getName();
+            }
+        }
+        return res;
+    }
+
+    /* (non-Javadoc)
+     * @see org.openide.WizardDescriptor.Iterator#current()
+     */
+    @Override
+    public WizardDescriptor.Panel<WizardDescriptor> current() {
+        return getPanels().get(index);
+    }
+
     /**
      * Gets the panels.
      *
@@ -94,6 +133,62 @@ public final class VerticleWizardIterator implements WizardDescriptor.Instantiat
             }
         }
         return panels;
+    }
+
+    /**
+     * Gets the sub dir.
+     *
+     * @param baseDir the base dir
+     * @param name the name
+     * @param createIfMissing the create if missing
+     * @return the sub dir
+     */
+    private FileObject getSubDir(FileObject baseDir, String name, boolean createIfMissing) {
+
+        FileObject[] subDirs = baseDir.getChildren();
+
+        for (int i = 0; i < subDirs.length; i++) {
+            FileObject subDir = subDirs[i];
+
+            if (subDir.isFolder() && name.equals(subDir.getName())) {
+                return subDir;
+            }
+
+        }
+
+        if (createIfMissing) {
+            try {
+                return baseDir.createFolder(name);
+            } catch (IOException ex) {
+                Exceptions.printStackTrace(ex);
+            }
+        }
+
+        return null;
+    }
+
+    /* (non-Javadoc)
+     * @see org.openide.WizardDescriptor.Iterator#hasNext()
+     */
+    @Override
+    public boolean hasNext() {
+        return index < getPanels().size() - 1;
+    }
+
+    /* (non-Javadoc)
+     * @see org.openide.WizardDescriptor.Iterator#hasPrevious()
+     */
+    @Override
+    public boolean hasPrevious() {
+        return index > 0;
+    }
+
+    /* (non-Javadoc)
+     * @see org.openide.WizardDescriptor.InstantiatingIterator#initialize(org.openide.WizardDescriptor)
+     */
+    @Override
+    public void initialize(WizardDescriptor wizard) {
+        this.wizard = wizard;
     }
 
     /* (non-Javadoc)
@@ -152,150 +247,6 @@ public final class VerticleWizardIterator implements WizardDescriptor.Instantiat
         return Collections.singleton(createdFile);
     }
 
-    /* (non-Javadoc)
-     * @see org.openide.WizardDescriptor.InstantiatingIterator#initialize(org.openide.WizardDescriptor)
-     */
-    @Override
-    public void initialize(WizardDescriptor wizard) {
-        this.wizard = wizard;
-    }
-
-    /* (non-Javadoc)
-     * @see org.openide.WizardDescriptor.InstantiatingIterator#uninitialize(org.openide.WizardDescriptor)
-     */
-    @Override
-    public void uninitialize(WizardDescriptor wizard) {
-        panels = null;
-    }
-
-    /* (non-Javadoc)
-     * @see org.openide.WizardDescriptor.Iterator#current()
-     */
-    @Override
-    public WizardDescriptor.Panel<WizardDescriptor> current() {
-        return getPanels().get(index);
-    }
-
-    /* (non-Javadoc)
-     * @see org.openide.WizardDescriptor.Iterator#name()
-     */
-    @Override
-    public String name() {
-        return index + 1 + ". from " + getPanels().size();
-    }
-
-    /* (non-Javadoc)
-     * @see org.openide.WizardDescriptor.Iterator#hasNext()
-     */
-    @Override
-    public boolean hasNext() {
-        return index < getPanels().size() - 1;
-    }
-
-    /* (non-Javadoc)
-     * @see org.openide.WizardDescriptor.Iterator#hasPrevious()
-     */
-    @Override
-    public boolean hasPrevious() {
-        return index > 0;
-    }
-
-    /* (non-Javadoc)
-     * @see org.openide.WizardDescriptor.Iterator#nextPanel()
-     */
-    @Override
-    public void nextPanel() {
-        if (!hasNext()) {
-            throw new NoSuchElementException();
-        }
-        index++;
-    }
-
-    /* (non-Javadoc)
-     * @see org.openide.WizardDescriptor.Iterator#previousPanel()
-     */
-    @Override
-    public void previousPanel() {
-        if (!hasPrevious()) {
-            throw new NoSuchElementException();
-        }
-        index--;
-    }
-
-    // If nothing unusual changes in the middle of the wizard, simply:
-    /* (non-Javadoc)
-     * @see org.openide.WizardDescriptor.Iterator#addChangeListener(javax.swing.event.ChangeListener)
-     */
-    @Override
-    public void addChangeListener(ChangeListener l) {
-    }
-
-    /* (non-Javadoc)
-     * @see org.openide.WizardDescriptor.Iterator#removeChangeListener(javax.swing.event.ChangeListener)
-     */
-    @Override
-    public void removeChangeListener(ChangeListener l) {
-    }
-    // If something changes dynamically (besides moving between panels), e.g.
-    // the number of panels changes in response to user input, then use
-    // ChangeSupport to implement add/removeChangeListener and call fireChange
-    // when needed
-
-    // You could safely ignore this method. Is is here to keep steps which were
-    // there before this wizard was instantiated. It should be better handled
-    // by NetBeans Wizard API itself rather than needed to be implemented by a
-    // client code.
-    /**
-     * Creates the steps.
-     *
-     * @return the string[]
-     */
-    private String[] createSteps() {
-        String[] beforeSteps = (String[]) wizard.getProperty("WizardPanel_contentData");
-        assert beforeSteps != null : "This wizard may only be used embedded in the template wizard";
-        String[] res = new String[(beforeSteps.length - 1) + panels.size()];
-        for (int i = 0; i < res.length; i++) {
-            if (i < (beforeSteps.length - 1)) {
-                res[i] = beforeSteps[i];
-            } else {
-                res[i] = panels.get(i - beforeSteps.length + 1).getComponent().getName();
-            }
-        }
-        return res;
-    }
-
-    /**
-     * Gets the sub dir.
-     *
-     * @param baseDir the base dir
-     * @param name the name
-     * @param createIfMissing the create if missing
-     * @return the sub dir
-     */
-    private FileObject getSubDir(FileObject baseDir, String name, boolean createIfMissing) {
-
-        FileObject[] subDirs = baseDir.getChildren();
-
-        for (int i = 0; i < subDirs.length; i++) {
-            FileObject subDir = subDirs[i];
-
-            if (subDir.isFolder() && name.equals(subDir.getName())) {
-                return subDir;
-            }
-
-        }
-
-        if (createIfMissing) {
-            try {
-                return baseDir.createFolder(name);
-            } catch (IOException ex) {
-                Exceptions.printStackTrace(ex);
-            }
-        }
-
-        return null;
-    }
-
     /**
      * Lookup sub dir.
      *
@@ -320,6 +271,55 @@ public final class VerticleWizardIterator implements WizardDescriptor.Instantiat
         } else {
             return baseDir;
         }
+    }
+
+    /* (non-Javadoc)
+     * @see org.openide.WizardDescriptor.Iterator#name()
+     */
+    @Override
+    public String name() {
+        return index + 1 + ". from " + getPanels().size();
+    }
+
+    /* (non-Javadoc)
+     * @see org.openide.WizardDescriptor.Iterator#nextPanel()
+     */
+    @Override
+    public void nextPanel() {
+        if (!hasNext()) {
+            throw new NoSuchElementException();
+        }
+        index++;
+    }
+
+    /* (non-Javadoc)
+     * @see org.openide.WizardDescriptor.Iterator#previousPanel()
+     */
+    @Override
+    public void previousPanel() {
+        if (!hasPrevious()) {
+            throw new NoSuchElementException();
+        }
+        index--;
+    }
+
+    /* (non-Javadoc)
+     * @see org.openide.WizardDescriptor.Iterator#removeChangeListener(javax.swing.event.ChangeListener)
+     */
+    @Override
+    public void removeChangeListener(ChangeListener l) {
+    }
+    // If something changes dynamically (besides moving between panels), e.g.
+    // the number of panels changes in response to user input, then use
+    // ChangeSupport to implement add/removeChangeListener and call fireChange
+    // when needed
+
+    /* (non-Javadoc)
+     * @see org.openide.WizardDescriptor.InstantiatingIterator#uninitialize(org.openide.WizardDescriptor)
+     */
+    @Override
+    public void uninitialize(WizardDescriptor wizard) {
+        panels = null;
     }
 
 }

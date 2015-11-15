@@ -1,5 +1,5 @@
 /*
-* VertxWizardPanel1.java
+* VertxWizardMavenPanel.java
 *   
 * Copyright 2009 - 2015 Frank Fischer (email: frank@te2m.de)
 *
@@ -20,7 +20,14 @@ import org.openide.util.HelpCtx;
 import org.openide.util.NbBundle;
 
 /**
- * Panel just asking for basic info.
+ * Panel for managing the Maven build related data.
+ * This includes:
+ * <ul>
+ * <li>Group ID</li>
+ * <li>Artifact ID</li>
+ * <li>Version</li>
+ * </ul>
+ * In case of missing data a fallback will be performed to some default values.
  *
  * @author ffischer
  * @version 1.0
@@ -40,9 +47,37 @@ public class VertxWizardMavenPanel implements WizardDescriptor.Panel,
     private VertxMavenPanelVisual component;
 
     /**
+     * The listeners.
+     */
+    private final Set<ChangeListener> listeners = new HashSet<ChangeListener>(1); // or can use ChangeSupport in NB 6.0
+
+    /**
      * Instantiates a new vertx wizard panel.
      */
     public VertxWizardMavenPanel() {
+    }
+
+    /* (non-Javadoc)
+     * @see org.openide.WizardDescriptor.Panel#addChangeListener(javax.swing.event.ChangeListener)
+     */
+    public final void addChangeListener(ChangeListener l) {
+        synchronized (listeners) {
+            listeners.add(l);
+        }
+    }
+
+    /**
+     * Fire change event.
+     */
+    protected final void fireChangeEvent() {
+        Set<ChangeListener> ls;
+        synchronized (listeners) {
+            ls = new HashSet<ChangeListener>(listeners);
+        }
+        ChangeEvent ev = new ChangeEvent(this);
+        for (ChangeListener l : ls) {
+            l.stateChanged(ev);
+        }
     }
 
     /* (non-Javadoc)
@@ -64,48 +99,18 @@ public class VertxWizardMavenPanel implements WizardDescriptor.Panel,
     }
 
     /* (non-Javadoc)
+     * @see org.openide.WizardDescriptor.FinishablePanel#isFinishPanel()
+     */
+    public boolean isFinishPanel() {
+        return true;
+    }
+
+    /* (non-Javadoc)
      * @see org.openide.WizardDescriptor.Panel#isValid()
      */
     public boolean isValid() {
         getComponent();
         return component.valid(wizardDescriptor);
-    }
-
-    /**
-     * The listeners.
-     */
-    private final Set<ChangeListener> listeners = new HashSet<ChangeListener>(1); // or can use ChangeSupport in NB 6.0
-
-    /* (non-Javadoc)
-     * @see org.openide.WizardDescriptor.Panel#addChangeListener(javax.swing.event.ChangeListener)
-     */
-    public final void addChangeListener(ChangeListener l) {
-        synchronized (listeners) {
-            listeners.add(l);
-        }
-    }
-
-    /* (non-Javadoc)
-     * @see org.openide.WizardDescriptor.Panel#removeChangeListener(javax.swing.event.ChangeListener)
-     */
-    public final void removeChangeListener(ChangeListener l) {
-        synchronized (listeners) {
-            listeners.remove(l);
-        }
-    }
-
-    /**
-     * Fire change event.
-     */
-    protected final void fireChangeEvent() {
-        Set<ChangeListener> ls;
-        synchronized (listeners) {
-            ls = new HashSet<ChangeListener>(listeners);
-        }
-        ChangeEvent ev = new ChangeEvent(this);
-        for (ChangeListener l : ls) {
-            l.stateChanged(ev);
-        }
     }
 
     /* (non-Javadoc)
@@ -117,18 +122,20 @@ public class VertxWizardMavenPanel implements WizardDescriptor.Panel,
     }
 
     /* (non-Javadoc)
+     * @see org.openide.WizardDescriptor.Panel#removeChangeListener(javax.swing.event.ChangeListener)
+     */
+    public final void removeChangeListener(ChangeListener l) {
+        synchronized (listeners) {
+            listeners.remove(l);
+        }
+    }
+
+    /* (non-Javadoc)
      * @see org.openide.WizardDescriptor.Panel#storeSettings(java.lang.Object)
      */
     public void storeSettings(Object settings) {
         WizardDescriptor d = (WizardDescriptor) settings;
         component.store(d);
-    }
-
-    /* (non-Javadoc)
-     * @see org.openide.WizardDescriptor.FinishablePanel#isFinishPanel()
-     */
-    public boolean isFinishPanel() {
-        return true;
     }
 
     /* (non-Javadoc)

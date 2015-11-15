@@ -29,6 +29,13 @@ public class VerticleWizardPanel1 implements WizardDescriptor.Panel<WizardDescri
      */
     private VerticleVisualPanel1 component;
 
+    /* (non-Javadoc)
+     * @see org.openide.WizardDescriptor.Panel#addChangeListener(javax.swing.event.ChangeListener)
+     */
+    @Override
+    public void addChangeListener(ChangeListener l) {
+    }
+
     // Get the visual component for the panel. In this template, the component
     // is kept separate. This can be more efficient: if the wizard is created
     // but never displayed, or not all panels are displayed, it is better to
@@ -44,6 +51,15 @@ public class VerticleWizardPanel1 implements WizardDescriptor.Panel<WizardDescri
         return component;
     }
 
+    /**
+     * Gets the description from visual panel.
+     *
+     * @return the description from visual panel
+     */
+    private String getDescriptionFromVisualPanel() {
+        return ((VerticleVisualPanel1) component).getTargetDescription();
+    }
+
     /* (non-Javadoc)
      * @see org.openide.WizardDescriptor.Panel#getHelp()
      */
@@ -53,6 +69,24 @@ public class VerticleWizardPanel1 implements WizardDescriptor.Panel<WizardDescri
         return HelpCtx.DEFAULT_HELP;
         // If you have context help:
         // return new HelpCtx("help.key.here");
+    }
+
+    /**
+     * Gets the name from visual panel.
+     *
+     * @return the name from visual panel
+     */
+    private String getNameFromVisualPanel() {
+        return ((VerticleVisualPanel1) component).getTargetName();
+    }
+
+    /**
+     * Gets the folder from visual panel.
+     *
+     * @return the folder from visual panel
+     */
+    private String getPackageFromVisualPanel() {
+        return ((VerticleVisualPanel1) component).getTargetPackage();
     }
 
     /* (non-Javadoc)
@@ -69,10 +103,11 @@ public class VerticleWizardPanel1 implements WizardDescriptor.Panel<WizardDescri
     }
 
     /* (non-Javadoc)
-     * @see org.openide.WizardDescriptor.Panel#addChangeListener(javax.swing.event.ChangeListener)
+     * @see org.openide.WizardDescriptor.Panel#readSettings(java.lang.Object)
      */
     @Override
-    public void addChangeListener(ChangeListener l) {
+    public void readSettings(WizardDescriptor wiz) {
+        // use wiz.getProperty to retrieve previous panel state
     }
 
     /* (non-Javadoc)
@@ -83,14 +118,6 @@ public class VerticleWizardPanel1 implements WizardDescriptor.Panel<WizardDescri
     }
 
     /* (non-Javadoc)
-     * @see org.openide.WizardDescriptor.Panel#readSettings(java.lang.Object)
-     */
-    @Override
-    public void readSettings(WizardDescriptor wiz) {
-        // use wiz.getProperty to retrieve previous panel state
-    }
-
-    /* (non-Javadoc)
      * @see org.openide.WizardDescriptor.Panel#storeSettings(java.lang.Object)
      */
     @Override
@@ -98,33 +125,6 @@ public class VerticleWizardPanel1 implements WizardDescriptor.Panel<WizardDescri
         wiz.putProperty(TemplateKeys.PROPERTY_NAME, getNameFromVisualPanel());
         wiz.putProperty(TemplateKeys.PROPERTY_DESCRIPTION, getDescriptionFromVisualPanel());
         wiz.putProperty(TemplateKeys.PROPERTY_PACKAGE, getPackageFromVisualPanel());
-    }
-
-    /**
-     * Gets the name from visual panel.
-     *
-     * @return the name from visual panel
-     */
-    private String getNameFromVisualPanel() {
-        return ((VerticleVisualPanel1) component).getTargetName();
-    }
-
-    /**
-     * Gets the description from visual panel.
-     *
-     * @return the description from visual panel
-     */
-    private String getDescriptionFromVisualPanel() {
-        return ((VerticleVisualPanel1) component).getTargetDescription();
-    }
-
-    /**
-     * Gets the folder from visual panel.
-     *
-     * @return the folder from visual panel
-     */
-    private String getPackageFromVisualPanel() {
-        return ((VerticleVisualPanel1) component).getTargetPackage();
     }
 
 }

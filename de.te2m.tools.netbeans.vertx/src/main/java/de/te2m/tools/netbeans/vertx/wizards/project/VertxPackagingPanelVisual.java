@@ -1,5 +1,5 @@
 /*
-* VertxPanelVisual.java
+* VertxPackagingPanelVisual.java
 *   
 * Copyright 2009 - 2015 Frank Fischer (email: frank@te2m.de)
 *
@@ -9,16 +9,12 @@
 */
 package de.te2m.tools.netbeans.vertx.wizards.project;
 
-import java.io.File;
-import javax.swing.JFileChooser;
 import javax.swing.JPanel;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.text.Document;
-import org.netbeans.spi.project.ui.support.ProjectChooser;
 import org.openide.WizardDescriptor;
 import org.openide.WizardValidationException;
-import org.openide.filesystems.FileUtil;
 
 /**
  * The Class VertxPanelVisual.
@@ -39,6 +35,15 @@ public class VertxPackagingPanelVisual extends JPanel implements DocumentListene
      */
     private VertxWizardPackagingPanel panel;
 
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    /**
+     * The j check box1.
+     */
+    private javax.swing.JCheckBox jCheckBox1;
+    // End of variables declaration//GEN-END:variables
+
+
+
     /**
      * Instantiates a new vertx panel visual.
      *
@@ -52,7 +57,24 @@ public class VertxPackagingPanelVisual extends JPanel implements DocumentListene
         //projectLocationTextField.getDocument().addDocumentListener(this);
     }
 
+    /* (non-Javadoc)
+     * @see javax.swing.JComponent#addNotify()
+     */
+    @Override
+    public void addNotify() {
+        super.addNotify();
+        //same problem as in 31086, initial focus on Cancel button
+        //projectNameTextField.requestFocus();
+    }
 
+    // Implementation of DocumentListener --------------------------------------
+    /* (non-Javadoc)
+     * @see javax.swing.event.DocumentListener#changedUpdate(javax.swing.event.DocumentEvent)
+     */
+    public void changedUpdate(DocumentEvent e) {
+        updateTexts(e);
+
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -89,22 +111,55 @@ public class VertxPackagingPanelVisual extends JPanel implements DocumentListene
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    /* (non-Javadoc)
+     * @see javax.swing.event.DocumentListener#insertUpdate(javax.swing.event.DocumentEvent)
+     */
+    public void insertUpdate(DocumentEvent e) {
+        updateTexts(e);
+    }
+
+    /**
+     * J check box1 action performed.
+     *
+     * @param evt the evt
+     */
     private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jCheckBox1ActionPerformed
 
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JCheckBox jCheckBox1;
-    // End of variables declaration//GEN-END:variables
+    /**
+     * Read.
+     *
+     * @param settings the settings
+     */
+    void read(WizardDescriptor settings) {
+    }
 
     /* (non-Javadoc)
-     * @see javax.swing.JComponent#addNotify()
+     * @see javax.swing.event.DocumentListener#removeUpdate(javax.swing.event.DocumentEvent)
      */
-    @Override
-    public void addNotify() {
-        super.addNotify();
-        //same problem as in 31086, initial focus on Cancel button
-        //projectNameTextField.requestFocus();
+    public void removeUpdate(DocumentEvent e) {
+        updateTexts(e);
+    }
+
+    /**
+     * Store.
+     *
+     * @param d the d
+     */
+    void store(WizardDescriptor d) {
+    }
+
+    /**
+     * Handles changes in the Project name and project directory,.
+     *
+     * @param e the e
+     */
+    private void updateTexts(DocumentEvent e) {
+
+        Document doc = e.getDocument();
+
+        panel.fireChangeEvent(); // Notify that the panel changed
     }
 
     /**
@@ -120,22 +175,6 @@ public class VertxPackagingPanelVisual extends JPanel implements DocumentListene
     }
 
     /**
-     * Store.
-     *
-     * @param d the d
-     */
-    void store(WizardDescriptor d) {
-    }
-
-    /**
-     * Read.
-     *
-     * @param settings the settings
-     */
-    void read(WizardDescriptor settings) {
-    }
-
-    /**
      * Validate.
      *
      * @param d the d
@@ -143,41 +182,6 @@ public class VertxPackagingPanelVisual extends JPanel implements DocumentListene
      */
     void validate(WizardDescriptor d) throws WizardValidationException {
         // nothing to validate
-    }
-
-    // Implementation of DocumentListener --------------------------------------
-    /* (non-Javadoc)
-     * @see javax.swing.event.DocumentListener#changedUpdate(javax.swing.event.DocumentEvent)
-     */
-    public void changedUpdate(DocumentEvent e) {
-        updateTexts(e);
-
-    }
-
-    /* (non-Javadoc)
-     * @see javax.swing.event.DocumentListener#insertUpdate(javax.swing.event.DocumentEvent)
-     */
-    public void insertUpdate(DocumentEvent e) {
-        updateTexts(e);
-    }
-
-    /* (non-Javadoc)
-     * @see javax.swing.event.DocumentListener#removeUpdate(javax.swing.event.DocumentEvent)
-     */
-    public void removeUpdate(DocumentEvent e) {
-        updateTexts(e);
-    }
-
-    /**
-     * Handles changes in the Project name and project directory,.
-     *
-     * @param e the e
-     */
-    private void updateTexts(DocumentEvent e) {
-
-        Document doc = e.getDocument();
-
-        panel.fireChangeEvent(); // Notify that the panel changed
     }
 
 }

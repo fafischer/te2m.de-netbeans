@@ -1,3 +1,12 @@
+/*
+* FreemarkerUtils.java
+*   
+* Copyright 2009 - 2015 Frank Fischer (email: frank@te2m.de)
+*
+* This file is part of the de.te2m.tools.netbeans.vertx project which is a sub project of the te2m.de Netbeans modules 
+* (https://github.com/fafischer/te2m.de-netbeans).
+* 
+*/
 package de.te2m.tools.netbeans.vertx.internal;
 
 import freemarker.cache.ClassTemplateLoader;
@@ -16,6 +25,29 @@ import java.util.Map;
  * @author ffischer
  */
 public class FreemarkerUtils {
+
+    /**
+     * Generate.
+     *
+     * @param hashMap the hash map
+     * @param templateBase the template base
+     * @param template the template
+     * @return the string
+     */
+    public static String generate(HashMap hashMap, String templateBase, String template) {
+        String result = null;
+        try {
+            Configuration cfg = new Configuration();
+            cfg.setTemplateLoader(new ClassTemplateLoader(FreemarkerUtils.class, templateBase));
+            Template tpl = cfg.getTemplate(template);
+            result = generateFromTemplate(tpl, hashMap);
+        } catch (TemplateException ex) {
+            handleException(ex);
+        } catch (IOException ioe) {
+            handleException(ioe);
+        }
+        return result;
+    }
 
     /**
      * Generate.
@@ -42,29 +74,6 @@ public class FreemarkerUtils {
         } else {
             return "";
         }
-    }
-
-    /**
-     * Generate.
-     *
-     * @param hashMap the hash map
-     * @param templateBase the template base
-     * @param template the template
-     * @return the string
-     */
-    public static String generate(HashMap hashMap, String templateBase, String template) {
-        String result = null;
-        try {
-            Configuration cfg = new Configuration();
-            cfg.setTemplateLoader(new ClassTemplateLoader(FreemarkerUtils.class, templateBase));
-            Template tpl = cfg.getTemplate(template);
-            result = generateFromTemplate(tpl, hashMap);
-        } catch (TemplateException ex) {
-            handleException(ex);
-        } catch (IOException ioe) {
-            handleException(ioe);
-        }
-        return result;
     }
 
     /**

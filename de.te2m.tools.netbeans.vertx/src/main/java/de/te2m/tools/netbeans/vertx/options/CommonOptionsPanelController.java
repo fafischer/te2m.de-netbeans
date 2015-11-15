@@ -49,12 +49,11 @@ public final class CommonOptionsPanelController extends OptionsPanelController {
     private boolean changed;
 
     /* (non-Javadoc)
-     * @see org.netbeans.spi.options.OptionsPanelController#update()
+     * @see org.netbeans.spi.options.OptionsPanelController#addPropertyChangeListener(java.beans.PropertyChangeListener)
      */
     @Override
-    public void update() {
-        getPanel().load();
-        changed = false;
+    public void addPropertyChangeListener(PropertyChangeListener l) {
+        pcs.addPropertyChangeListener(l);
     }
 
     /* (non-Javadoc)
@@ -79,28 +78,15 @@ public final class CommonOptionsPanelController extends OptionsPanelController {
         // need not do anything special, if no changes have been persisted yet
     }
 
-    /* (non-Javadoc)
-     * @see org.netbeans.spi.options.OptionsPanelController#isValid()
+    /**
+     * Changed.
      */
-    @Override
-    public boolean isValid() {
-        return getPanel().valid();
-    }
-
-    /* (non-Javadoc)
-     * @see org.netbeans.spi.options.OptionsPanelController#isChanged()
-     */
-    @Override
-    public boolean isChanged() {
-        return changed;
-    }
-
-    /* (non-Javadoc)
-     * @see org.netbeans.spi.options.OptionsPanelController#getHelpCtx()
-     */
-    @Override
-    public HelpCtx getHelpCtx() {
-        return null; // new HelpCtx("...ID") if you have a help set
+    void changed() {
+        if (!changed) {
+            changed = true;
+            pcs.firePropertyChange(OptionsPanelController.PROP_CHANGED, false, true);
+        }
+        pcs.firePropertyChange(OptionsPanelController.PROP_VALID, null, null);
     }
 
     /* (non-Javadoc)
@@ -112,19 +98,11 @@ public final class CommonOptionsPanelController extends OptionsPanelController {
     }
 
     /* (non-Javadoc)
-     * @see org.netbeans.spi.options.OptionsPanelController#addPropertyChangeListener(java.beans.PropertyChangeListener)
+     * @see org.netbeans.spi.options.OptionsPanelController#getHelpCtx()
      */
     @Override
-    public void addPropertyChangeListener(PropertyChangeListener l) {
-        pcs.addPropertyChangeListener(l);
-    }
-
-    /* (non-Javadoc)
-     * @see org.netbeans.spi.options.OptionsPanelController#removePropertyChangeListener(java.beans.PropertyChangeListener)
-     */
-    @Override
-    public void removePropertyChangeListener(PropertyChangeListener l) {
-        pcs.removePropertyChangeListener(l);
+    public HelpCtx getHelpCtx() {
+        return null; // new HelpCtx("...ID") if you have a help set
     }
 
     /**
@@ -139,15 +117,37 @@ public final class CommonOptionsPanelController extends OptionsPanelController {
         return panel;
     }
 
-    /**
-     * Changed.
+    /* (non-Javadoc)
+     * @see org.netbeans.spi.options.OptionsPanelController#isChanged()
      */
-    void changed() {
-        if (!changed) {
-            changed = true;
-            pcs.firePropertyChange(OptionsPanelController.PROP_CHANGED, false, true);
-        }
-        pcs.firePropertyChange(OptionsPanelController.PROP_VALID, null, null);
+    @Override
+    public boolean isChanged() {
+        return changed;
+    }
+
+    /* (non-Javadoc)
+     * @see org.netbeans.spi.options.OptionsPanelController#isValid()
+     */
+    @Override
+    public boolean isValid() {
+        return getPanel().valid();
+    }
+
+    /* (non-Javadoc)
+     * @see org.netbeans.spi.options.OptionsPanelController#removePropertyChangeListener(java.beans.PropertyChangeListener)
+     */
+    @Override
+    public void removePropertyChangeListener(PropertyChangeListener l) {
+        pcs.removePropertyChangeListener(l);
+    }
+
+    /* (non-Javadoc)
+     * @see org.netbeans.spi.options.OptionsPanelController#update()
+     */
+    @Override
+    public void update() {
+        getPanel().load();
+        changed = false;
     }
 
 }

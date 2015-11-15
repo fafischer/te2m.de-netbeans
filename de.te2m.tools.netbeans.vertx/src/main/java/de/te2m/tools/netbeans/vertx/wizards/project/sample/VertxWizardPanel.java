@@ -41,9 +41,37 @@ public class VertxWizardPanel implements WizardDescriptor.Panel,
     private VertxPanelVisual component;
 
     /**
+     * The listeners.
+     */
+    private final Set<ChangeListener> listeners = new HashSet<ChangeListener>(1); // or can use ChangeSupport in NB 6.0
+
+    /**
      * Instantiates a new vertx wizard panel.
      */
     public VertxWizardPanel() {
+    }
+
+    /* (non-Javadoc)
+     * @see org.openide.WizardDescriptor.Panel#addChangeListener(javax.swing.event.ChangeListener)
+     */
+    public final void addChangeListener(ChangeListener l) {
+        synchronized (listeners) {
+            listeners.add(l);
+        }
+    }
+
+    /**
+     * Fire change event.
+     */
+    protected final void fireChangeEvent() {
+        Set<ChangeListener> ls;
+        synchronized (listeners) {
+            ls = new HashSet<ChangeListener>(listeners);
+        }
+        ChangeEvent ev = new ChangeEvent(this);
+        for (ChangeListener l : ls) {
+            l.stateChanged(ev);
+        }
     }
 
     /* (non-Javadoc)
@@ -65,48 +93,18 @@ public class VertxWizardPanel implements WizardDescriptor.Panel,
     }
 
     /* (non-Javadoc)
+     * @see org.openide.WizardDescriptor.FinishablePanel#isFinishPanel()
+     */
+    public boolean isFinishPanel() {
+        return true;
+    }
+
+    /* (non-Javadoc)
      * @see org.openide.WizardDescriptor.Panel#isValid()
      */
     public boolean isValid() {
         getComponent();
         return component.valid(wizardDescriptor);
-    }
-
-    /**
-     * The listeners.
-     */
-    private final Set<ChangeListener> listeners = new HashSet<ChangeListener>(1); // or can use ChangeSupport in NB 6.0
-
-    /* (non-Javadoc)
-     * @see org.openide.WizardDescriptor.Panel#addChangeListener(javax.swing.event.ChangeListener)
-     */
-    public final void addChangeListener(ChangeListener l) {
-        synchronized (listeners) {
-            listeners.add(l);
-        }
-    }
-
-    /* (non-Javadoc)
-     * @see org.openide.WizardDescriptor.Panel#removeChangeListener(javax.swing.event.ChangeListener)
-     */
-    public final void removeChangeListener(ChangeListener l) {
-        synchronized (listeners) {
-            listeners.remove(l);
-        }
-    }
-
-    /**
-     * Fire change event.
-     */
-    protected final void fireChangeEvent() {
-        Set<ChangeListener> ls;
-        synchronized (listeners) {
-            ls = new HashSet<ChangeListener>(listeners);
-        }
-        ChangeEvent ev = new ChangeEvent(this);
-        for (ChangeListener l : ls) {
-            l.stateChanged(ev);
-        }
     }
 
     /* (non-Javadoc)
@@ -118,18 +116,20 @@ public class VertxWizardPanel implements WizardDescriptor.Panel,
     }
 
     /* (non-Javadoc)
+     * @see org.openide.WizardDescriptor.Panel#removeChangeListener(javax.swing.event.ChangeListener)
+     */
+    public final void removeChangeListener(ChangeListener l) {
+        synchronized (listeners) {
+            listeners.remove(l);
+        }
+    }
+
+    /* (non-Javadoc)
      * @see org.openide.WizardDescriptor.Panel#storeSettings(java.lang.Object)
      */
     public void storeSettings(Object settings) {
         WizardDescriptor d = (WizardDescriptor) settings;
         component.store(d);
-    }
-
-    /* (non-Javadoc)
-     * @see org.openide.WizardDescriptor.FinishablePanel#isFinishPanel()
-     */
-    public boolean isFinishPanel() {
-        return true;
     }
 
     /* (non-Javadoc)

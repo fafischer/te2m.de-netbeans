@@ -1,3 +1,12 @@
+/*
+* PomInfo.java
+*   
+* Copyright 2009 - 2015 Frank Fischer (email: frank@te2m.de)
+*
+* This file is part of the de.te2m.tools.netbeans.vertx project which is a sub project of the te2m.de Netbeans modules 
+* (https://github.com/fafischer/te2m.de-netbeans).
+* 
+*/
 package de.te2m.tools.netbeans.vertx.internal.model;
 
 /**
@@ -17,11 +26,24 @@ public class PomInfo {
      */
     private String groupID;
     
+    /**
+     * The version.
+     */
     private String version;
+    
+    /**
+     * The description.
+     */
     private String description;
     
+    /**
+     * The user id.
+     */
     private String userID;
     
+    /**
+     * The user display name.
+     */
     private String userDisplayName;
     
     /**
@@ -44,12 +66,12 @@ public class PomInfo {
     }
 
     /**
-     * Sets the artifact id.
+     * Gets the description.
      *
-     * @param artifactID the new artifact id
+     * @return the description
      */
-    public void setArtifactID(String artifactID) {
-        this.artifactID = artifactID;
+    public String getDescription() {
+        return description!=null?description:"";
     }
 
     /**
@@ -62,12 +84,12 @@ public class PomInfo {
     }
 
     /**
-     * Sets the group id.
+     * Gets the name.
      *
-     * @param groupID the new group id
+     * @return the name
      */
-    public void setGroupID(String groupID) {
-        this.groupID = groupID;
+    public String getName() {
+        return name!=null?name:"My Project Name";
     }
 
     /**
@@ -80,21 +102,57 @@ public class PomInfo {
     }
 
     /**
-     * Sets the url.
+     * Gets the user display name.
      *
-     * @param url the new url
+     * @return the user display name
      */
-    public void setUrl(String url) {
-        this.url = url;
+    public String getUserDisplayName() {
+        return userDisplayName!=null?userDisplayName:getUserID();
     }
 
     /**
-     * Gets the name.
+     * Gets the user id.
      *
-     * @return the name
+     * @return the user id
      */
-    public String getName() {
-        return name!=null?name:"My Project Name";
+    public String getUserID() {
+        return userID!=null?userID:"";
+    }
+
+    /**
+     * Gets the version.
+     *
+     * @return the version
+     */
+    public String getVersion() {
+        return version!=null?version:"1.0-SNAPSHOT";
+    }
+
+    /**
+     * Sets the artifact id.
+     *
+     * @param artifactID the new artifact id
+     */
+    public void setArtifactID(String artifactID) {
+        this.artifactID = artifactID;
+    }
+
+    /**
+     * Sets the description.
+     *
+     * @param description the new description
+     */
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    /**
+     * Sets the group id.
+     *
+     * @param groupID the new group id
+     */
+    public void setGroupID(String groupID) {
+        this.groupID = groupID;
     }
 
     /**
@@ -106,34 +164,38 @@ public class PomInfo {
         this.name = name;
     }
 
-    public String getDescription() {
-        return description!=null?description:"";
+    /**
+     * Sets the url.
+     *
+     * @param url the new url
+     */
+    public void setUrl(String url) {
+        this.url = url;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getUserID() {
-        return userID!=null?userID:"";
-    }
-
-    public void setUserID(String userID) {
-        this.userID = userID;
-    }
-
-    public String getUserDisplayName() {
-        return userDisplayName!=null?userDisplayName:getUserID();
-    }
-
+    /**
+     * Sets the user display name.
+     *
+     * @param userDisplayName the new user display name
+     */
     public void setUserDisplayName(String userDisplayName) {
         this.userDisplayName = userDisplayName;
     }
 
-    public String getVersion() {
-        return version!=null?version:"1.0-SNAPSHOT";
+    /**
+     * Sets the user id.
+     *
+     * @param userID the new user id
+     */
+    public void setUserID(String userID) {
+        this.userID = userID;
     }
 
+    /**
+     * Sets the version.
+     *
+     * @param version the new version
+     */
     public void setVersion(String version) {
         this.version = version;
     }

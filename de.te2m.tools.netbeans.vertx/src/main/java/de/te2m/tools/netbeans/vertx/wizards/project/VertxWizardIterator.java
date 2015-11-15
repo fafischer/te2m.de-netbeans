@@ -59,6 +59,70 @@ import org.xml.sax.InputSource;
 public class VertxWizardIterator implements WizardDescriptor./*Progress*/InstantiatingIterator {
 
     /**
+     * Creates the iterator.
+     *
+     * @return the vertx wizard iterator
+     */
+    public static VertxWizardIterator createIterator() {
+        return new VertxWizardIterator();
+    }
+
+    /**
+     * Filter project xml.
+     *
+     * @param fo the fo
+     * @param str the str
+     * @param name the name
+     * @throws IOException Signals that an I/O exception has occurred.
+     */
+    private static void filterProjectXML(FileObject fo, ZipInputStream str, String name) throws IOException {
+        try {
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            FileUtil.copy(str, baos);
+            Document doc = XMLUtil.parse(new InputSource(new ByteArrayInputStream(baos.toByteArray())), false, false, null, null);
+            NodeList nl = doc.getDocumentElement().getElementsByTagName("name");
+            if (nl != null) {
+                for (int i = 0; i < nl.getLength(); i++) {
+                    Element el = (Element) nl.item(i);
+                    if (el.getParentNode() != null && "data".equals(el.getParentNode().getNodeName())) {
+                        NodeList nl2 = el.getChildNodes();
+                        if (nl2.getLength() > 0) {
+                            nl2.item(0).setNodeValue(name);
+                        }
+                        break;
+                    }
+                }
+            }
+            OutputStream out = fo.getOutputStream();
+            try {
+                XMLUtil.write(doc, out, "UTF-8");
+            } finally {
+                out.close();
+            }
+        } catch (Exception ex) {
+            Exceptions.printStackTrace(ex);
+            writeFile(str, fo);
+        }
+
+    }
+
+    /**
+     * Write file.
+     *
+     * @param str the str
+     * @param fo the fo
+     * @throws IOException Signals that an I/O exception has occurred.
+     */
+    private static void writeFile(ZipInputStream str, FileObject fo) throws IOException {
+        OutputStream out = fo.getOutputStream();
+        try {
+            FileUtil.copy(str, out);
+        } finally {
+            out.close();
+        }
+    }
+
+    /**
      * The index.
      */
     private int index;
@@ -79,13 +143,12 @@ public class VertxWizardIterator implements WizardDescriptor./*Progress*/Instant
     public VertxWizardIterator() {
     }
 
-    /**
-     * Creates the iterator.
-     *
-     * @return the vertx wizard iterator
+    // If nothing unusual changes in the middle of the wizard, simply:
+    /* (non-Javadoc)
+     * @see org.openide.WizardDescriptor.Iterator#addChangeListener(javax.swing.event.ChangeListener)
      */
-    public static VertxWizardIterator createIterator() {
-        return new VertxWizardIterator();
+    @Override
+    public final void addChangeListener(ChangeListener l) {
     }
 
     /**
@@ -109,6 +172,59 @@ public class VertxWizardIterator implements WizardDescriptor./*Progress*/Instant
             NbBundle.getMessage(VertxWizardIterator.class, "LBL_CreateMavenStep"),
             NbBundle.getMessage(VertxWizardIterator.class, "LBL_CreatePackagingStep")
         };
+    }
+
+    /* (non-Javadoc)
+     * @see org.openide.WizardDescriptor.Iterator#current()
+     */
+    @Override
+    public WizardDescriptor.Panel current() {
+        return panels[index];
+    }
+
+    /* (non-Javadoc)
+     * @see org.openide.WizardDescriptor.Iterator#hasNext()
+     */
+    @Override
+    public boolean hasNext() {
+        return index < panels.length - 1;
+    }
+
+    /* (non-Javadoc)
+     * @see org.openide.WizardDescriptor.Iterator#hasPrevious()
+     */
+    @Override
+    public boolean hasPrevious() {
+        return index > 0;
+    }
+
+    /* (non-Javadoc)
+     * @see org.openide.WizardDescriptor.InstantiatingIterator#initialize(org.openide.WizardDescriptor)
+     */
+    @Override
+    public void initialize(WizardDescriptor wiz) {
+        this.wiz = wiz;
+        index = 0;
+        panels = createPanels();
+        // Make sure list of steps is accurate.
+        String[] steps = createSteps();
+        for (int i = 0; i < panels.length; i++) {
+            Component c = panels[i].getComponent();
+            if (steps[i] == null) {
+                // Default step name to component name of panel.
+                // Mainly useful for getting the name of the target
+                // chooser to appear in the list of steps.
+                steps[i] = c.getName();
+            }
+            if (c instanceof JComponent) { // assume Swing components
+                JComponent jc = (JComponent) c;
+                // Step #.
+                // TODO if using org.openide.dialogs >= 7.8, can use WizardDescriptor.PROP_*:
+                jc.putClientProperty("WizardPanel_contentSelectedIndex", new Integer(i));
+                // Step name (actually the whole list for reference).
+                jc.putClientProperty("WizardPanel_contentData", steps);
+            }
+        }
     }
 
     /* (non-Javadoc)
@@ -160,68 +276,12 @@ public class VertxWizardIterator implements WizardDescriptor./*Progress*/Instant
     }
 
     /* (non-Javadoc)
-     * @see org.openide.WizardDescriptor.InstantiatingIterator#initialize(org.openide.WizardDescriptor)
-     */
-    @Override
-    public void initialize(WizardDescriptor wiz) {
-        this.wiz = wiz;
-        index = 0;
-        panels = createPanels();
-        // Make sure list of steps is accurate.
-        String[] steps = createSteps();
-        for (int i = 0; i < panels.length; i++) {
-            Component c = panels[i].getComponent();
-            if (steps[i] == null) {
-                // Default step name to component name of panel.
-                // Mainly useful for getting the name of the target
-                // chooser to appear in the list of steps.
-                steps[i] = c.getName();
-            }
-            if (c instanceof JComponent) { // assume Swing components
-                JComponent jc = (JComponent) c;
-                // Step #.
-                // TODO if using org.openide.dialogs >= 7.8, can use WizardDescriptor.PROP_*:
-                jc.putClientProperty("WizardPanel_contentSelectedIndex", new Integer(i));
-                // Step name (actually the whole list for reference).
-                jc.putClientProperty("WizardPanel_contentData", steps);
-            }
-        }
-    }
-
-    /* (non-Javadoc)
-     * @see org.openide.WizardDescriptor.InstantiatingIterator#uninitialize(org.openide.WizardDescriptor)
-     */
-    @Override
-    public void uninitialize(WizardDescriptor wiz) {
-        this.wiz.putProperty("projdir", null);
-        this.wiz.putProperty("name", null);
-        this.wiz = null;
-        panels = null;
-    }
-
-    /* (non-Javadoc)
      * @see org.openide.WizardDescriptor.Iterator#name()
      */
     @Override
     public String name() {
         return MessageFormat.format("{0} of {1}",
                 new Object[]{new Integer(index + 1), new Integer(panels.length)});
-    }
-
-    /* (non-Javadoc)
-     * @see org.openide.WizardDescriptor.Iterator#hasNext()
-     */
-    @Override
-    public boolean hasNext() {
-        return index < panels.length - 1;
-    }
-
-    /* (non-Javadoc)
-     * @see org.openide.WizardDescriptor.Iterator#hasPrevious()
-     */
-    @Override
-    public boolean hasPrevious() {
-        return index > 0;
     }
 
     /* (non-Javadoc)
@@ -247,81 +307,21 @@ public class VertxWizardIterator implements WizardDescriptor./*Progress*/Instant
     }
 
     /* (non-Javadoc)
-     * @see org.openide.WizardDescriptor.Iterator#current()
-     */
-    @Override
-    public WizardDescriptor.Panel current() {
-        return panels[index];
-    }
-
-    // If nothing unusual changes in the middle of the wizard, simply:
-    /* (non-Javadoc)
-     * @see org.openide.WizardDescriptor.Iterator#addChangeListener(javax.swing.event.ChangeListener)
-     */
-    @Override
-    public final void addChangeListener(ChangeListener l) {
-    }
-
-    /* (non-Javadoc)
      * @see org.openide.WizardDescriptor.Iterator#removeChangeListener(javax.swing.event.ChangeListener)
      */
     @Override
     public final void removeChangeListener(ChangeListener l) {
     }
 
-    /**
-     * Write file.
-     *
-     * @param str the str
-     * @param fo the fo
-     * @throws IOException Signals that an I/O exception has occurred.
+    /* (non-Javadoc)
+     * @see org.openide.WizardDescriptor.InstantiatingIterator#uninitialize(org.openide.WizardDescriptor)
      */
-    private static void writeFile(ZipInputStream str, FileObject fo) throws IOException {
-        OutputStream out = fo.getOutputStream();
-        try {
-            FileUtil.copy(str, out);
-        } finally {
-            out.close();
-        }
-    }
-
-    /**
-     * Filter project xml.
-     *
-     * @param fo the fo
-     * @param str the str
-     * @param name the name
-     * @throws IOException Signals that an I/O exception has occurred.
-     */
-    private static void filterProjectXML(FileObject fo, ZipInputStream str, String name) throws IOException {
-        try {
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            FileUtil.copy(str, baos);
-            Document doc = XMLUtil.parse(new InputSource(new ByteArrayInputStream(baos.toByteArray())), false, false, null, null);
-            NodeList nl = doc.getDocumentElement().getElementsByTagName("name");
-            if (nl != null) {
-                for (int i = 0; i < nl.getLength(); i++) {
-                    Element el = (Element) nl.item(i);
-                    if (el.getParentNode() != null && "data".equals(el.getParentNode().getNodeName())) {
-                        NodeList nl2 = el.getChildNodes();
-                        if (nl2.getLength() > 0) {
-                            nl2.item(0).setNodeValue(name);
-                        }
-                        break;
-                    }
-                }
-            }
-            OutputStream out = fo.getOutputStream();
-            try {
-                XMLUtil.write(doc, out, "UTF-8");
-            } finally {
-                out.close();
-            }
-        } catch (Exception ex) {
-            Exceptions.printStackTrace(ex);
-            writeFile(str, fo);
-        }
-
+    @Override
+    public void uninitialize(WizardDescriptor wiz) {
+        this.wiz.putProperty("projdir", null);
+        this.wiz.putProperty("name", null);
+        this.wiz = null;
+        panels = null;
     }
 
 }

@@ -45,7 +45,12 @@ public class JavaSourceFileLayerPaletteFactory {
                         //Palette Actions:
                         new PaletteActions() {
                             @Override
-                            public Action[] getImportActions() {
+                            public Action[] getCustomCategoryActions(Lookup lkp) {
+                                return null;
+                            }
+
+                            @Override
+                            public Action[] getCustomItemActions(Lookup lkp) {
                                 return null;
                             }
 
@@ -55,12 +60,7 @@ public class JavaSourceFileLayerPaletteFactory {
                             }
 
                             @Override
-                            public Action[] getCustomCategoryActions(Lookup lkp) {
-                                return null;
-                            }
-
-                            @Override
-                            public Action[] getCustomItemActions(Lookup lkp) {
+                            public Action[] getImportActions() {
                                 return null;
                             }
 
