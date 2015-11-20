@@ -30,15 +30,19 @@ Provides a project template and several code templates related to vertx.io
 
 ![Create new Project](img/NewProject.png)
 
-2. New File Wizards
+2. Create an Maven based Sample Project
+
+![Create new Project](img/NewProject.png)
+
+3. New File Wizards
 
 ![Create new Java Files](img/VNewFile.png)
 
-3. Add code snippets via "Insert Code"
+4. Add code snippets via "Insert Code"
 
 ![Insert Code](img/VInsertCode.png)
 
-4. Add code snippets via "Palette"
+5. Add code snippets via "Palette"
 
 ![Insert Code](img/VPalette.png)
 
