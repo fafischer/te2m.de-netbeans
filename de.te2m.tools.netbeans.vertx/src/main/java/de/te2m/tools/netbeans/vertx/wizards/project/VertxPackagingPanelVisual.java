@@ -37,6 +37,9 @@ public class VertxPackagingPanelVisual extends JPanel implements DocumentListene
     private VertxWizardPackagingPanel panel;
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    /**
+     * The create fat jar check box.
+     */
     private javax.swing.JCheckBox createFatJarCheckBox;
     // End of variables declaration//GEN-END:variables
 
@@ -71,6 +74,15 @@ public class VertxPackagingPanelVisual extends JPanel implements DocumentListene
         updateTexts(e);
         
     }
+
+    /**
+     * J check box1 action performed.
+     *
+     * @param evt the evt
+     */
+    private void createFatJarCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createFatJarCheckBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_createFatJarCheckBoxActionPerformed
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -113,15 +125,6 @@ public class VertxPackagingPanelVisual extends JPanel implements DocumentListene
     public void insertUpdate(DocumentEvent e) {
         updateTexts(e);
     }
-
-    /**
-     * J check box1 action performed.
-     *
-     * @param evt the evt
-     */
-    private void createFatJarCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createFatJarCheckBoxActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_createFatJarCheckBoxActionPerformed
 
     /**
      * Read.

@@ -6,16 +6,15 @@
 * This file is part of the de.te2m.tools.netbeans.vertx project which is a sub project of the te2m.de Netbeans modules 
 * (https://github.com/fafischer/te2m.de-netbeans).
 * 
-*/
+ */
 package de.te2m.tools.netbeans.vertx.wizards.testcase;
 
+import de.te2m.tools.netbeans.vertx.wizards.AbstractTe2mWizard;
 import de.te2m.tools.netbeans.vertx.wizards.TemplateKeys;
 import java.awt.Component;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -48,7 +47,7 @@ import org.openide.util.NbBundle.Messages;
 @TemplateRegistration(folder = "Vertx.io", displayName = "#VerticleWizardIterator_displayName", iconBase = "de/te2m/tools/netbeans/vertx/icons/logo16.png", description = "verticleTest.html",
         content = "VerticleUnitTest.java.template", scriptEngine = "freemarker")
 @Messages("VerticleWizardIterator_displayName=Testcase for Verticle")
-public final class VerticleWizardIterator implements WizardDescriptor.InstantiatingIterator<WizardDescriptor> {
+public final class VerticleWizardIterator extends AbstractTe2mWizard implements WizardDescriptor.InstantiatingIterator<WizardDescriptor> {
 
     /**
      * The index.
@@ -59,7 +58,7 @@ public final class VerticleWizardIterator implements WizardDescriptor.Instantiat
      * The wizard.
      */
     private WizardDescriptor wizard;
-    
+
     /**
      * The panels.
      */
@@ -135,37 +134,7 @@ public final class VerticleWizardIterator implements WizardDescriptor.Instantiat
         return panels;
     }
 
-    /**
-     * Gets the sub dir.
-     *
-     * @param baseDir the base dir
-     * @param name the name
-     * @param createIfMissing the create if missing
-     * @return the sub dir
-     */
-    private FileObject getSubDir(FileObject baseDir, String name, boolean createIfMissing) {
 
-        FileObject[] subDirs = baseDir.getChildren();
-
-        for (int i = 0; i < subDirs.length; i++) {
-            FileObject subDir = subDirs[i];
-
-            if (subDir.isFolder() && name.equals(subDir.getName())) {
-                return subDir;
-            }
-
-        }
-
-        if (createIfMissing) {
-            try {
-                return baseDir.createFolder(name);
-            } catch (IOException ex) {
-                Exceptions.printStackTrace(ex);
-            }
-        }
-
-        return null;
-    }
 
     /* (non-Javadoc)
      * @see org.openide.WizardDescriptor.Iterator#hasNext()
@@ -203,19 +172,11 @@ public final class VerticleWizardIterator implements WizardDescriptor.Instantiat
 
         String packName = (String) wizard.getProperty(TemplateKeys.PROPERTY_PACKAGE);
 
-        // Replace with lookup to options
-        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
-        // Replace with lookup to options
-        String defaultVersion = "1.0";
-        // Replace with lookup to options
-        String username = System.getProperty("user.name");
-
         params.put(TemplateKeys.PROPERTY_NAME, fName);
         params.put(TemplateKeys.PROPERTY_PACKAGE, packName);
         params.put(TemplateKeys.PROPERTY_DESCRIPTION, wizard.getProperty(TemplateKeys.PROPERTY_DESCRIPTION));
-        params.put(TemplateKeys.PROPERTY_USER, username);
-        params.put(TemplateKeys.PROPERTY_CREATION_DATE, sdf.format(new Date()));
-        params.put(TemplateKeys.PROPERTY_VERSION, defaultVersion);
+
+        initializeCommonProperties(params);
         //Get the template and convert it:
         FileObject template = Templates.getTemplate(wizard);
         DataObject dTemplate = DataObject.find(template);
@@ -246,32 +207,6 @@ public final class VerticleWizardIterator implements WizardDescriptor.Instantiat
         FileObject createdFile = dobj.getPrimaryFile();
 
         return Collections.singleton(createdFile);
-    }
-
-    /**
-     * Lookup sub dir.
-     *
-     * @param baseDir the base dir
-     * @param name the name
-     * @return the file object
-     */
-    private FileObject lookupSubDir(FileObject baseDir, String name) {
-
-        if (null != name && name.trim().length() > 0) {
-            int pos = name.indexOf("/");
-            if (pos != -1) {
-
-                String newBaseName = name.substring(0, pos);
-
-                FileObject newBase = getSubDir(baseDir, newBaseName, true);
-
-                return lookupSubDir(newBase, name.substring(pos + 1));
-            } else {
-                return getSubDir(baseDir, name, true);
-            }
-        } else {
-            return baseDir;
-        }
     }
 
     /* (non-Javadoc)

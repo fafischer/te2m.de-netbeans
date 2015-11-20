@@ -9,12 +9,14 @@
 */
 package de.te2m.tools.netbeans.vertx.wizards.project;
 
+import de.te2m.tools.netbeans.vertx.options.CommonPanel;
 import de.te2m.tools.netbeans.vertx.wizards.TemplateKeys;
 import javax.swing.JPanel;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import org.openide.WizardDescriptor;
 import org.openide.WizardValidationException;
+import org.openide.util.NbPreferences;
 
 /**
  * The Class VertxPanelVisual.
@@ -36,11 +38,34 @@ public class VertxMavenPanelVisual extends JPanel implements DocumentListener {
     private VertxWizardMavenPanel panel;
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    /**
+     * The artifact id text field.
+     */
     private javax.swing.JTextField artifactIDTextField;
+    
+    /**
+     * The created folder label.
+     */
     private javax.swing.JLabel createdFolderLabel;
+    
+    /**
+     * The group id text field.
+     */
     private javax.swing.JTextField groupIDTextField;
+    
+    /**
+     * The project location label.
+     */
     private javax.swing.JLabel projectLocationLabel;
+    
+    /**
+     * The project name label.
+     */
     private javax.swing.JLabel projectNameLabel;
+    
+    /**
+     * The version text field.
+     */
     private javax.swing.JTextField versionTextField;
     // End of variables declaration//GEN-END:variables
     
@@ -67,6 +92,23 @@ public class VertxMavenPanelVisual extends JPanel implements DocumentListener {
         groupIDTextField.requestFocus();
     }
     
+
+    /**
+     * Artifact id text field action performed.
+     *
+     * @param evt the evt
+     */
+    private void artifactIDTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_artifactIDTextFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_artifactIDTextFieldActionPerformed
+
+    /* (non-Javadoc)
+     * @see javax.swing.event.DocumentListener#changedUpdate(javax.swing.event.DocumentEvent)
+     */
+    @Override
+    public void changedUpdate(DocumentEvent e) {
+        panel.fireChangeEvent();
+    }
 
     /**
      * Gets the project name.
@@ -145,9 +187,15 @@ public class VertxMavenPanelVisual extends JPanel implements DocumentListener {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void artifactIDTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_artifactIDTextFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_artifactIDTextFieldActionPerformed
+
+    /* (non-Javadoc)
+     * @see javax.swing.event.DocumentListener#insertUpdate(javax.swing.event.DocumentEvent)
+     */
+    @Override
+    public void insertUpdate(DocumentEvent e) {
+        panel.fireChangeEvent();
+    }
+
 
     /**
      * Read.
@@ -168,12 +216,19 @@ public class VertxMavenPanelVisual extends JPanel implements DocumentListener {
         
         if(null==version||version.trim().length()==0)
         {
-            version = "1.0-SNAPSHOT";
+            version = NbPreferences.forModule(CommonPanel.class).get(TemplateKeys.PROPERTY_VERSION, "1.0-SNAPSHOT");
         }
         
         this.versionTextField.setText(version);
     }
 
+    /* (non-Javadoc)
+     * @see javax.swing.event.DocumentListener#removeUpdate(javax.swing.event.DocumentEvent)
+     */
+    @Override
+    public void removeUpdate(DocumentEvent e) {
+        panel.fireChangeEvent();
+    }
 
     /**
      * Store.
@@ -190,7 +245,6 @@ public class VertxMavenPanelVisual extends JPanel implements DocumentListener {
         d.putProperty(TemplateKeys.MVN_GROUP_ID,groupID);
         d.putProperty(TemplateKeys.MVN_VERSION,version);
     }
-
 
     /**
      * Valid.
@@ -231,21 +285,6 @@ public class VertxMavenPanelVisual extends JPanel implements DocumentListener {
      */
     void validate(WizardDescriptor d) throws WizardValidationException {
         // nothing to validate
-    }
-
-    @Override
-    public void insertUpdate(DocumentEvent e) {
-        panel.fireChangeEvent();
-    }
-
-    @Override
-    public void removeUpdate(DocumentEvent e) {
-        panel.fireChangeEvent();
-    }
-
-    @Override
-    public void changedUpdate(DocumentEvent e) {
-        panel.fireChangeEvent();
     }
 
 }

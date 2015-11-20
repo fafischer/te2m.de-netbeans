@@ -12,17 +12,22 @@
         <vertx.version>3.1.0</vertx.version>
         <junit.version>4.12</junit.version>
     </properties>
-    <!--
-    <developers>
+    <#if pomInfo.includeCompany><organization>
+        <name>${pomInfo.companyName}</name>
+        <url>${pomInfo.companyURL}</url>
+    </organization></#if>
+    <#if pomInfo.includeUser><developers>
         <developer>
             <id>${pomInfo.userID}</id>
             <name>${pomInfo.userDisplayName}</name>
             <roles>
                 <role>Developer</role>
             </roles>
+            <organization>${pomInfo.companyName}</organization>
+            <organizationUrl>${pomInfo.companyURL}</organizationUrl>
+            <timezone>${pomInfo.timeZoneID}</timezone>
         </developer>         
-    </developers>
-    -->
+    </developers></#if>    
     <dependencies>
         <dependency>
             <groupId>io.vertx</groupId>

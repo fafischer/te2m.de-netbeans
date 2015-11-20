@@ -6,8 +6,11 @@
 * This file is part of the de.te2m.tools.netbeans.vertx project which is a sub project of the te2m.de Netbeans modules 
 * (https://github.com/fafischer/te2m.de-netbeans).
 * 
-*/
+ */
 package de.te2m.tools.netbeans.vertx.options;
+
+import de.te2m.tools.netbeans.vertx.wizards.TemplateKeys;
+import org.openide.util.NbPreferences;
 
 /**
  * The Class CommonPanel.
@@ -16,7 +19,7 @@ package de.te2m.tools.netbeans.vertx.options;
  * @version 1.0
  * @since 1.0
  */
-final class CommonPanel extends javax.swing.JPanel {
+public final class CommonPanel extends javax.swing.JPanel {
 
     /**
      * The controller.
@@ -25,36 +28,71 @@ final class CommonPanel extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     /**
+     * The company url text field.
+     */
+    private javax.swing.JTextField companyUrlTextField;
+    
+    /**
      * The default company name text.
      */
     private javax.swing.JTextField defaultCompanyNameText;
-
-    /**
-     * The default user name text.
-     */
-    private javax.swing.JTextField defaultUserNameText;
-
+    
     /**
      * The default version text.
      */
     private javax.swing.JTextField defaultVersionText;
-
+    
     /**
      * The j label1.
      */
     private javax.swing.JLabel jLabel1;
-
+    
     /**
      * The j label2.
      */
     private javax.swing.JLabel jLabel2;
-
+    
     /**
      * The j label3.
      */
     private javax.swing.JLabel jLabel3;
-    // End of variables declaration//GEN-END:variables
     
+    /**
+     * The j label4.
+     */
+    private javax.swing.JLabel jLabel4;
+    
+    /**
+     * The j label5.
+     */
+    private javax.swing.JLabel jLabel5;
+    
+    /**
+     * The j separator1.
+     */
+    private javax.swing.JSeparator jSeparator1;
+    
+    /**
+     * The user display name label.
+     */
+    private javax.swing.JLabel userDisplayNameLabel;
+    
+    /**
+     * The user display name text field.
+     */
+    private javax.swing.JTextField userDisplayNameTextField;
+    
+    /**
+     * The user e mail text.
+     */
+    private javax.swing.JTextField userEMailText;
+    
+    /**
+     * The user name text.
+     */
+    private javax.swing.JTextField userNameText;
+    // End of variables declaration//GEN-END:variables
+
     /**
      * Instantiates a new common panel.
      *
@@ -65,7 +103,16 @@ final class CommonPanel extends javax.swing.JPanel {
         initComponents();
         // TODO listen to changes in form fields and call controller.changed()
     }
-    
+
+    /**
+     * Default version text action performed.
+     *
+     * @param evt the evt
+     */
+    private void defaultVersionTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_defaultVersionTextActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_defaultVersionTextActionPerformed
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -75,15 +122,22 @@ final class CommonPanel extends javax.swing.JPanel {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        defaultUserNameText = new javax.swing.JTextField();
+        userNameText = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         defaultCompanyNameText = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         defaultVersionText = new javax.swing.JTextField();
+        userDisplayNameLabel = new javax.swing.JLabel();
+        userDisplayNameTextField = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        userEMailText = new javax.swing.JTextField();
+        jSeparator1 = new javax.swing.JSeparator();
+        jLabel5 = new javax.swing.JLabel();
+        companyUrlTextField = new javax.swing.JTextField();
 
         org.openide.awt.Mnemonics.setLocalizedText(jLabel1, org.openide.util.NbBundle.getMessage(CommonPanel.class, "CommonPanel.jLabel1.text")); // NOI18N
 
-        defaultUserNameText.setText(org.openide.util.NbBundle.getMessage(CommonPanel.class, "CommonPanel.defaultUserNameText.text")); // NOI18N
+        userNameText.setText(org.openide.util.NbBundle.getMessage(CommonPanel.class, "CommonPanel.userNameText.text")); // NOI18N
 
         org.openide.awt.Mnemonics.setLocalizedText(jLabel2, org.openide.util.NbBundle.getMessage(CommonPanel.class, "CommonPanel.jLabel2.text")); // NOI18N
 
@@ -92,6 +146,33 @@ final class CommonPanel extends javax.swing.JPanel {
         org.openide.awt.Mnemonics.setLocalizedText(jLabel3, org.openide.util.NbBundle.getMessage(CommonPanel.class, "CommonPanel.jLabel3.text")); // NOI18N
 
         defaultVersionText.setText(org.openide.util.NbBundle.getMessage(CommonPanel.class, "CommonPanel.defaultVersionText.text")); // NOI18N
+        defaultVersionText.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                defaultVersionTextActionPerformed(evt);
+            }
+        });
+
+        org.openide.awt.Mnemonics.setLocalizedText(userDisplayNameLabel, org.openide.util.NbBundle.getMessage(CommonPanel.class, "CommonPanel.userDisplayNameLabel.text")); // NOI18N
+
+        userDisplayNameTextField.setText(org.openide.util.NbBundle.getMessage(CommonPanel.class, "CommonPanel.userDisplayNameTextField.text")); // NOI18N
+        userDisplayNameTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                userDisplayNameTextFieldActionPerformed(evt);
+            }
+        });
+
+        org.openide.awt.Mnemonics.setLocalizedText(jLabel4, org.openide.util.NbBundle.getMessage(CommonPanel.class, "CommonPanel.jLabel4.text")); // NOI18N
+
+        userEMailText.setText(org.openide.util.NbBundle.getMessage(CommonPanel.class, "CommonPanel.userEMailText.text")); // NOI18N
+        userEMailText.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                userEMailTextActionPerformed(evt);
+            }
+        });
+
+        org.openide.awt.Mnemonics.setLocalizedText(jLabel5, org.openide.util.NbBundle.getMessage(CommonPanel.class, "CommonPanel.jLabel5.text")); // NOI18N
+
+        companyUrlTextField.setText(org.openide.util.NbBundle.getMessage(CommonPanel.class, "CommonPanel.companyUrlTextField.text")); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -100,14 +181,29 @@ final class CommonPanel extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(defaultUserNameText, javax.swing.GroupLayout.DEFAULT_SIZE, 350, Short.MAX_VALUE)
-                    .addComponent(defaultCompanyNameText)
-                    .addComponent(defaultVersionText))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel4)
+                            .addComponent(userDisplayNameLabel))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(userDisplayNameTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 335, Short.MAX_VALUE)
+                            .addComponent(userNameText, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(userEMailText)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                        .addComponent(defaultVersionText, javax.swing.GroupLayout.PREFERRED_SIZE, 335, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jSeparator1)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel5))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(defaultCompanyNameText, javax.swing.GroupLayout.DEFAULT_SIZE, 335, Short.MAX_VALUE)
+                            .addComponent(companyUrlTextField))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -115,46 +211,76 @@ final class CommonPanel extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(defaultUserNameText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(userNameText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1))
-                .addGap(16, 16, 16)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(defaultCompanyNameText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(userDisplayNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(userDisplayNameLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(userEMailText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4))
+                .addGap(8, 8, 8)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(defaultCompanyNameText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(companyUrlTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(58, 58, 58)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(defaultVersionText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(161, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
-    
+
     /**
      * Load.
      */
     void load() {
-        // TODO read settings and initialize GUI
-        // Example:
-        // someCheckBox.setSelected(Preferences.userNodeForPackage(CommonPanel.class).getBoolean("someFlag", false));
-        // or for org.openide.util with API spec. version >= 7.4:
-        // someCheckBox.setSelected(NbPreferences.forModule(CommonPanel.class).getBoolean("someFlag", false));
-        // or:
-        // someTextField.setText(SomeSystemOption.getDefault().getSomeStringProperty());
+        defaultCompanyNameText.setText(NbPreferences.forModule(CommonPanel.class).get(TemplateKeys.PROPERTY_COMPANY, ""));
+        userNameText.setText(NbPreferences.forModule(CommonPanel.class).get(TemplateKeys.PROPERTY_USER, System.getProperty("user.name")));
+        userEMailText.setText(NbPreferences.forModule(CommonPanel.class).get(TemplateKeys.PROPERTY_USER_EMAIL, System.getProperty("user.name")+"@domain.tld"));
+        userDisplayNameTextField.setText(NbPreferences.forModule(CommonPanel.class).get(TemplateKeys.PROPERTY_USER_DISPLAY_NAME, System.getProperty("user.name")));
+        defaultVersionText.setText(NbPreferences.forModule(CommonPanel.class).get(TemplateKeys.PROPERTY_VERSION, "1.0-SNAPSHOT"));
+        companyUrlTextField.setText(NbPreferences.forModule(CommonPanel.class).get(TemplateKeys.PROPERTY_COMPANY_URL, "http://example.com"));
     }
-    
+
     /**
      * Store.
      */
     void store() {
-        // TODO store modified settings
-        // Example:
-        // Preferences.userNodeForPackage(CommonPanel.class).putBoolean("someFlag", someCheckBox.isSelected());
-        // or for org.openide.util with API spec. version >= 7.4:
-        // NbPreferences.forModule(CommonPanel.class).putBoolean("someFlag", someCheckBox.isSelected());
-        // or:
-        // SomeSystemOption.getDefault().setSomeStringProperty(someTextField.getText());
+        NbPreferences.forModule(CommonPanel.class).put(TemplateKeys.PROPERTY_COMPANY, defaultCompanyNameText.getText());
+        NbPreferences.forModule(CommonPanel.class).put(TemplateKeys.PROPERTY_USER, userNameText.getText());
+        NbPreferences.forModule(CommonPanel.class).put(TemplateKeys.PROPERTY_USER_EMAIL, userEMailText.getText());
+        NbPreferences.forModule(CommonPanel.class).put(TemplateKeys.PROPERTY_USER_DISPLAY_NAME, userDisplayNameTextField.getText());
+        NbPreferences.forModule(CommonPanel.class).put(TemplateKeys.PROPERTY_VERSION, defaultVersionText.getText());
+        NbPreferences.forModule(CommonPanel.class).put(TemplateKeys.PROPERTY_COMPANY_URL, companyUrlTextField.getText());
     }
-    
+
+    /**
+     * User display name text field action performed.
+     *
+     * @param evt the evt
+     */
+    private void userDisplayNameTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userDisplayNameTextFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_userDisplayNameTextFieldActionPerformed
+
+    /**
+     * User e mail text action performed.
+     *
+     * @param evt the evt
+     */
+    private void userEMailTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userEMailTextActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_userEMailTextActionPerformed
+
     /**
      * Valid.
      *

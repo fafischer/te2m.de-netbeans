@@ -6,7 +6,7 @@
 * This file is part of the de.te2m.tools.netbeans.vertx project which is a sub project of the te2m.de Netbeans modules 
 * (https://github.com/fafischer/te2m.de-netbeans).
 * 
-*/
+ */
 package de.te2m.tools.netbeans.vertx;
 
 /**
@@ -61,7 +61,13 @@ public interface Templates {
     public static final String HTTP_SERVER = "        // Adjust sample data as required"
             + "        vertx.createHttpServer().requestHandler(req -> {\n"
             + "      req.response().putHeader(\"content-type\", \"text/html\").end(\"<html><body><h1>Hello World!</h1></body></html>\");\n"
-            + "    }).listen(8080);";
+            + "    }).listen(8080, result -> {\n"
+            + "                    if (result.succeeded()) {\n"
+            + "                        future.complete();\n"
+            + "                    } else {\n"
+            + "                        future.fail(result.cause());\n"
+            + "                    }\n"
+            + "                });";
 
     /**
      * The Constant DEPLOYMENT_OPTIONS.

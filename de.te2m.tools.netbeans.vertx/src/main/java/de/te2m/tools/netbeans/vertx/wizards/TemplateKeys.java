@@ -81,4 +81,39 @@ public interface TemplateKeys {
      * The property version.
      */
     public static final String PROPERTY_VERSION = "Version";
+    
+    /**
+     * The Constant PROPERTY_COMPANY.
+     */
+    public static final String PROPERTY_COMPANY="DefaultCompanyName";
+    
+    /**
+     * The Constant PROPERTY_USER_DISPLAY_NAME.
+     */
+    public static final String PROPERTY_USER_DISPLAY_NAME="CurrentUserDisplayName";
+    
+    /**
+     * The Constant PROPERTY_USER_EMAIL.
+     */
+    public static final String PROPERTY_USER_EMAIL="CurrentUserEmail";
+    
+    /**
+     * The Constant PROPERTY_DATE_FORMAT.
+     */
+    public static final String PROPERTY_DATE_FORMAT="DefaultDateFormat";
+    
+    /**
+     * The Constant PROPERTY_COMPANY_URL.
+     */
+    public static final String PROPERTY_COMPANY_URL="DefaultCompanyURL";
+    
+    /**
+     * The Constant PROPERTY_INCLUDE_COMPANY.
+     */
+    public static final String PROPERTY_INCLUDE_COMPANY="includeCompanyInfo";
+    
+    /**
+     * The Constant PROPERTY_INCLUDE_USER.
+     */
+    public static final String PROPERTY_INCLUDE_USER="includeUserInfo";
 }
