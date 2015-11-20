@@ -6,7 +6,7 @@ This repository contains several Netbeans Modules provided by te2m.de
 
 ### de.te2m.tools.netbeans.vertx
 
-Provides a project template and several code templates related to vertx.io
+Provides project templates and several code templates related to vertx.io. The generated code can be customized.
 
 #### Features
 
@@ -16,7 +16,7 @@ Provides a project template and several code templates related to vertx.io
 
 ##### Create an Maven based Sample Project
 
-![Create new Project](img/NewSampleProject.png)
+![Create new Sample Project](img/NewSampleProject.png)
 
 ##### New File Wizards
 
@@ -29,6 +29,10 @@ Provides a project template and several code templates related to vertx.io
 ##### Add code snippets via "Palette"
 
 ![Insert Code](img/VPalette.png)
+
+##### Customize Code Generation via Options
+
+![Customize Options](img/VOptions.png)
 
 ### de.te2m.tools.netbeans.jsfutils
 
