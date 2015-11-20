@@ -16,7 +16,7 @@ Provides a project template and several code templates related to vertx.io
 
 ##### Create an Maven based Sample Project
 
-![Create new Project](img/NewProject.png)
+![Create new Project](img/NewSampleProject.png)
 
 ##### New File Wizards
 
