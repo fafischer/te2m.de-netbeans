@@ -13,6 +13,7 @@ import de.te2m.tools.netbeans.vertx.internal.model.PomInfo;
 import de.te2m.tools.netbeans.vertx.options.CommonPanel;
 import de.te2m.tools.netbeans.vertx.options.FormattingPanel;
 import de.te2m.tools.netbeans.vertx.options.GeneratePanel;
+import de.te2m.tools.netbeans.vertx.options.MavenPanel;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -68,7 +69,7 @@ public class AbstractTe2mWizard {
      */
     protected void initializeCommonProperties(Map<String, Object> params) {
         SimpleDateFormat sdf = new SimpleDateFormat(NbPreferences.forModule(FormattingPanel.class).get(TemplateKeys.PROPERTY_DATE_FORMAT, "dd.MM.yyyy"));
-        String defaultVersion = NbPreferences.forModule(CommonPanel.class).get(TemplateKeys.PROPERTY_VERSION, "1.0-SNAPSHOT");
+        String defaultVersion = NbPreferences.forModule(MavenPanel.class).get(TemplateKeys.PROPERTY_VERSION, "1.0-SNAPSHOT");
         String companyName = NbPreferences.forModule(CommonPanel.class).get(TemplateKeys.PROPERTY_COMPANY, "");
         String username = NbPreferences.forModule(CommonPanel.class).get(TemplateKeys.PROPERTY_USER, System.getProperty("user.name"));
         String userDisplayName = NbPreferences.forModule(CommonPanel.class).get(TemplateKeys.PROPERTY_USER_DISPLAY_NAME, System.getProperty("user.name"));
