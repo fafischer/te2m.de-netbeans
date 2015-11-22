@@ -20,6 +20,7 @@
         <developer>
             <id>${pomInfo.userID}</id>
             <name>${pomInfo.userDisplayName}</name>
+            <email>${pomInfo.userEmail}</email>
             <roles>
                 <role>Developer</role>
             </roles>

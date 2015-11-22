@@ -174,7 +174,7 @@ public class PomInfo {
      * @return the user email
      */
     public String getUserEmail() {
-        return userEmail;
+        return userEmail!=null?userEmail:"";
     }
 
     /**

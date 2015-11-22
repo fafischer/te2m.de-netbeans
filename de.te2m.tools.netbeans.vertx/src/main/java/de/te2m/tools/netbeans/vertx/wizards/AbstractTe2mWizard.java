@@ -14,20 +14,6 @@ import de.te2m.tools.netbeans.vertx.options.CommonPanel;
 import de.te2m.tools.netbeans.vertx.options.FormattingPanel;
 import de.te2m.tools.netbeans.vertx.options.GeneratePanel;
 import de.te2m.tools.netbeans.vertx.options.MavenPanel;
-import static de.te2m.tools.netbeans.vertx.wizards.TemplateKeys.MVN_ARTIFACT_ID;
-import static de.te2m.tools.netbeans.vertx.wizards.TemplateKeys.MVN_GROUP_ID;
-import static de.te2m.tools.netbeans.vertx.wizards.TemplateKeys.MVN_VERSION;
-import static de.te2m.tools.netbeans.vertx.wizards.TemplateKeys.POM_INFO;
-import static de.te2m.tools.netbeans.vertx.wizards.TemplateKeys.PROPERTY_COMPANY;
-import static de.te2m.tools.netbeans.vertx.wizards.TemplateKeys.PROPERTY_COMPANY_URL;
-import static de.te2m.tools.netbeans.vertx.wizards.TemplateKeys.PROPERTY_CREATION_DATE;
-import static de.te2m.tools.netbeans.vertx.wizards.TemplateKeys.PROPERTY_DATE_FORMAT;
-import static de.te2m.tools.netbeans.vertx.wizards.TemplateKeys.PROPERTY_DESCRIPTION;
-import static de.te2m.tools.netbeans.vertx.wizards.TemplateKeys.PROPERTY_INCLUDE_COMPANY;
-import static de.te2m.tools.netbeans.vertx.wizards.TemplateKeys.PROPERTY_INCLUDE_USER;
-import static de.te2m.tools.netbeans.vertx.wizards.TemplateKeys.PROPERTY_NAME;
-import static de.te2m.tools.netbeans.vertx.wizards.TemplateKeys.PROPERTY_USER;
-import static de.te2m.tools.netbeans.vertx.wizards.TemplateKeys.PROPERTY_USER_DISPLAY_NAME;
 import java.io.IOException;
 import static java.lang.System.getProperty;
 import java.text.SimpleDateFormat;
@@ -43,7 +29,7 @@ import static org.openide.util.NbPreferences.forModule;
  *
  * @author ffischer
  */
-public class AbstractTe2mWizard {
+public class AbstractTe2mWizard implements TemplateKeys{
 
     /**
      * Gets the sub dir.
@@ -109,6 +95,7 @@ public class AbstractTe2mWizard {
             pInfo.setVersion((String) wiz.getProperty(MVN_VERSION));
         }
         pInfo.setUserID(forModule(CommonPanel.class).get(PROPERTY_USER, getProperty("user.name")));
+        pInfo.setUserEmail(forModule(CommonPanel.class).get(PROPERTY_USER_EMAIL, ""));
         pInfo.setUserDisplayName(forModule(CommonPanel.class).get(PROPERTY_USER_DISPLAY_NAME, getProperty("user.name")));
         pInfo.setCompanyName(forModule(CommonPanel.class).get(PROPERTY_COMPANY, ""));
         pInfo.setCompanyURL(forModule(CommonPanel.class).get(PROPERTY_COMPANY_URL, "http://example.com"));
