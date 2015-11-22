@@ -10,6 +10,7 @@
 package de.te2m.tools.netbeans.vertx.wizards.project;
 
 import de.te2m.tools.netbeans.vertx.options.CommonPanel;
+import de.te2m.tools.netbeans.vertx.options.MavenPanel;
 import de.te2m.tools.netbeans.vertx.wizards.TemplateKeys;
 import javax.swing.JPanel;
 import javax.swing.event.DocumentEvent;
@@ -205,18 +206,25 @@ public class VertxMavenPanelVisual extends JPanel implements DocumentListener {
     void read(WizardDescriptor settings) {
 
         String groupID = (String) settings.getProperty(TemplateKeys.MVN_GROUP_ID);
+        if(null==groupID||groupID.trim().length()==0)
+        {
+            groupID = NbPreferences.forModule(MavenPanel.class).get(TemplateKeys.MVN_GROUP_ID, "");
+        }
         
         this.groupIDTextField.setText(groupID);
         
         String artifactID = (String) settings.getProperty(TemplateKeys.MVN_ARTIFACT_ID);
-        
+        if(null==artifactID||artifactID.trim().length()==0)
+        {
+            artifactID = NbPreferences.forModule(MavenPanel.class).get(TemplateKeys.MVN_ARTIFACT_ID, "");
+        }
         this.artifactIDTextField.setText(artifactID);
         
         String version = (String) settings.getProperty(TemplateKeys.MVN_VERSION);
         
         if(null==version||version.trim().length()==0)
         {
-            version = NbPreferences.forModule(CommonPanel.class).get(TemplateKeys.PROPERTY_VERSION, "1.0-SNAPSHOT");
+            version = NbPreferences.forModule(MavenPanel.class).get(TemplateKeys.MVN_VERSION, "1.0-SNAPSHOT");
         }
         
         this.versionTextField.setText(version);

@@ -69,7 +69,7 @@ public class AbstractTe2mWizard {
      */
     protected void initializeCommonProperties(Map<String, Object> params) {
         SimpleDateFormat sdf = new SimpleDateFormat(NbPreferences.forModule(FormattingPanel.class).get(TemplateKeys.PROPERTY_DATE_FORMAT, "dd.MM.yyyy"));
-        String defaultVersion = NbPreferences.forModule(MavenPanel.class).get(TemplateKeys.PROPERTY_VERSION, "1.0-SNAPSHOT");
+        String defaultVersion = NbPreferences.forModule(MavenPanel.class).get(TemplateKeys.MVN_VERSION, "1.0-SNAPSHOT");
         String companyName = NbPreferences.forModule(CommonPanel.class).get(TemplateKeys.PROPERTY_COMPANY, "");
         String username = NbPreferences.forModule(CommonPanel.class).get(TemplateKeys.PROPERTY_USER, System.getProperty("user.name"));
         String userDisplayName = NbPreferences.forModule(CommonPanel.class).get(TemplateKeys.PROPERTY_USER_DISPLAY_NAME, System.getProperty("user.name"));
@@ -77,7 +77,7 @@ public class AbstractTe2mWizard {
         params.put(TemplateKeys.PROPERTY_USER_DISPLAY_NAME, userDisplayName);
         params.put(TemplateKeys.PROPERTY_COMPANY, companyName);
         params.put(TemplateKeys.PROPERTY_CREATION_DATE, sdf.format(new Date()));
-        params.put(TemplateKeys.PROPERTY_VERSION, defaultVersion);
+        params.put(TemplateKeys.MVN_VERSION, defaultVersion);
     }
 
     /**

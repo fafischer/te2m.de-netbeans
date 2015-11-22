@@ -40,7 +40,7 @@ public interface TemplateKeys {
     /**
      * The Constant MVN_VERSION.
      */
-    public static final String MVN_VERSION="version";
+    public static final String MVN_VERSION="Version";
 
     /**
      * The property decription.
@@ -77,11 +77,6 @@ public interface TemplateKeys {
      */
     public static final String PROPERTY_CREATION_DATE = "CreationDate";
 
-    /**
-     * The property version.
-     */
-    public static final String PROPERTY_VERSION = "Version";
-    
     /**
      * The Constant PROPERTY_COMPANY.
      */

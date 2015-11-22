@@ -96,7 +96,7 @@ public final class FormattingPanel extends javax.swing.JPanel {
      * Store.
      */
     void store() {
-        NbPreferences.forModule(FormattingPanel.class).put(TemplateKeys.PROPERTY_VERSION, dateFormatTextField.getText());
+        NbPreferences.forModule(FormattingPanel.class).put(TemplateKeys.PROPERTY_DATE_FORMAT, dateFormatTextField.getText());
     }
     /**
      * Valid.
