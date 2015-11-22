@@ -12,6 +12,8 @@ package de.te2m.tools.netbeans.vertx.wizards.project;
 import de.te2m.tools.netbeans.vertx.wizards.TemplateKeys;
 import java.io.File;
 import javax.swing.JFileChooser;
+import static javax.swing.JFileChooser.APPROVE_OPTION;
+import static javax.swing.JFileChooser.DIRECTORIES_ONLY;
 import javax.swing.JPanel;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -20,6 +22,8 @@ import org.netbeans.spi.project.ui.support.ProjectChooser;
 import org.openide.WizardDescriptor;
 import org.openide.WizardValidationException;
 import org.openide.filesystems.FileUtil;
+import static org.openide.filesystems.FileUtil.normalizeFile;
+import static org.openide.filesystems.FileUtil.preventFileChooserSymlinkTraversal;
 
 /**
  * The Class VertxPanelVisual.
@@ -124,9 +128,9 @@ public class VertxProjectPanelVisual extends JPanel implements DocumentListener 
         String command = evt.getActionCommand();
         if ("BROWSE".equals(command)) {
             JFileChooser chooser = new JFileChooser();
-            FileUtil.preventFileChooserSymlinkTraversal(chooser, null);
+            preventFileChooserSymlinkTraversal(chooser, null);
             chooser.setDialogTitle("Select Project Location");
-            chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+            chooser.setFileSelectionMode(DIRECTORIES_ONLY);
             String path = this.projectLocationTextField.getText();
             if (path.length() > 0) {
                 File f = new File(path);
@@ -134,9 +138,9 @@ public class VertxProjectPanelVisual extends JPanel implements DocumentListener 
                     chooser.setSelectedFile(f);
                 }
             }
-            if (JFileChooser.APPROVE_OPTION == chooser.showOpenDialog(this)) {
+            if (APPROVE_OPTION == chooser.showOpenDialog(this)) {
                 File projectDir = chooser.getSelectedFile();
-                projectLocationTextField.setText(FileUtil.normalizeFile(projectDir).getAbsolutePath());
+                projectLocationTextField.setText(normalizeFile(projectDir).getAbsolutePath());
             }
             panel.fireChangeEvent();
         }

@@ -41,10 +41,8 @@ public class FreemarkerUtils {
             cfg.setTemplateLoader(new ClassTemplateLoader(FreemarkerUtils.class, templateBase));
             Template tpl = cfg.getTemplate(template);
             result = generateFromTemplate(tpl, hashMap);
-        } catch (TemplateException ex) {
+        } catch (TemplateException | IOException ex) {
             handleException(ex);
-        } catch (IOException ioe) {
-            handleException(ioe);
         }
         return result;
     }
@@ -64,10 +62,8 @@ public class FreemarkerUtils {
 
             Template tpl = new Template("name", new StringReader(templateContent), cfg);
             result = generateFromTemplate(tpl, hashMap);
-        } catch (TemplateException ex) {
+        } catch (TemplateException | IOException ex) {
             handleException(ex);
-        } catch (IOException ioe) {
-            handleException(ioe);
         }
         if (null != result) {
             return result;

@@ -16,7 +16,7 @@ import org.netbeans.spi.palette.DragAndDropHandler;
 import org.netbeans.spi.palette.PaletteActions;
 import org.netbeans.spi.palette.PaletteController;
 import org.netbeans.spi.palette.PaletteFactory;
-import org.openide.util.Exceptions;
+import static org.openide.util.Exceptions.printStackTrace;
 import org.openide.util.Lookup;
 import org.openide.util.datatransfer.ExTransferable;
 
@@ -79,7 +79,7 @@ public class JavaSourceFileLayerPaletteFactory {
                         });
             }
         } catch (IOException ex) {
-            Exceptions.printStackTrace(ex);
+            printStackTrace(ex);
         }
         return null;
     }

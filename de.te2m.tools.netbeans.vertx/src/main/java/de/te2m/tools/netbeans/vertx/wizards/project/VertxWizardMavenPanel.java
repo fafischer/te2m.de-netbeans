@@ -17,7 +17,7 @@ import javax.swing.event.ChangeListener;
 import org.openide.WizardDescriptor;
 import org.openide.WizardValidationException;
 import org.openide.util.HelpCtx;
-import org.openide.util.NbBundle;
+import static org.openide.util.NbBundle.getMessage;
 
 /**
  * Panel for managing the Maven build related data.
@@ -49,7 +49,7 @@ public class VertxWizardMavenPanel implements WizardDescriptor.Panel,
     /**
      * The listeners.
      */
-    private final Set<ChangeListener> listeners = new HashSet<ChangeListener>(1); // or can use ChangeSupport in NB 6.0
+    private final Set<ChangeListener> listeners = new HashSet<>(1); // or can use ChangeSupport in NB 6.0
 
     /**
      * Instantiates a new vertx wizard panel.
@@ -72,7 +72,7 @@ public class VertxWizardMavenPanel implements WizardDescriptor.Panel,
     protected final void fireChangeEvent() {
         Set<ChangeListener> ls;
         synchronized (listeners) {
-            ls = new HashSet<ChangeListener>(listeners);
+            ls = new HashSet<>(listeners);
         }
         ChangeEvent ev = new ChangeEvent(this);
         for (ChangeListener l : ls) {
@@ -86,7 +86,7 @@ public class VertxWizardMavenPanel implements WizardDescriptor.Panel,
     public Component getComponent() {
         if (component == null) {
             component = new VertxMavenPanelVisual(this);
-            component.setName(NbBundle.getMessage(VertxWizardMavenPanel.class, "LBL_CreateMavenStep"));
+            component.setName(getMessage(VertxWizardMavenPanel.class, "LBL_CreateMavenStep"));
         }
         return component;
     }

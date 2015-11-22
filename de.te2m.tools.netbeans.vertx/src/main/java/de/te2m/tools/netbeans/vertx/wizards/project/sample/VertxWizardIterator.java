@@ -9,7 +9,7 @@
  */
 package de.te2m.tools.netbeans.vertx.wizards.project.sample;
 
-import de.te2m.tools.netbeans.vertx.internal.FreemarkerUtils;
+import static de.te2m.tools.netbeans.vertx.internal.FreemarkerUtils.generate;
 import java.awt.Component;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -17,7 +17,8 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.text.MessageFormat;
+import static java.lang.System.out;
+import static java.text.MessageFormat.format;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
@@ -27,17 +28,22 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 import javax.swing.JComponent;
 import javax.swing.event.ChangeListener;
-import org.netbeans.api.project.ProjectManager;
+import static org.netbeans.api.project.ProjectManager.getDefault;
 import org.netbeans.api.templates.TemplateRegistration;
-import org.netbeans.spi.project.ui.support.ProjectChooser;
-import org.netbeans.spi.project.ui.templates.support.Templates;
+import static org.netbeans.spi.project.ui.support.ProjectChooser.setProjectsFolder;
+import static org.netbeans.spi.project.ui.templates.support.Templates.getTemplate;
 import org.openide.WizardDescriptor;
 import org.openide.filesystems.FileObject;
-import org.openide.filesystems.FileUtil;
-import org.openide.util.Exceptions;
-import org.openide.util.NbBundle;
+import static org.openide.filesystems.FileUtil.copy;
+import static org.openide.filesystems.FileUtil.createData;
+import static org.openide.filesystems.FileUtil.createFolder;
+import static org.openide.filesystems.FileUtil.normalizeFile;
+import static org.openide.filesystems.FileUtil.toFileObject;
+import static org.openide.util.Exceptions.printStackTrace;
 import org.openide.util.NbBundle.Messages;
-import org.openide.xml.XMLUtil;
+import static org.openide.util.NbBundle.getMessage;
+import static org.openide.xml.XMLUtil.parse;
+import static org.openide.xml.XMLUtil.write;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -75,8 +81,8 @@ public class VertxWizardIterator implements WizardDescriptor./*Progress*/Instant
     private static void filterProjectXML(FileObject fo, ZipInputStream str, String name) throws IOException {
         try {
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            FileUtil.copy(str, baos);
-            Document doc = XMLUtil.parse(new InputSource(new ByteArrayInputStream(baos.toByteArray())), false, false, null, null);
+            copy(str, baos);
+            Document doc = parse(new InputSource(new ByteArrayInputStream(baos.toByteArray())), false, false, null, null);
             NodeList nl = doc.getDocumentElement().getElementsByTagName("name");
             if (nl != null) {
                 for (int i = 0; i < nl.getLength(); i++) {
@@ -90,14 +96,11 @@ public class VertxWizardIterator implements WizardDescriptor./*Progress*/Instant
                     }
                 }
             }
-            OutputStream out = fo.getOutputStream();
-            try {
-                XMLUtil.write(doc, out, "UTF-8");
-            } finally {
-                out.close();
+            try (OutputStream out = fo.getOutputStream()) {
+                write(doc, out, "UTF-8");
             }
         } catch (Exception ex) {
-            Exceptions.printStackTrace(ex);
+            printStackTrace(ex);
             writeFile(str, fo);
         }
 
@@ -116,9 +119,9 @@ public class VertxWizardIterator implements WizardDescriptor./*Progress*/Instant
             ZipEntry entry;
             while ((entry = str.getNextEntry()) != null) {
                 if (entry.isDirectory()) {
-                    FileUtil.createFolder(projectRoot, entry.getName());
+                    createFolder(projectRoot, entry.getName());
                 } else {
-                    FileObject fo = FileUtil.createData(projectRoot, entry.getName());
+                    FileObject fo = createData(projectRoot, entry.getName());
                     if ("nbproject/project.xml".equals(entry.getName())) {
                         // Special handling for setting name of Ant-based projects; customize as needed:
                         filterProjectXML(fo, str, projectRoot.getName());
@@ -140,11 +143,8 @@ public class VertxWizardIterator implements WizardDescriptor./*Progress*/Instant
      * @throws IOException Signals that an I/O exception has occurred.
      */
     private static void writeFile(ZipInputStream str, FileObject fo) throws IOException {
-        OutputStream out = fo.getOutputStream();
-        try {
-            FileUtil.copy(str, out);
-        } finally {
-            out.close();
+        try (OutputStream out = fo.getOutputStream()) {
+            copy(str, out);
         }
     }
 
@@ -194,7 +194,7 @@ public class VertxWizardIterator implements WizardDescriptor./*Progress*/Instant
      */
     private String[] createSteps() {
         return new String[]{
-            NbBundle.getMessage(VertxWizardIterator.class, "LBL_CreateProjectStep")
+            getMessage(VertxWizardIterator.class, "LBL_CreateProjectStep")
         };
     }
 
@@ -244,7 +244,7 @@ public class VertxWizardIterator implements WizardDescriptor./*Progress*/Instant
                 JComponent jc = (JComponent) c;
                 // Step #.
                 // TODO if using org.openide.dialogs >= 7.8, can use WizardDescriptor.PROP_*:
-                jc.putClientProperty("WizardPanel_contentSelectedIndex", new Integer(i));
+                jc.putClientProperty("WizardPanel_contentSelectedIndex", i);
                 // Step name (actually the whole list for reference).
                 jc.putClientProperty("WizardPanel_contentData", steps);
             }
@@ -256,12 +256,12 @@ public class VertxWizardIterator implements WizardDescriptor./*Progress*/Instant
      */
     @Override
     public Set/*<FileObject>*/ instantiate(/*ProgressHandle handle*/) throws IOException {
-        Set<FileObject> resultSet = new LinkedHashSet<FileObject>();
-        File dirF = FileUtil.normalizeFile((File) wiz.getProperty("projdir"));
+        Set<FileObject> resultSet = new LinkedHashSet<>();
+        File dirF = normalizeFile((File) wiz.getProperty("projdir"));
         dirF.mkdirs();
 
-        FileObject template = Templates.getTemplate(wiz);
-        FileObject dir = FileUtil.toFileObject(dirF);
+        FileObject template = getTemplate(wiz);
+        FileObject dir = toFileObject(dirF);
         unZipFile(template.getInputStream(), dir);
 
         // Always open top dir as a project:
@@ -270,15 +270,15 @@ public class VertxWizardIterator implements WizardDescriptor./*Progress*/Instant
         Enumeration<? extends FileObject> e = dir.getFolders(true);
         while (e.hasMoreElements()) {
             FileObject subfolder = e.nextElement();
-            if (ProjectManager.getDefault().isProject(subfolder)) {
+            if (getDefault().isProject(subfolder)) {
                 resultSet.add(subfolder);
             }
         }
-        HashMap<String, Object> params = new HashMap<String, Object>();
-        System.out.println(FreemarkerUtils.generate(params, "de/te2m/tools/netbeans/vertx", "pom.xml.template"));
+        HashMap<String, Object> params = new HashMap<>();
+        out.println(generate(params, "de/te2m/tools/netbeans/vertx", "pom.xml.template"));
         File parent = dirF.getParentFile();
         if (parent != null && parent.exists()) {
-            ProjectChooser.setProjectsFolder(parent);
+            setProjectsFolder(parent);
         }
 
         return resultSet;
@@ -289,8 +289,8 @@ public class VertxWizardIterator implements WizardDescriptor./*Progress*/Instant
      */
     @Override
     public String name() {
-        return MessageFormat.format("{0} of {1}",
-                new Object[]{new Integer(index + 1), new Integer(panels.length)});
+        return format("{0} of {1}",
+                new Object[]{index + 1, panels.length});
     }
 
     /* (non-Javadoc)

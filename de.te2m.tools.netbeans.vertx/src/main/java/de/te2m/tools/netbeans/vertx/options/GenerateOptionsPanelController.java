@@ -12,7 +12,7 @@ package de.te2m.tools.netbeans.vertx.options;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import javax.swing.JComponent;
-import javax.swing.SwingUtilities;
+import static javax.swing.SwingUtilities.invokeLater;
 import org.netbeans.spi.options.OptionsPanelController;
 import org.openide.util.HelpCtx;
 import org.openide.util.Lookup;
@@ -61,12 +61,9 @@ public final class GenerateOptionsPanelController extends OptionsPanelController
      */
     @Override
     public void applyChanges() {
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                getPanel().store();
-                changed = false;
-            }
+        invokeLater(() -> {
+            getPanel().store();
+            changed = false;
         });
     }
 
@@ -84,9 +81,9 @@ public final class GenerateOptionsPanelController extends OptionsPanelController
     void changed() {
         if (!changed) {
             changed = true;
-            pcs.firePropertyChange(OptionsPanelController.PROP_CHANGED, false, true);
+            pcs.firePropertyChange(PROP_CHANGED, false, true);
         }
-        pcs.firePropertyChange(OptionsPanelController.PROP_VALID, null, null);
+        pcs.firePropertyChange(PROP_VALID, null, null);
     }
 
     /* (non-Javadoc)

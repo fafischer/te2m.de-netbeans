@@ -12,11 +12,11 @@ package de.te2m.tools.netbeans.vertx.code;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Caret;
 import javax.swing.text.JTextComponent;
-
-import org.openide.util.Exceptions;
+import static org.openide.util.Exceptions.printStackTrace;
 
 /**
  * The Class AbstractCodeGenerator.
+ * Abstract super class for all code generators.
  *
  * @author ffischer
  */
@@ -50,7 +50,7 @@ public abstract class AbstractCodeGenerator {
             int dot = caret.getDot();
             textComp.getDocument().insertString(dot, getContent(), null);
         } catch (BadLocationException ex) {
-            Exceptions.printStackTrace(ex);
+            printStackTrace(ex);
         }
     }
 

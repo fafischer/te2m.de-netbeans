@@ -9,10 +9,13 @@
 */
 package de.te2m.tools.netbeans.vertx.wizards.verticle;
 
-import de.te2m.tools.netbeans.vertx.wizards.TemplateKeys;
+import static de.te2m.tools.netbeans.vertx.wizards.TemplateKeys.PROPERTY_DESCRIPTION;
+import static de.te2m.tools.netbeans.vertx.wizards.TemplateKeys.PROPERTY_NAME;
+import static de.te2m.tools.netbeans.vertx.wizards.TemplateKeys.PROPERTY_PACKAGE;
 import javax.swing.event.ChangeListener;
 import org.openide.WizardDescriptor;
 import org.openide.util.HelpCtx;
+import static org.openide.util.HelpCtx.DEFAULT_HELP;
 
 /**
  * The Class VerticleWizardPanel1.
@@ -66,7 +69,7 @@ public class VerticleWizardPanel1 implements WizardDescriptor.Panel<WizardDescri
     @Override
     public HelpCtx getHelp() {
         // Show no Help button for this panel:
-        return HelpCtx.DEFAULT_HELP;
+        return DEFAULT_HELP;
         // If you have context help:
         // return new HelpCtx("help.key.here");
     }
@@ -122,9 +125,9 @@ public class VerticleWizardPanel1 implements WizardDescriptor.Panel<WizardDescri
      */
     @Override
     public void storeSettings(WizardDescriptor wiz) {
-        wiz.putProperty(TemplateKeys.PROPERTY_NAME, getNameFromVisualPanel());
-        wiz.putProperty(TemplateKeys.PROPERTY_DESCRIPTION, getDescriptionFromVisualPanel());
-        wiz.putProperty(TemplateKeys.PROPERTY_PACKAGE, getPackageFromVisualPanel());
+        wiz.putProperty(PROPERTY_NAME, getNameFromVisualPanel());
+        wiz.putProperty(PROPERTY_DESCRIPTION, getDescriptionFromVisualPanel());
+        wiz.putProperty(PROPERTY_PACKAGE, getPackageFromVisualPanel());
     }
 
 }

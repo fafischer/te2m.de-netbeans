@@ -9,8 +9,9 @@
 */
 package de.te2m.tools.netbeans.vertx.options;
 
-import de.te2m.tools.netbeans.vertx.wizards.TemplateKeys;
-import org.openide.util.NbPreferences;
+import static de.te2m.tools.netbeans.vertx.wizards.TemplateKeys.PROPERTY_INCLUDE_COMPANY;
+import static de.te2m.tools.netbeans.vertx.wizards.TemplateKeys.PROPERTY_INCLUDE_USER;
+import static org.openide.util.NbPreferences.forModule;
 
 /**
  * The Class GeneratePanel.
@@ -104,16 +105,16 @@ public final class GeneratePanel extends javax.swing.JPanel {
      * Load.
      */
     void load() {
-        includeUserCheckBox.setSelected(NbPreferences.forModule(GeneratePanel.class).getBoolean(TemplateKeys.PROPERTY_INCLUDE_COMPANY, true));
-        includeCompanyInfoCheckBox.setSelected(NbPreferences.forModule(GeneratePanel.class).getBoolean(TemplateKeys.PROPERTY_INCLUDE_USER, true));
+        includeUserCheckBox.setSelected(forModule(GeneratePanel.class).getBoolean(PROPERTY_INCLUDE_COMPANY, true));
+        includeCompanyInfoCheckBox.setSelected(forModule(GeneratePanel.class).getBoolean(PROPERTY_INCLUDE_USER, true));
     }
 
     /**
      * Store.
      */
     void store() {
-        NbPreferences.forModule(GeneratePanel.class).putBoolean(TemplateKeys.PROPERTY_INCLUDE_COMPANY, includeCompanyInfoCheckBox.isSelected());
-        NbPreferences.forModule(GeneratePanel.class).putBoolean(TemplateKeys.PROPERTY_INCLUDE_USER, includeUserCheckBox.isSelected());
+        forModule(GeneratePanel.class).putBoolean(PROPERTY_INCLUDE_COMPANY, includeCompanyInfoCheckBox.isSelected());
+        forModule(GeneratePanel.class).putBoolean(PROPERTY_INCLUDE_USER, includeUserCheckBox.isSelected());
     }
     
     /**

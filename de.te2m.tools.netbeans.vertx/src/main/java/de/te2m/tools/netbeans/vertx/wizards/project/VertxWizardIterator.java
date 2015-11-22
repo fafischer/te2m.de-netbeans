@@ -10,11 +10,11 @@
 package de.te2m.tools.netbeans.vertx.wizards.project;
 
 import de.te2m.tools.netbeans.vertx.wizards.AbstractTe2mWizard;
-import de.te2m.tools.netbeans.vertx.wizards.TemplateKeys;
+import static de.te2m.tools.netbeans.vertx.wizards.TemplateKeys.PKG_CREATE_FAT_JAR;
 import java.awt.Component;
 import java.io.File;
 import java.io.IOException;
-import java.text.MessageFormat;
+import static java.text.MessageFormat.format;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
@@ -22,17 +22,19 @@ import java.util.NoSuchElementException;
 import java.util.Set;
 import javax.swing.JComponent;
 import javax.swing.event.ChangeListener;
-import org.netbeans.api.project.ProjectManager;
+import static org.netbeans.api.project.ProjectManager.getDefault;
 import org.netbeans.api.templates.TemplateRegistration;
-import org.netbeans.spi.project.ui.support.ProjectChooser;
-import org.netbeans.spi.project.ui.templates.support.Templates;
+import static org.netbeans.spi.project.ui.support.ProjectChooser.setProjectsFolder;
+import static org.netbeans.spi.project.ui.templates.support.Templates.getTemplate;
 import org.openide.WizardDescriptor;
 import org.openide.filesystems.FileObject;
-import org.openide.filesystems.FileUtil;
-import org.openide.loaders.DataFolder;
+import static org.openide.filesystems.FileUtil.normalizeFile;
+import static org.openide.filesystems.FileUtil.toFileObject;
+import static org.openide.loaders.DataFolder.findFolder;
 import org.openide.loaders.DataObject;
-import org.openide.util.NbBundle;
+import static org.openide.loaders.DataObject.find;
 import org.openide.util.NbBundle.Messages;
+import static org.openide.util.NbBundle.getMessage;
 
 // TODO define position attribute
 /**
@@ -101,9 +103,9 @@ public class VertxWizardIterator extends AbstractTe2mWizard implements WizardDes
      */
     private String[] createSteps() {
         return new String[]{
-            NbBundle.getMessage(VertxWizardIterator.class, "LBL_CreateProjectStep"),
-            NbBundle.getMessage(VertxWizardIterator.class, "LBL_CreateMavenStep"),
-            NbBundle.getMessage(VertxWizardIterator.class, "LBL_CreatePackagingStep")
+            getMessage(VertxWizardIterator.class, "LBL_CreateProjectStep"),
+            getMessage(VertxWizardIterator.class, "LBL_CreateMavenStep"),
+            getMessage(VertxWizardIterator.class, "LBL_CreatePackagingStep")
         };
     }
 
@@ -153,7 +155,7 @@ public class VertxWizardIterator extends AbstractTe2mWizard implements WizardDes
                 JComponent jc = (JComponent) c;
                 // Step #.
                 // TODO if using org.openide.dialogs >= 7.8, can use WizardDescriptor.PROP_*:
-                jc.putClientProperty("WizardPanel_contentSelectedIndex", new Integer(i));
+                jc.putClientProperty("WizardPanel_contentSelectedIndex", i);
                 // Step name (actually the whole list for reference).
                 jc.putClientProperty("WizardPanel_contentData", steps);
             }
@@ -170,20 +172,20 @@ public class VertxWizardIterator extends AbstractTe2mWizard implements WizardDes
         initializeCommonProperties(params);
         initializePomInfo(params, wiz);
 
-        params.put(TemplateKeys.PKG_CREATE_FAT_JAR, wiz.getProperty(TemplateKeys.PKG_CREATE_FAT_JAR));
+        params.put(PKG_CREATE_FAT_JAR, wiz.getProperty(PKG_CREATE_FAT_JAR));
         
         Set<FileObject> resultSet = new LinkedHashSet<>();
-        File dirF = FileUtil.normalizeFile((File) wiz.getProperty("projdir"));
+        File dirF = normalizeFile((File) wiz.getProperty("projdir"));
         dirF.mkdirs();
 
-        FileObject template = Templates.getTemplate(wiz);
-        DataObject dTemplate = DataObject.find(template);
-        FileObject dir = FileUtil.toFileObject(dirF);
+        FileObject template = getTemplate(wiz);
+        DataObject dTemplate = find(template);
+        FileObject dir = toFileObject(dirF);
 
         // Always open top dir as a project:
         resultSet.add(dir);
 
-        DataObject dobj = dTemplate.createFromTemplate(DataFolder.findFolder(dir), "pom.xml", params);
+        DataObject dobj = dTemplate.createFromTemplate(findFolder(dir), "pom.xml", params);
 
         //Obtain a FileObject:
         FileObject createdFile = dobj.getPrimaryFile();
@@ -192,10 +194,10 @@ public class VertxWizardIterator extends AbstractTe2mWizard implements WizardDes
 
         File parent = dirF.getParentFile();
         if (parent != null && parent.exists()) {
-            ProjectChooser.setProjectsFolder(parent);
+            setProjectsFolder(parent);
         }
 
-        if (ProjectManager.getDefault().isProject(dir)) {
+        if (getDefault().isProject(dir)) {
             resultSet.add(dir);
         }
 
@@ -209,8 +211,8 @@ public class VertxWizardIterator extends AbstractTe2mWizard implements WizardDes
      */
     @Override
     public String name() {
-        return MessageFormat.format("{0} of {1}",
-                new Object[]{new Integer(index + 1), new Integer(panels.length)});
+        return format("{0} of {1}",
+                new Object[]{index + 1, panels.length});
     }
 
     /* (non-Javadoc)

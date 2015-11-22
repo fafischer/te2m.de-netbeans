@@ -9,7 +9,6 @@
 */
 package de.te2m.tools.netbeans.vertx.wizards.project;
 
-import de.te2m.tools.netbeans.vertx.options.CommonPanel;
 import de.te2m.tools.netbeans.vertx.options.MavenPanel;
 import de.te2m.tools.netbeans.vertx.wizards.TemplateKeys;
 import javax.swing.JPanel;

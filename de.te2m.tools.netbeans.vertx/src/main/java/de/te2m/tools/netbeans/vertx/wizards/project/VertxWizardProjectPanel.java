@@ -17,7 +17,7 @@ import javax.swing.event.ChangeListener;
 import org.openide.WizardDescriptor;
 import org.openide.WizardValidationException;
 import org.openide.util.HelpCtx;
-import org.openide.util.NbBundle;
+import static org.openide.util.NbBundle.getMessage;
 
 /**
  * Panel for managing the project related data.
@@ -49,7 +49,7 @@ public class VertxWizardProjectPanel implements WizardDescriptor.Panel,
     /**
      * The listeners.
      */
-    private final Set<ChangeListener> listeners = new HashSet<ChangeListener>(1); // or can use ChangeSupport in NB 6.0
+    private final Set<ChangeListener> listeners = new HashSet<>(1); // or can use ChangeSupport in NB 6.0
 
     /**
      * Instantiates a new vertx wizard panel.
@@ -72,21 +72,22 @@ public class VertxWizardProjectPanel implements WizardDescriptor.Panel,
     protected final void fireChangeEvent() {
         Set<ChangeListener> ls;
         synchronized (listeners) {
-            ls = new HashSet<ChangeListener>(listeners);
+            ls = new HashSet<>(listeners);
         }
         ChangeEvent ev = new ChangeEvent(this);
-        for (ChangeListener l : ls) {
+        ls.stream().forEach((l) -> {
             l.stateChanged(ev);
-        }
+        });
     }
 
     /* (non-Javadoc)
      * @see org.openide.WizardDescriptor.Panel#getComponent()
      */
+    @Override
     public Component getComponent() {
         if (component == null) {
             component = new VertxProjectPanelVisual(this);
-            component.setName(NbBundle.getMessage(VertxWizardProjectPanel.class, "LBL_CreateProjectStep"));
+            component.setName(getMessage(VertxWizardProjectPanel.class, "LBL_CreateProjectStep"));
         }
         return component;
     }
@@ -94,13 +95,15 @@ public class VertxWizardProjectPanel implements WizardDescriptor.Panel,
     /* (non-Javadoc)
      * @see org.openide.WizardDescriptor.Panel#getHelp()
      */
+    @Override
     public HelpCtx getHelp() {
-        return new HelpCtx(VertxWizardProjectPanel.class);
+        return new HelpCtx("de.te2m.tools.netbeans.vertx.wizards.project.VertxWizardProjectPanel");
     }
 
     /* (non-Javadoc)
      * @see org.openide.WizardDescriptor.FinishablePanel#isFinishPanel()
      */
+    @Override
     public boolean isFinishPanel() {
         return true;
     }
@@ -108,6 +111,7 @@ public class VertxWizardProjectPanel implements WizardDescriptor.Panel,
     /* (non-Javadoc)
      * @see org.openide.WizardDescriptor.Panel#isValid()
      */
+    @Override
     public boolean isValid() {
         getComponent();
         return component.valid(wizardDescriptor);
@@ -116,6 +120,7 @@ public class VertxWizardProjectPanel implements WizardDescriptor.Panel,
     /* (non-Javadoc)
      * @see org.openide.WizardDescriptor.Panel#readSettings(java.lang.Object)
      */
+    @Override
     public void readSettings(Object settings) {
         wizardDescriptor = (WizardDescriptor) settings;
         component.read(wizardDescriptor);
@@ -124,6 +129,7 @@ public class VertxWizardProjectPanel implements WizardDescriptor.Panel,
     /* (non-Javadoc)
      * @see org.openide.WizardDescriptor.Panel#removeChangeListener(javax.swing.event.ChangeListener)
      */
+    @Override
     public final void removeChangeListener(ChangeListener l) {
         synchronized (listeners) {
             listeners.remove(l);
@@ -133,6 +139,7 @@ public class VertxWizardProjectPanel implements WizardDescriptor.Panel,
     /* (non-Javadoc)
      * @see org.openide.WizardDescriptor.Panel#storeSettings(java.lang.Object)
      */
+    @Override
     public void storeSettings(Object settings) {
         WizardDescriptor d = (WizardDescriptor) settings;
         component.store(d);
@@ -141,6 +148,7 @@ public class VertxWizardProjectPanel implements WizardDescriptor.Panel,
     /* (non-Javadoc)
      * @see org.openide.WizardDescriptor.ValidatingPanel#validate()
      */
+    @Override
     public void validate() throws WizardValidationException {
         getComponent();
         component.validate(wizardDescriptor);

@@ -9,8 +9,8 @@
 */
 package de.te2m.tools.netbeans.vertx.options;
 
-import de.te2m.tools.netbeans.vertx.wizards.TemplateKeys;
-import org.openide.util.NbPreferences;
+import static de.te2m.tools.netbeans.vertx.wizards.TemplateKeys.PROPERTY_DATE_FORMAT;
+import static org.openide.util.NbPreferences.forModule;
 
 /**
  * The Class GeneratePanel.
@@ -89,14 +89,14 @@ public final class FormattingPanel extends javax.swing.JPanel {
      * Load.
      */
     void load() {
-        dateFormatTextField.setText(NbPreferences.forModule(FormattingPanel.class).get(TemplateKeys.PROPERTY_DATE_FORMAT, "dd.MM.yyyy"));
+        dateFormatTextField.setText(forModule(FormattingPanel.class).get(PROPERTY_DATE_FORMAT, "dd.MM.yyyy"));
     }
 
     /**
      * Store.
      */
     void store() {
-        NbPreferences.forModule(FormattingPanel.class).put(TemplateKeys.PROPERTY_DATE_FORMAT, dateFormatTextField.getText());
+        forModule(FormattingPanel.class).put(PROPERTY_DATE_FORMAT, dateFormatTextField.getText());
     }
     /**
      * Valid.

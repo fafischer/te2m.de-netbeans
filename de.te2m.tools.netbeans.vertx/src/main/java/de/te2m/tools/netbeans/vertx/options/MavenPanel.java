@@ -1,5 +1,5 @@
 /*
-* CommonPanel.java
+* MavenPanel.java
 *   
 * Copyright 2009 - 2015 Frank Fischer (email: frank@te2m.de)
 *
@@ -9,11 +9,14 @@
  */
 package de.te2m.tools.netbeans.vertx.options;
 
-import de.te2m.tools.netbeans.vertx.wizards.TemplateKeys;
-import org.openide.util.NbPreferences;
+import static de.te2m.tools.netbeans.vertx.wizards.TemplateKeys.MVN_ARTIFACT_ID;
+import static de.te2m.tools.netbeans.vertx.wizards.TemplateKeys.MVN_GROUP_ID;
+import static de.te2m.tools.netbeans.vertx.wizards.TemplateKeys.MVN_VERSION;
+import static org.openide.util.NbPreferences.forModule;
 
 /**
- * The Class CommonPanel.
+ * The Class MavenPanel.
+ * Option panel used for handling Maven defaults.
  *
  * @author ffischer
  * @version 1.0
@@ -129,21 +132,22 @@ public final class MavenPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     /**
-     * Load.
+     * Load the option values.
+     * If no value is already available then default values will be used (if available)
      */
     void load() {
-        defaultVersionText.setText(NbPreferences.forModule(MavenPanel.class).get(TemplateKeys.MVN_VERSION, "1.0-SNAPSHOT"));
-        artifactIDTextField.setText(NbPreferences.forModule(MavenPanel.class).get(TemplateKeys.MVN_ARTIFACT_ID, ""));
-        groupIDTextField.setText(NbPreferences.forModule(MavenPanel.class).get(TemplateKeys.MVN_GROUP_ID, ""));
+        defaultVersionText.setText(forModule(MavenPanel.class).get(MVN_VERSION, "1.0-SNAPSHOT"));
+        artifactIDTextField.setText(forModule(MavenPanel.class).get(MVN_ARTIFACT_ID, ""));
+        groupIDTextField.setText(forModule(MavenPanel.class).get(MVN_GROUP_ID, ""));
     }
 
     /**
-     * Store.
+     * Store the option values.
      */
     void store() {
-        NbPreferences.forModule(MavenPanel.class).put(TemplateKeys.MVN_VERSION, defaultVersionText.getText());
-        NbPreferences.forModule(MavenPanel.class).put(TemplateKeys.MVN_ARTIFACT_ID, artifactIDTextField.getText());
-        NbPreferences.forModule(MavenPanel.class).put(TemplateKeys.MVN_GROUP_ID, groupIDTextField.getText());
+        forModule(MavenPanel.class).put(MVN_VERSION, defaultVersionText.getText());
+        forModule(MavenPanel.class).put(MVN_ARTIFACT_ID, artifactIDTextField.getText());
+        forModule(MavenPanel.class).put(MVN_GROUP_ID, groupIDTextField.getText());
     }
 
     /**

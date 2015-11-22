@@ -9,8 +9,8 @@
 */
 package de.te2m.tools.netbeans.vertx.code;
 
-import de.te2m.tools.netbeans.vertx.Templates;
-import java.util.Collections;
+import static de.te2m.tools.netbeans.vertx.Templates.DEPLOYMENT_OPTIONS;
+import static java.util.Collections.singletonList;
 import java.util.List;
 import javax.swing.text.JTextComponent;
 import org.netbeans.api.editor.mimelookup.MimeRegistration;
@@ -40,8 +40,9 @@ public class VertxDeploymentOptionsGenerator extends AbstractCodeGenerator imple
         /* (non-Javadoc)
          * @see org.netbeans.spi.editor.codegen.CodeGenerator.Factory#create(org.openide.util.Lookup)
          */
+        @Override
         public List<? extends CodeGenerator> create(Lookup context) {
-            return Collections.singletonList(new VertxDeploymentOptionsGenerator(context));
+            return singletonList(new VertxDeploymentOptionsGenerator(context));
         }
     }
 
@@ -58,8 +59,9 @@ public class VertxDeploymentOptionsGenerator extends AbstractCodeGenerator imple
     /* (non-Javadoc)
      * @see de.te2m.tools.netbeans.code.AbstractCodeGenerator#getContent()
      */
+    @Override
     protected String getContent() {
-        return Templates.DEPLOYMENT_OPTIONS;
+        return DEPLOYMENT_OPTIONS;
     }
 
     /**
@@ -67,6 +69,7 @@ public class VertxDeploymentOptionsGenerator extends AbstractCodeGenerator imple
      *
      * @return the display name
      */
+    @Override
     public String getDisplayName() {
         return "vertx.io Deployment Options";
     }

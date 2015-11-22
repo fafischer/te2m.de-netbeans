@@ -9,8 +9,8 @@
 */
 package de.te2m.tools.netbeans.vertx.code;
 
-import de.te2m.tools.netbeans.vertx.Templates;
-import java.util.Collections;
+import static de.te2m.tools.netbeans.vertx.Templates.JDBC_GET_CONNECTION;
+import static java.util.Collections.singletonList;
 import java.util.List;
 import javax.swing.text.JTextComponent;
 import org.netbeans.api.editor.mimelookup.MimeRegistration;
@@ -41,7 +41,7 @@ public class VertxJDBCGetConnectionGenerator extends AbstractCodeGenerator imple
          * @see org.netbeans.spi.editor.codegen.CodeGenerator.Factory#create(org.openide.util.Lookup)
          */
         public List<? extends CodeGenerator> create(Lookup context) {
-            return Collections.singletonList(new VertxJDBCGetConnectionGenerator(context));
+            return singletonList(new VertxJDBCGetConnectionGenerator(context));
         }
     }
 
@@ -59,7 +59,7 @@ public class VertxJDBCGetConnectionGenerator extends AbstractCodeGenerator imple
      * @see de.te2m.tools.netbeans.code.AbstractCodeGenerator#getContent()
      */
     protected String getContent() {
-        return Templates.JDBC_GET_CONNECTION;
+        return JDBC_GET_CONNECTION;
     }
 
     /**

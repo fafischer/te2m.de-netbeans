@@ -1,5 +1,5 @@
 /*
-* CommonOptionsPanelController.java
+* mavenPanelController.java
 *   
 * Copyright 2009 - 2015 Frank Fischer (email: frank@te2m.de)
 *
@@ -12,13 +12,13 @@ package de.te2m.tools.netbeans.vertx.options;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import javax.swing.JComponent;
-import javax.swing.SwingUtilities;
+import static javax.swing.SwingUtilities.invokeLater;
 import org.netbeans.spi.options.OptionsPanelController;
 import org.openide.util.HelpCtx;
 import org.openide.util.Lookup;
 
 /**
- * The Class CommonOptionsPanelController.
+ * The Class MavenPanelController.
  *
  * @author ffischer
  * @version 1.0
@@ -61,12 +61,9 @@ public final class MavenPanelController extends OptionsPanelController {
      */
     @Override
     public void applyChanges() {
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                getPanel().store();
-                changed = false;
-            }
+        invokeLater(() -> {
+            getPanel().store();
+            changed = false;
         });
     }
 
@@ -84,9 +81,9 @@ public final class MavenPanelController extends OptionsPanelController {
     void changed() {
         if (!changed) {
             changed = true;
-            pcs.firePropertyChange(OptionsPanelController.PROP_CHANGED, false, true);
+            pcs.firePropertyChange(PROP_CHANGED, false, true);
         }
-        pcs.firePropertyChange(OptionsPanelController.PROP_VALID, null, null);
+        pcs.firePropertyChange(PROP_VALID, null, null);
     }
 
     /* (non-Javadoc)

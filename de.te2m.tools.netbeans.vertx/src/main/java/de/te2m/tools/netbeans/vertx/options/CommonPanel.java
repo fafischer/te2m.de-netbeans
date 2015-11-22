@@ -9,8 +9,13 @@
  */
 package de.te2m.tools.netbeans.vertx.options;
 
-import de.te2m.tools.netbeans.vertx.wizards.TemplateKeys;
-import org.openide.util.NbPreferences;
+import static de.te2m.tools.netbeans.vertx.wizards.TemplateKeys.PROPERTY_COMPANY;
+import static de.te2m.tools.netbeans.vertx.wizards.TemplateKeys.PROPERTY_COMPANY_URL;
+import static de.te2m.tools.netbeans.vertx.wizards.TemplateKeys.PROPERTY_USER;
+import static de.te2m.tools.netbeans.vertx.wizards.TemplateKeys.PROPERTY_USER_DISPLAY_NAME;
+import static de.te2m.tools.netbeans.vertx.wizards.TemplateKeys.PROPERTY_USER_EMAIL;
+import static java.lang.System.getProperty;
+import static org.openide.util.NbPreferences.forModule;
 
 /**
  * The Class CommonPanel.
@@ -162,22 +167,22 @@ public final class CommonPanel extends javax.swing.JPanel {
      * Load.
      */
     void load() {
-        defaultCompanyNameText.setText(NbPreferences.forModule(CommonPanel.class).get(TemplateKeys.PROPERTY_COMPANY, ""));
-        userNameText.setText(NbPreferences.forModule(CommonPanel.class).get(TemplateKeys.PROPERTY_USER, System.getProperty("user.name")));
-        userEMailText.setText(NbPreferences.forModule(CommonPanel.class).get(TemplateKeys.PROPERTY_USER_EMAIL, System.getProperty("user.name")+"@domain.tld"));
-        userDisplayNameTextField.setText(NbPreferences.forModule(CommonPanel.class).get(TemplateKeys.PROPERTY_USER_DISPLAY_NAME, System.getProperty("user.name")));
-        companyUrlTextField.setText(NbPreferences.forModule(CommonPanel.class).get(TemplateKeys.PROPERTY_COMPANY_URL, "http://example.com"));
+        defaultCompanyNameText.setText(forModule(CommonPanel.class).get(PROPERTY_COMPANY, ""));
+        userNameText.setText(forModule(CommonPanel.class).get(PROPERTY_USER, getProperty("user.name")));
+        userEMailText.setText(forModule(CommonPanel.class).get(PROPERTY_USER_EMAIL, getProperty("user.name")+"@domain.tld"));
+        userDisplayNameTextField.setText(forModule(CommonPanel.class).get(PROPERTY_USER_DISPLAY_NAME, getProperty("user.name")));
+        companyUrlTextField.setText(forModule(CommonPanel.class).get(PROPERTY_COMPANY_URL, "http://example.com"));
     }
 
     /**
      * Store.
      */
     void store() {
-        NbPreferences.forModule(CommonPanel.class).put(TemplateKeys.PROPERTY_COMPANY, defaultCompanyNameText.getText());
-        NbPreferences.forModule(CommonPanel.class).put(TemplateKeys.PROPERTY_USER, userNameText.getText());
-        NbPreferences.forModule(CommonPanel.class).put(TemplateKeys.PROPERTY_USER_EMAIL, userEMailText.getText());
-        NbPreferences.forModule(CommonPanel.class).put(TemplateKeys.PROPERTY_USER_DISPLAY_NAME, userDisplayNameTextField.getText());
-        NbPreferences.forModule(CommonPanel.class).put(TemplateKeys.PROPERTY_COMPANY_URL, companyUrlTextField.getText());
+        forModule(CommonPanel.class).put(PROPERTY_COMPANY, defaultCompanyNameText.getText());
+        forModule(CommonPanel.class).put(PROPERTY_USER, userNameText.getText());
+        forModule(CommonPanel.class).put(PROPERTY_USER_EMAIL, userEMailText.getText());
+        forModule(CommonPanel.class).put(PROPERTY_USER_DISPLAY_NAME, userDisplayNameTextField.getText());
+        forModule(CommonPanel.class).put(PROPERTY_COMPANY_URL, companyUrlTextField.getText());
     }
 
     /**

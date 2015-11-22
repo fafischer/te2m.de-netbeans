@@ -9,7 +9,7 @@
 */
 package de.te2m.tools.netbeans.vertx.internal.model;
 
-import java.util.TimeZone;
+import static java.util.TimeZone.getDefault;
 
 /**
  * The Class PomInfo.
@@ -147,7 +147,7 @@ public class PomInfo {
      */
     public String getTimeZoneID()
     {
-        return TimeZone.getDefault().getID();
+        return getDefault().getID();
     }
 
     /**

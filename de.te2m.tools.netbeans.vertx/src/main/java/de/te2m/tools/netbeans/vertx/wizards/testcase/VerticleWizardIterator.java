@@ -10,11 +10,13 @@
 package de.te2m.tools.netbeans.vertx.wizards.testcase;
 
 import de.te2m.tools.netbeans.vertx.wizards.AbstractTe2mWizard;
-import de.te2m.tools.netbeans.vertx.wizards.TemplateKeys;
+import static de.te2m.tools.netbeans.vertx.wizards.TemplateKeys.PROPERTY_DESCRIPTION;
+import static de.te2m.tools.netbeans.vertx.wizards.TemplateKeys.PROPERTY_NAME;
+import static de.te2m.tools.netbeans.vertx.wizards.TemplateKeys.PROPERTY_PACKAGE;
 import java.awt.Component;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
+import static java.util.Collections.singleton;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,18 +24,24 @@ import java.util.NoSuchElementException;
 import java.util.Set;
 import javax.swing.JComponent;
 import javax.swing.event.ChangeListener;
-import org.netbeans.api.java.project.JavaProjectConstants;
+import static org.netbeans.api.java.project.JavaProjectConstants.SOURCES_HINT_TEST;
 import org.netbeans.api.project.Project;
-import org.netbeans.api.project.ProjectUtils;
+import static org.netbeans.api.project.ProjectUtils.getSources;
 import org.netbeans.api.project.SourceGroup;
 import org.netbeans.api.project.Sources;
 import org.netbeans.api.templates.TemplateRegistration;
-import org.netbeans.spi.project.ui.templates.support.Templates;
+import static org.netbeans.spi.project.ui.templates.support.Templates.getProject;
+import static org.netbeans.spi.project.ui.templates.support.Templates.getTemplate;
 import org.openide.WizardDescriptor;
+import static org.openide.WizardDescriptor.PROP_AUTO_WIZARD_STYLE;
+import static org.openide.WizardDescriptor.PROP_CONTENT_DATA;
+import static org.openide.WizardDescriptor.PROP_CONTENT_DISPLAYED;
+import static org.openide.WizardDescriptor.PROP_CONTENT_NUMBERED;
+import static org.openide.WizardDescriptor.PROP_CONTENT_SELECTED_INDEX;
 import org.openide.filesystems.FileObject;
-import org.openide.loaders.DataFolder;
+import static org.openide.loaders.DataFolder.findFolder;
 import org.openide.loaders.DataObject;
-import org.openide.util.Exceptions;
+import static org.openide.loaders.DataObject.find;
 import org.openide.util.NbBundle.Messages;
 
 // TODO define position attribute
@@ -110,7 +118,7 @@ public final class VerticleWizardIterator extends AbstractTe2mWizard implements 
      */
     private List<WizardDescriptor.Panel<WizardDescriptor>> getPanels() {
         if (panels == null) {
-            panels = new ArrayList<WizardDescriptor.Panel<WizardDescriptor>>();
+            panels = new ArrayList<>();
             panels.add(new VerticleWizardPanel1());
             String[] steps = createSteps();
             for (int i = 0; i < panels.size(); i++) {
@@ -123,11 +131,11 @@ public final class VerticleWizardIterator extends AbstractTe2mWizard implements 
                 }
                 if (c instanceof JComponent) { // assume Swing components
                     JComponent jc = (JComponent) c;
-                    jc.putClientProperty(WizardDescriptor.PROP_CONTENT_SELECTED_INDEX, i);
-                    jc.putClientProperty(WizardDescriptor.PROP_CONTENT_DATA, steps);
-                    jc.putClientProperty(WizardDescriptor.PROP_AUTO_WIZARD_STYLE, true);
-                    jc.putClientProperty(WizardDescriptor.PROP_CONTENT_DISPLAYED, true);
-                    jc.putClientProperty(WizardDescriptor.PROP_CONTENT_NUMBERED, true);
+                    jc.putClientProperty(PROP_CONTENT_SELECTED_INDEX, i);
+                    jc.putClientProperty(PROP_CONTENT_DATA, steps);
+                    jc.putClientProperty(PROP_AUTO_WIZARD_STYLE, true);
+                    jc.putClientProperty(PROP_CONTENT_DISPLAYED, true);
+                    jc.putClientProperty(PROP_CONTENT_NUMBERED, true);
                 }
             }
         }
@@ -166,30 +174,30 @@ public final class VerticleWizardIterator extends AbstractTe2mWizard implements 
     @Override
     public Set<?> instantiate() throws IOException {
 
-        Map<String, Object> params = new HashMap<String, Object>();
+        Map<String, Object> params = new HashMap<>();
 
-        String fName = (String) wizard.getProperty(TemplateKeys.PROPERTY_NAME);
+        String fName = (String) wizard.getProperty(PROPERTY_NAME);
 
-        String packName = (String) wizard.getProperty(TemplateKeys.PROPERTY_PACKAGE);
+        String packName = (String) wizard.getProperty(PROPERTY_PACKAGE);
 
-        params.put(TemplateKeys.PROPERTY_NAME, fName);
-        params.put(TemplateKeys.PROPERTY_PACKAGE, packName);
-        params.put(TemplateKeys.PROPERTY_DESCRIPTION, wizard.getProperty(TemplateKeys.PROPERTY_DESCRIPTION));
+        params.put(PROPERTY_NAME, fName);
+        params.put(PROPERTY_PACKAGE, packName);
+        params.put(PROPERTY_DESCRIPTION, wizard.getProperty(PROPERTY_DESCRIPTION));
 
         initializeCommonProperties(params);
         //Get the template and convert it:
-        FileObject template = Templates.getTemplate(wizard);
-        DataObject dTemplate = DataObject.find(template);
+        FileObject template = getTemplate(wizard);
+        DataObject dTemplate = find(template);
 
         String tmpl = dTemplate.getPrimaryFile().asText();
 
-        Project pRoot = Templates.getProject(wizard);
+        Project pRoot = getProject(wizard);
 
         FileObject mainJavaRoot = null;
 
-        Sources sources = ProjectUtils.getSources(pRoot);
+        Sources sources = getSources(pRoot);
 
-        SourceGroup[] sgs = sources.getSourceGroups(JavaProjectConstants.SOURCES_HINT_TEST);
+        SourceGroup[] sgs = sources.getSourceGroups(SOURCES_HINT_TEST);
 
         if (sgs.length > 0) {
             mainJavaRoot = sgs[0].getRootFolder();
@@ -197,16 +205,16 @@ public final class VerticleWizardIterator extends AbstractTe2mWizard implements 
             mainJavaRoot = lookupSubDir(pRoot.getProjectDirectory(), "src/test/java");
         }
 
-        String folder = null != wizard.getProperty(TemplateKeys.PROPERTY_PACKAGE) ? (String) wizard.getProperty(TemplateKeys.PROPERTY_PACKAGE) : "";
+        String folder = null != wizard.getProperty(PROPERTY_PACKAGE) ? (String) wizard.getProperty(PROPERTY_PACKAGE) : "";
 
         FileObject res = lookupSubDir(mainJavaRoot, folder.replace(".", "/"));
 
-        DataObject dobj = dTemplate.createFromTemplate(DataFolder.findFolder(res), fName + "Test.java", params);
+        DataObject dobj = dTemplate.createFromTemplate(findFolder(res), fName + "Test.java", params);
 
         //Obtain a FileObject:
         FileObject createdFile = dobj.getPrimaryFile();
 
-        return Collections.singleton(createdFile);
+        return singleton(createdFile);
     }
 
     /* (non-Javadoc)

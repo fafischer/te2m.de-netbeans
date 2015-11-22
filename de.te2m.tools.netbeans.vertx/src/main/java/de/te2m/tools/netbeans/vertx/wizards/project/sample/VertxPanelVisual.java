@@ -9,7 +9,6 @@
 */
 package de.te2m.tools.netbeans.vertx.wizards.project.sample;
 
-import de.te2m.tools.netbeans.vertx.*;
 import java.io.File;
 import javax.swing.JFileChooser;
 import javax.swing.JPanel;

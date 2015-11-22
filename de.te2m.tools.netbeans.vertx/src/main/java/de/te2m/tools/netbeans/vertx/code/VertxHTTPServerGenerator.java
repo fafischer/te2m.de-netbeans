@@ -9,8 +9,8 @@
 */
 package de.te2m.tools.netbeans.vertx.code;
 
-import de.te2m.tools.netbeans.vertx.Templates;
-import java.util.Collections;
+import static de.te2m.tools.netbeans.vertx.Templates.HTTP_SERVER;
+import static java.util.Collections.singletonList;
 import java.util.List;
 import javax.swing.text.JTextComponent;
 import org.netbeans.api.editor.mimelookup.MimeRegistration;
@@ -41,7 +41,7 @@ public class VertxHTTPServerGenerator extends AbstractCodeGenerator implements C
          * @see org.netbeans.spi.editor.codegen.CodeGenerator.Factory#create(org.openide.util.Lookup)
          */
         public List<? extends CodeGenerator> create(Lookup context) {
-            return Collections.singletonList(new VertxHTTPServerGenerator(context));
+            return singletonList(new VertxHTTPServerGenerator(context));
         }
     }
 
@@ -59,7 +59,7 @@ public class VertxHTTPServerGenerator extends AbstractCodeGenerator implements C
      * @see de.te2m.tools.netbeans.code.AbstractCodeGenerator#getContent()
      */
     protected String getContent() {
-        return Templates.HTTP_SERVER;
+        return HTTP_SERVER;
     }
 
     /**
