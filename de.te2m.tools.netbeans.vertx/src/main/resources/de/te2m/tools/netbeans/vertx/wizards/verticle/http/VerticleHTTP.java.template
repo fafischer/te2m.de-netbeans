@@ -1,0 +1,41 @@
+package ${TargetPackage};
+
+import io.vertx.core.AbstractVerticle;
+import io.vertx.core.Future;
+import io.vertx.ext.web.Router;
+import io.vertx.ext.web.handler.StaticHandler;
+
+/**
+* ${TargetName}
+*
+* ${TargetDescription}
+* <p>
+* This Verticle provides an simple web server for static content.
+* </p>
+* <p>
+* The HTTP server will listen on a configured port, 8080 will be used as fallback if no configured port is available.
+* </p>
+* @author ${CurrentUser} 
+* @since ${Version}
+*/
+public class ${TargetName} extends AbstractVerticle {
+
+    
+    @Override    
+    public void start(Future<Void> future) {
+        // initialize Router
+        Router router = Router.router(vertx);
+        router.route().handler(StaticHandler.create());        
+        // create HTTP server based on configured port, use 8080 as fallback if no configured port is available.
+        vertx.createHttpServer()
+                .requestHandler(router::accept)
+                .listen(config().getInteger("http.port", 8080));
+    }
+    
+    @Override
+    public void stop() {
+        // Optional - called when verticle is undeployed
+        // @TODO Add cleanup as required
+    }
+
+}
