@@ -21,39 +21,12 @@ import javax.swing.JPanel;
 public final class VerticleVisualPanel1 extends JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    /**
-     * The description text area.
-     */
     private javax.swing.JTextArea descriptionTextArea;
-
-    /**
-     * The j label1.
-     */
     private javax.swing.JLabel jLabel1;
-
-    /**
-     * The j label2.
-     */
     private javax.swing.JLabel jLabel2;
-
-    /**
-     * The j label3.
-     */
     private javax.swing.JLabel jLabel3;
-
-    /**
-     * The j scroll pane1.
-     */
     private javax.swing.JScrollPane jScrollPane1;
-
-    /**
-     * The name text field.
-     */
     private javax.swing.JTextField nameTextField;
-
-    /**
-     * The package text field.
-     */
     private javax.swing.JTextField packageTextField;
     // End of variables declaration//GEN-END:variables
 

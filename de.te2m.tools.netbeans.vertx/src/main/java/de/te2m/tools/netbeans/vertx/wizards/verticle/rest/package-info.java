@@ -3,4 +3,4 @@
  * 
  */
 
-package de.te2m.tools.netbeans.vertx.wizards.verticle;
+package de.te2m.tools.netbeans.vertx.wizards.verticle.simple;
