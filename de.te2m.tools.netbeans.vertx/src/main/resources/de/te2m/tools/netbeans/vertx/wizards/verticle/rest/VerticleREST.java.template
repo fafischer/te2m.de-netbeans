@@ -9,21 +9,47 @@ import io.vertx.ext.web.Router;
 import io.vertx.ext.web.RoutingContext;
 import io.vertx.ext.web.handler.BodyHandler;
 
-/*
+/**
 * ${TargetName}
 *
 * ${TargetDescription}
-* created on ${CreationDate}
-*
+* <p>
+* This Verticle provides an REST based interface for CRUD (Create, Read, Update, Delete) 
+* operations for an certain entity.
+* </p>
+* It supports the following methods: 
+* <ul>
+* <li>GET: Get list of all entities or a single one (if ID is provided)</li>
+* <li>POST: Create a new entity</li>
+* <li>PUT: Update an entity. When using PUT the whole entity will be replaced</li>
+* <li>PATCH: Update an entity. When using PATCH the entity will be partially updated</li>
+* <li>DELETE: DELETE an entity</li>
+* </ul>
+* <p>
+* The HTTP server will listen on a configured port, 8080 will be used as fallback if no configured port is available.
+* </p>
 * @author ${CurrentUser} 
 * @since ${Version}
 */
 public class ${TargetName} extends AbstractVerticle {
 
+     /**
+     * Constant used for REST base URL.
+     */     
     public static final String BASE_PATH = "api";
-
+     /**
+     * Constant used for the URL parameter 'id'.
+     */      
     public static final String PARAM_ID = "id";
-   
+     /**
+     * Constant used for the content-type 'application/json'.
+     */   
+    public static final String CONTENT_TYPE_APPLICATION_JSON = "application/json";
+    /**
+     * Constant used for the HTTP header 'content-type'.
+     */
+    public static final String HEADER_CONTENT_TYPE = "content-type";
+    
     @Override    
     public void start(Future<Void> future) {
         // initialize Router
@@ -31,15 +57,17 @@ public class ${TargetName} extends AbstractVerticle {
         // register the handler
         router.route().handler(BodyHandler.create());
         router.get("/" + BASE_PATH + "/:" + PARAM_ID).handler(this::handleGet);
-        router.put("/" + BASE_PATH + "/:" + PARAM_ID).handler(this::handleAdd);
-        router.post("/" + BASE_PATH + "/:" + PARAM_ID).handler(this::handleReplace);
+        router.post("/" + BASE_PATH).handler(this::handleAdd);
+        router.put("/" + BASE_PATH + "/:" + PARAM_ID).handler(this::handleReplace);
         router.delete("/" + BASE_PATH + "/:" + PARAM_ID).handler(this::handleDelete);
         router.patch("/" + BASE_PATH + "/:" + PARAM_ID).handler(this::handleUpdate);
         router.get("/" + BASE_PATH).handler(this::handleList);
-        // create HTTP server
-        vertx.createHttpServer().requestHandler(router::accept).listen(8080);
+        // create HTTP server based on configured port, use 8080 as fallback if no configured port is available.
+        vertx.createHttpServer()
+                .requestHandler(router::accept)
+                .listen(config().getInteger("http.port", 8080));
     }
-
+    
     @Override
     public void stop() {
         // Optional - called when verticle is undeployed
@@ -48,8 +76,9 @@ public class ${TargetName} extends AbstractVerticle {
 
     /**
      * Returns the entity for the provided ID
+     * @param routingContext The current RoutingContext object
      */
-    private void handleGet(RoutingContext routingContext) {
+    protected void handleGet(RoutingContext routingContext) {
         String entityID = routingContext.request().getParam(PARAM_ID);
         HttpServerResponse response = routingContext.response();
         if (entityID == null) {
@@ -60,15 +89,22 @@ public class ${TargetName} extends AbstractVerticle {
             if (json == null) {
                 sendError(404, response);
             } else {
-                response.putHeader("content-type", "application/json").end(json.encodePrettily());
+                response.putHeader(HEADER_CONTENT_TYPE, CONTENT_TYPE_APPLICATION_JSON).end(json.encodePrettily());
             }
         }        
     }
 
     /**
-     * Adds a new entity
+     * Adds a new entity.
+     * <p>
+     * In case of an successfully creation the HTTP status code 201 will be returned. It will return also the newly created entity as JSON string.
+     * </p>
+     * <p>
+     * If the creation fails then HTTP status code 400 will be returned.
+     * </p>
+     * @param routingContext The current RoutingContext object
      */
-    private void handleAdd(RoutingContext routingContext) {
+    protected void handleAdd(RoutingContext routingContext) {
         String entityID = routingContext.request().getParam(PARAM_ID);
         HttpServerResponse response = routingContext.response();
         if (entityID == null) {
@@ -79,15 +115,20 @@ public class ${TargetName} extends AbstractVerticle {
                 sendError(400, response);
             } else {
                 //@TODO Implement: Add entity identified with ID as required by the business logic
-                response.end();
+                // HTTP 201 = Created
+                response.setStatusCode(201)
+                        .putHeader(HEADER_CONTENT_TYPE, CONTENT_TYPE_APPLICATION_JSON)
+                        .end(json.encodePrettily());
             }
         }
     }
-    
+
+
     /**
      * Replace the entity identified with the provided ID
+     * @param routingContext The current RoutingContext object
      */
-    private void handleReplace(RoutingContext routingContext) {
+    protected void handleReplace(RoutingContext routingContext) {
         String entityID = routingContext.request().getParam(PARAM_ID);
         HttpServerResponse response = routingContext.response();
         if (entityID == null) {
@@ -98,34 +139,50 @@ public class ${TargetName} extends AbstractVerticle {
                 sendError(400, response);
             } else {
                 //@TODO Implement: Replace entity identified with ID as required by the business logic
-                response.end();
+                response.putHeader(HEADER_CONTENT_TYPE, CONTENT_TYPE_APPLICATION_JSON)
+                        .end(json.encodePrettily());
             }
         }
     }
-    
+
     /**
      * Deletes the entity identified with the provided ID
+     * <p>
+     * In case of an successfully deletion the HTTP status code 204 will be returned. 
+     * </p>
+     * <p>
+     * If the provided ID is invalid then HTTP status code 404 will be returned.
+     * </p>
+     * <p>
+     * If the deletion fails for any other reason then HTTP status code 400 will be returned.
+     * </p>
+     * @param routingContext The current RoutingContext object
      */
-    private void handleDelete(RoutingContext routingContext) {
+    protected void handleDelete(RoutingContext routingContext) {
         String entityID = routingContext.request().getParam(PARAM_ID);
         HttpServerResponse response = routingContext.response();
         if (entityID == null) {
             sendError(400, response);
-        } else {
-            JsonObject json = routingContext.getBodyAsJson();
-            if (json == null) {
-                sendError(400, response);
-            } else {
-                //@TODO Implement: Delete entity identified with ID as required by the business logic
-                response.end();
+        } else{
+            // check if an entity with the provided ID exists     
+            boolean found = false;
+            //@TODO Implement: Delete entity identified with ID as required by the business logic
+            if(found)
+            {
+                response.setStatusCode(204).end();
+            }
+            else
+            {
+                sendError(404, response);
             }
         }
     }
-    
+
     /**
      * Update the entity identified with the provided ID
+     * @param routingContext The current RoutingContext object
      */
-    private void handleUpdate(RoutingContext routingContext) {
+    protected void handleUpdate(RoutingContext routingContext) {
         String entityID = routingContext.request().getParam(PARAM_ID);
         HttpServerResponse response = routingContext.response();
         if (entityID == null) {
@@ -136,24 +193,32 @@ public class ${TargetName} extends AbstractVerticle {
                 sendError(400, response);
             } else {
                 //@TODO Implement: Update entity identified with ID as required by the business logic
-                response.end();
+                response.putHeader(HEADER_CONTENT_TYPE, CONTENT_TYPE_APPLICATION_JSON)
+                        .end(json.encodePrettily());
             }
         }
     }
+
     /**
      * Returns a list of all entities
+     * @param routingContext The current RoutingContext object
      */
-    private void handleList(RoutingContext routingContext) {
+    protected void handleList(RoutingContext routingContext) {
         JsonArray arr = new JsonArray();
 
         // @TODO Implement: Fill JSONArray with all entities as required
-        routingContext.response().putHeader("content-type", "application/json").end(arr.encodePrettily());
+        routingContext.response()
+                .putHeader(HEADER_CONTENT_TYPE, CONTENT_TYPE_APPLICATION_JSON)
+                .end(arr.encodePrettily());
     }
 
     /**
      * Sets the provided error code and finishes request processing
+     * @param statusCode The HTTP status code to be sent
+     * @param response The current HttpServerResponse
      */
-    private void sendError(int statusCode, HttpServerResponse response) {
-        response.setStatusCode(statusCode).end();
+    protected void sendError(int statusCode, HttpServerResponse response) {
+        response.setStatusCode(statusCode)
+                .end();
     }
 }
