@@ -60,15 +60,3 @@ This is just the content of the initial vertx.io project created with the de.te2
 ## About te2m.de
 
 This project has initially started on SourceForge as part of [temtools](http://temtools.sf.net) in 2009. 
-
-The initial project name was built based on the first letter of the name of the most important persons in my life:
-* **T**obias
-* **E**mily
-* **M**elina
-
-Since then the number of most important persons of my life has increased by 1: 
-
-* **M**arlon
-
-Thats why the project name has changed from temtools to te(2*m).
-  
