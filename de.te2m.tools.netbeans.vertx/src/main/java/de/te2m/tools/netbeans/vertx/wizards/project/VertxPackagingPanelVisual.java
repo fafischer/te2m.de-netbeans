@@ -9,13 +9,16 @@
  */
 package de.te2m.tools.netbeans.vertx.wizards.project;
 
+import de.te2m.tools.netbeans.vertx.options.VertxPanel;
 import de.te2m.tools.netbeans.vertx.wizards.TemplateKeys;
+import static de.te2m.tools.netbeans.vertx.wizards.TemplateKeys.VERTX_VERSION;
 import javax.swing.JPanel;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.text.Document;
 import org.openide.WizardDescriptor;
 import org.openide.WizardValidationException;
+import static org.openide.util.NbPreferences.forModule;
 
 /**
  * The Class VertxPanelVisual.
@@ -134,7 +137,7 @@ public class VertxPackagingPanelVisual extends JPanel implements DocumentListene
     void read(WizardDescriptor settings) {
         Boolean value = (Boolean) settings.getProperty(TemplateKeys.PKG_CREATE_FAT_JAR);
         if (value == null) {
-            value = Boolean.FALSE;
+            value = forModule(VertxPanel.class).getBoolean(TemplateKeys.VERTX_USE_FAT_JAR_DEFAULT, false);
         }
         
         createFatJarCheckBox.setSelected(value);

@@ -9,8 +9,8 @@
     <packaging>jar</packaging>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <vertx.version>3.1.0</vertx.version>
-        <junit.version>4.12</junit.version>
+     <#if vertxDefaultVersion ??><vertx.version>${vertxDefaultVersion}</vertx.version><#else><vertx.version>3.1.0</vertx.version></#if>
+     <junit.version>4.12</junit.version>
     </properties>
     <#if pomInfo.includeCompany><organization>
         <name>${pomInfo.companyName}</name>

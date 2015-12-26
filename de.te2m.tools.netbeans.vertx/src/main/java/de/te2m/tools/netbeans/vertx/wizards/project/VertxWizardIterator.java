@@ -173,7 +173,7 @@ public class VertxWizardIterator extends AbstractTe2mWizard implements WizardDes
         initializePomInfo(params, wiz);
 
         params.put(PKG_CREATE_FAT_JAR, wiz.getProperty(PKG_CREATE_FAT_JAR));
-        
+        params.put(PROPERTY_VERTX_VERSION, wiz.getProperty(VERTX_VERSION));
         Set<FileObject> resultSet = new LinkedHashSet<>();
         File dirF = normalizeFile((File) wiz.getProperty("projdir"));
         dirF.mkdirs();

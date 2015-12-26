@@ -14,6 +14,7 @@ import de.te2m.tools.netbeans.vertx.options.CommonPanel;
 import de.te2m.tools.netbeans.vertx.options.FormattingPanel;
 import de.te2m.tools.netbeans.vertx.options.GeneratePanel;
 import de.te2m.tools.netbeans.vertx.options.MavenPanel;
+import de.te2m.tools.netbeans.vertx.options.VertxPanel;
 import java.io.IOException;
 import static java.lang.System.getProperty;
 import java.text.SimpleDateFormat;
@@ -23,6 +24,7 @@ import org.openide.WizardDescriptor;
 import org.openide.filesystems.FileObject;
 import static org.openide.util.Exceptions.printStackTrace;
 import static org.openide.util.NbPreferences.forModule;
+import static java.lang.System.getProperty;
 
 /**
  * The Class AbstractTe2mWizard.
@@ -69,10 +71,12 @@ public class AbstractTe2mWizard implements TemplateKeys{
         SimpleDateFormat sdf = new SimpleDateFormat(forModule(FormattingPanel.class).get(PROPERTY_DATE_FORMAT, "dd.MM.yyyy"));
         String defaultVersion = forModule(MavenPanel.class).get(MVN_VERSION, "1.0-SNAPSHOT");
         String companyName = forModule(CommonPanel.class).get(PROPERTY_COMPANY, "");
+        String vertxDefaultVersion = forModule(VertxPanel.class).get(VERTX_VERSION, "3.1.0");
         String username = forModule(CommonPanel.class).get(PROPERTY_USER, getProperty("user.name"));
         String userDisplayName = forModule(CommonPanel.class).get(PROPERTY_USER_DISPLAY_NAME, getProperty("user.name"));
         params.put(PROPERTY_USER, username);
         params.put(PROPERTY_USER_DISPLAY_NAME, userDisplayName);
+        params.put(PROPERTY_VERTX_VERSION, vertxDefaultVersion);
         params.put(PROPERTY_COMPANY, companyName);
         params.put(PROPERTY_CREATION_DATE, sdf.format(new Date()));
         params.put(MVN_VERSION, defaultVersion);

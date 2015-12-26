@@ -16,6 +16,7 @@ import static de.te2m.tools.netbeans.vertx.wizards.TemplateKeys.PROPERTY_USER_DI
 import static de.te2m.tools.netbeans.vertx.wizards.TemplateKeys.PROPERTY_USER_EMAIL;
 import static java.lang.System.getProperty;
 import static org.openide.util.NbPreferences.forModule;
+import static java.lang.System.getProperty;
 
 /**
  * The Class CommonPanel.

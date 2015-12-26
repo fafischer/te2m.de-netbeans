@@ -42,6 +42,10 @@ public interface TemplateKeys {
      */
     public static final String MVN_VERSION="Version";
 
+    public static final String VERTX_VERSION="Vertx_Version";
+    
+    public static final String VERTX_USE_FAT_JAR_DEFAULT="Vertx_Use_Fat_Jar_Default";
+    
     /**
      * The property decription.
      */
@@ -71,6 +75,9 @@ public interface TemplateKeys {
      * The property user.
      */
     public static final String PROPERTY_USER = "CurrentUser";
+    
+    
+    public static final String PROPERTY_VERTX_VERSION ="vertxDefaultVersion";
 
     /**
      * The property creation date.
