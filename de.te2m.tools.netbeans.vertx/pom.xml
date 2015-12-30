@@ -26,8 +26,8 @@
                     <homePageUrl>https://github.com/fafischer/te2m.de-netbeans</homePageUrl>
                     <keystore>../../private/keystore</keystore>
                     <keystorealias>signingKS</keystorealias>
-                    <licenseName>GPL v2</licenseName>
-                    <licenseFile>GPL-v2.txt</licenseFile>
+                    <licenseName>CDDLv1.0</licenseName>
+                    <licenseFile>CDDLv1.0.txt</licenseFile>
                 </configuration>
             </plugin>
             <plugin>
