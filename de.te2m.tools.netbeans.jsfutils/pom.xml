@@ -17,8 +17,18 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>nbm-maven-plugin</artifactId>
-                <version>3.14</version>
+                <version>3.14.1</version>
                 <extensions>true</extensions>
+                <configuration>
+                    <useOSGiDependencies>true</useOSGiDependencies>
+                    <codeNameBase>de.te2m.tools.netbeans.vertx</codeNameBase>
+                    <author>Frank Fischer (frank@te2m.de)</author>
+                    <homePageUrl>https://github.com/fafischer/te2m.de-netbeans</homePageUrl>
+                    <keystore>../../private/keystore</keystore>
+                    <keystorealias>signingKS</keystorealias>
+                    <licenseName>CDDLv1.0</licenseName>
+                    <licenseFile>CDDLv1.0.txt</licenseFile>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
