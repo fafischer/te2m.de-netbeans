@@ -10,6 +10,7 @@
 package de.te2m.tools.netbeans.vertx.wizards.project;
 
 import de.te2m.tools.netbeans.vertx.wizards.AbstractTe2mWizard;
+import de.te2m.tools.netbeans.vertx.wizards.TemplateIDs;
 import static de.te2m.tools.netbeans.vertx.wizards.TemplateKeys.PKG_CREATE_FAT_JAR;
 import java.awt.Component;
 import java.io.File;
@@ -44,7 +45,7 @@ import static org.openide.util.NbBundle.getMessage;
  * @version 1.0
  * @since 1.0
  */
-@TemplateRegistration(folder = "Project/vertx.io", displayName = "#Vertx_displayName", description = "VertxDescription.html", iconBase = "de/te2m/tools/netbeans/vertx/icons/logo16.png", content = "pom.xml.template", scriptEngine = "freemarker")
+@TemplateRegistration(folder = "Project/vertx.io", displayName = "#Vertx_displayName", description = "VertxDescription.html", iconBase = "de/te2m/tools/netbeans/vertx/icons/logo16.png", content = "../"+TemplateIDs.VERTX_POM+".template", scriptEngine = "freemarker")
 @Messages("Vertx_displayName=Create a new Vertx.io 3.1 Project")
 public class VertxWizardIterator extends AbstractTe2mWizard implements WizardDescriptor./*Progress*/InstantiatingIterator {
 

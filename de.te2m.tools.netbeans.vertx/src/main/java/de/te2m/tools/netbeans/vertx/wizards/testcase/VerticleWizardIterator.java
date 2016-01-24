@@ -10,6 +10,7 @@
 package de.te2m.tools.netbeans.vertx.wizards.testcase;
 
 import de.te2m.tools.netbeans.vertx.wizards.AbstractTe2mWizard;
+import de.te2m.tools.netbeans.vertx.wizards.TemplateIDs;
 import static de.te2m.tools.netbeans.vertx.wizards.TemplateKeys.PROPERTY_DESCRIPTION;
 import static de.te2m.tools.netbeans.vertx.wizards.TemplateKeys.PROPERTY_NAME;
 import static de.te2m.tools.netbeans.vertx.wizards.TemplateKeys.PROPERTY_PACKAGE;
@@ -53,7 +54,7 @@ import org.openide.util.NbBundle.Messages;
  * @since 1.0
  */
 @TemplateRegistration(folder = "Vertx.io", displayName = "#VerticleWizardIterator_displayName", iconBase = "de/te2m/tools/netbeans/vertx/icons/logo16.png", description = "verticleTest.html",
-        content = "VerticleUnitTest.java.template", scriptEngine = "freemarker")
+        content = "../"+TemplateIDs.JUNIT_BASE+".template", scriptEngine = "freemarker")
 @Messages("VerticleWizardIterator_displayName=Testcase for Verticle")
 public final class VerticleWizardIterator extends AbstractTe2mWizard implements WizardDescriptor.InstantiatingIterator<WizardDescriptor> {
 

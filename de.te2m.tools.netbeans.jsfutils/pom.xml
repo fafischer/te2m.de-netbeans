@@ -21,7 +21,7 @@
                 <extensions>true</extensions>
                 <configuration>
                     <useOSGiDependencies>true</useOSGiDependencies>
-                    <codeNameBase>de.te2m.tools.netbeans.vertx</codeNameBase>
+                    <codeNameBase>de.te2m.tools.netbeans.jsfutils</codeNameBase>
                     <author>Frank Fischer (frank@te2m.de)</author>
                     <homePageUrl>https://github.com/fafischer/te2m.de-netbeans</homePageUrl>
                     <keystore>../../private/keystore</keystore>
