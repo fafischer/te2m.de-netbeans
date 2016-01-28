@@ -118,4 +118,6 @@ public interface TemplateKeys {
      * The Constant PROPERTY_INCLUDE_USER.
      */
     public static final String PROPERTY_INCLUDE_USER="includeUserInfo";
+    
+    public static final String PKG_CREATE_DOCKER="createDocker";
 }

@@ -9,5 +9,6 @@ public interface TemplateIDs {
     public static final String JUNIT_BASE="VerticleUnitTest.java";
     public static final String VERTICLE_BASE="BaseVerticle.java";
     public static final String VERTX_POM="pom.xml";
+    public static String VERTX_DOCKER="dockerfile-fatjar";
     
 }

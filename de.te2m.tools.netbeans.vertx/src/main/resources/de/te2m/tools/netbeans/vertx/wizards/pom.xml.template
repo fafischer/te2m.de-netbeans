@@ -88,7 +88,38 @@
                         </configuration>
                     </execution>
                 </executions>
-            </plugin></#if></#if>
+            </plugin>
+            <#if createDocker??><#if createDocker>
+            <!-- Create docker container during build by using the FAT jar -->
+            <plugin>
+                <groupId>com.spotify</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
+                <version>0.2.8</version>
+                <executions>
+                    <execution>
+                        <id>docker</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>build</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <dockerDirectory>${r"${"}project.basedir}/src/main/docker</dockerDirectory>
+                    <!-- Configure the image name -->
+                    <imageName>${r"${"}project.groupId}/${r"${"}project.artifactId}</imageName>
+                    <resources>
+                        <resource>
+                            <targetPath>/verticles</targetPath>
+                            <directory>${r"${"}project.build.directory}</directory>
+                            <includes>
+                                <include>${r"${"}project.build.directory}/${r"${"}project.artifactId}-${r"${"}project.version}-fat.jar</include>
+                            </includes>
+                        </resource>
+                        <!-- don't forget to also add all the dependencies required by your application -->
+                    </resources>
+                </configuration>
+            </plugin></#if></#if></#if></#if>
         </plugins>
     </build>
 	

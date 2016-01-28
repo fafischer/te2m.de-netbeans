@@ -18,8 +18,11 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
-              <Component id="createFatJarCheckBox" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="527" max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="createDockerCheckBox" min="-2" max="-2" attributes="0"/>
+                  <Component id="createFatJarCheckBox" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace pref="493" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -28,7 +31,9 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
               <Component id="createFatJarCheckBox" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="252" max="32767" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Component id="createDockerCheckBox" min="-2" max="-2" attributes="0"/>
+              <EmptySpace pref="209" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -42,6 +47,16 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="createFatJarCheckBoxActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="createDockerCheckBox">
+      <Properties>
+        <Property name="label" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+          <ResourceString bundle="de/te2m/tools/netbeans/vertx/wizards/project/Bundle.properties" key="VertxPackagingPanelVisual.createDockerCheckBox.label" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+        </Property>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="createDockerCheckBoxActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

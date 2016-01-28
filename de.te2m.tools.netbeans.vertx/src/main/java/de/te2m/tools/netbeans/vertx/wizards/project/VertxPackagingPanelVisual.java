@@ -40,9 +40,7 @@ public class VertxPackagingPanelVisual extends JPanel implements DocumentListene
     private VertxWizardPackagingPanel panel;
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    /**
-     * The create fat jar check box.
-     */
+    private javax.swing.JCheckBox createDockerCheckBox;
     private javax.swing.JCheckBox createFatJarCheckBox;
     // End of variables declaration//GEN-END:variables
 
@@ -79,12 +77,15 @@ public class VertxPackagingPanelVisual extends JPanel implements DocumentListene
     }
 
     /**
-     * J check box1 action performed.
+     * Action listener when createFatJar checkbox is toggled; 
      *
      * @param evt the evt
      */
     private void createFatJarCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createFatJarCheckBoxActionPerformed
-        // TODO add your handling code here:
+       
+        // enable docker creation if FatJar is selected
+        createDockerCheckBox.setEnabled(createFatJarCheckBox.isSelected());
+        
     }//GEN-LAST:event_createFatJarCheckBoxActionPerformed
 
     /**
@@ -96,11 +97,19 @@ public class VertxPackagingPanelVisual extends JPanel implements DocumentListene
     private void initComponents() {
 
         createFatJarCheckBox = new javax.swing.JCheckBox();
+        createDockerCheckBox = new javax.swing.JCheckBox();
 
         org.openide.awt.Mnemonics.setLocalizedText(createFatJarCheckBox, org.openide.util.NbBundle.getMessage(VertxPackagingPanelVisual.class, "VertxPackagingPanelVisual.createFatJarCheckBox.text")); // NOI18N
         createFatJarCheckBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 createFatJarCheckBoxActionPerformed(evt);
+            }
+        });
+
+        createDockerCheckBox.setLabel(org.openide.util.NbBundle.getMessage(VertxPackagingPanelVisual.class, "VertxPackagingPanelVisual.createDockerCheckBox.label")); // NOI18N
+        createDockerCheckBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                createDockerCheckBoxActionPerformed(evt);
             }
         });
 
@@ -110,17 +119,25 @@ public class VertxPackagingPanelVisual extends JPanel implements DocumentListene
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(28, 28, 28)
-                .addComponent(createFatJarCheckBox)
-                .addContainerGap(527, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(createDockerCheckBox)
+                    .addComponent(createFatJarCheckBox))
+                .addContainerGap(493, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(32, 32, 32)
                 .addComponent(createFatJarCheckBox)
-                .addContainerGap(252, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(createDockerCheckBox)
+                .addContainerGap(209, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void createDockerCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createDockerCheckBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_createDockerCheckBoxActionPerformed
 
     /* (non-Javadoc)
      * @see javax.swing.event.DocumentListener#insertUpdate(javax.swing.event.DocumentEvent)
@@ -130,7 +147,7 @@ public class VertxPackagingPanelVisual extends JPanel implements DocumentListene
     }
 
     /**
-     * Read.
+     * Read the current settings and initialize the values.
      *
      * @param settings the settings
      */
@@ -141,6 +158,14 @@ public class VertxPackagingPanelVisual extends JPanel implements DocumentListene
         }
         
         createFatJarCheckBox.setSelected(value);
+        // docker will be only enabled if an FatJar is created
+        createDockerCheckBox.setEnabled(value);
+        value = (Boolean) settings.getProperty(TemplateKeys.PKG_CREATE_DOCKER);
+        if(null==value)
+        {
+            value=Boolean.FALSE;
+        }
+        createDockerCheckBox.setSelected(value);
     }
 
     /* (non-Javadoc)
@@ -151,14 +176,15 @@ public class VertxPackagingPanelVisual extends JPanel implements DocumentListene
     }
 
     /**
-     * Store.
+     * Store the values created in this wizard.
      *
      * @param d the d
      */
     void store(WizardDescriptor d) {
-        Boolean value = createFatJarCheckBox.isSelected();
-        
-        d.putProperty(TemplateKeys.PKG_CREATE_FAT_JAR, value);
+        Boolean fatJarValue = createFatJarCheckBox.isSelected();
+        Boolean dockerValue = createFatJarCheckBox.isSelected();
+        d.putProperty(TemplateKeys.PKG_CREATE_FAT_JAR, fatJarValue);
+        d.putProperty(TemplateKeys.PKG_CREATE_DOCKER, dockerValue);
     }
 
     /**

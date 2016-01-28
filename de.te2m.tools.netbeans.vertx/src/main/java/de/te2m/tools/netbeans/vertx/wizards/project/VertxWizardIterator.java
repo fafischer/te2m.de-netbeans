@@ -11,6 +11,7 @@ package de.te2m.tools.netbeans.vertx.wizards.project;
 
 import de.te2m.tools.netbeans.vertx.wizards.AbstractTe2mWizard;
 import de.te2m.tools.netbeans.vertx.wizards.TemplateIDs;
+import de.te2m.tools.netbeans.vertx.wizards.TemplateKeys;
 import static de.te2m.tools.netbeans.vertx.wizards.TemplateKeys.PKG_CREATE_FAT_JAR;
 import java.awt.Component;
 import java.io.File;
@@ -25,6 +26,7 @@ import javax.swing.JComponent;
 import javax.swing.event.ChangeListener;
 import static org.netbeans.api.project.ProjectManager.getDefault;
 import org.netbeans.api.templates.TemplateRegistration;
+import org.netbeans.api.templates.TemplateRegistrations;
 import static org.netbeans.spi.project.ui.support.ProjectChooser.setProjectsFolder;
 import static org.netbeans.spi.project.ui.templates.support.Templates.getTemplate;
 import org.openide.WizardDescriptor;
@@ -45,7 +47,10 @@ import static org.openide.util.NbBundle.getMessage;
  * @version 1.0
  * @since 1.0
  */
-@TemplateRegistration(folder = "Project/vertx.io", displayName = "#Vertx_displayName", description = "VertxDescription.html", iconBase = "de/te2m/tools/netbeans/vertx/icons/logo16.png", content = "../"+TemplateIDs.VERTX_POM+".template", scriptEngine = "freemarker")
+@TemplateRegistrations({
+    @TemplateRegistration(folder = "Project/vertx.io", displayName = "#Vertx_displayName", description = "VertxDescription.html", iconBase = "de/te2m/tools/netbeans/vertx/icons/logo16.png", content = "../"+TemplateIDs.VERTX_POM+".template", scriptEngine = "freemarker"),
+    @TemplateRegistration(folder = "Project/vertx.io", content = "../"+TemplateIDs.VERTX_DOCKER+".template", scriptEngine = "freemarker", category = "hidden")
+})
 @Messages("Vertx_displayName=Create a new Vertx.io 3.1 Project")
 public class VertxWizardIterator extends AbstractTe2mWizard implements WizardDescriptor./*Progress*/InstantiatingIterator {
 
@@ -172,17 +177,21 @@ public class VertxWizardIterator extends AbstractTe2mWizard implements WizardDes
         Map<String, Object> params = new HashMap<>();
         initializeCommonProperties(params);
         initializePomInfo(params, wiz);
-
+        params.put(PKG_CREATE_DOCKER, wiz.getProperty(PKG_CREATE_DOCKER));
         params.put(PKG_CREATE_FAT_JAR, wiz.getProperty(PKG_CREATE_FAT_JAR));
         //params.put(PROPERTY_VERTX_VERSION, wiz.getProperty(VERTX_VERSION));
         Set<FileObject> resultSet = new LinkedHashSet<>();
-        File dirF = normalizeFile((File) wiz.getProperty("projdir"));
-        dirF.mkdirs();
+        File projectBaseDir = normalizeFile((File) wiz.getProperty("projdir"));
+        projectBaseDir.mkdirs();
 
         FileObject template = getTemplate(wiz);
         DataObject dTemplate = find(template);
-        FileObject dir = toFileObject(dirF);
+        FileObject dir = toFileObject(projectBaseDir);
 
+        FileObject templateRoot = template.getParent();
+        
+        FileObject[] allTemplates = templateRoot.getChildren();
+        
         // Always open top dir as a project:
         resultSet.add(dir);
 
@@ -193,7 +202,21 @@ public class VertxWizardIterator extends AbstractTe2mWizard implements WizardDes
 
         resultSet.add(createdFile);
 
-        File parent = dirF.getParentFile();
+        FileObject dockerDir = lookupSubDir(dir, "src/main/docker");
+        
+        for (int i = 0; i < allTemplates.length; i++) {
+            FileObject currentTemplate = allTemplates[i];
+            if(TemplateIDs.VERTX_DOCKER.equals(currentTemplate.getNameExt()))
+            {
+                DataObject currentTemplateDO = find(currentTemplate);
+                DataObject dockerObj = currentTemplateDO.createFromTemplate(findFolder(dockerDir), "Dockerfile", params);
+                resultSet.add(dockerObj.getPrimaryFile());
+            }
+            System.out.println(">>>>>  "+i+"  >>>>> "+currentTemplate.getNameExt());
+            
+        }
+        
+        File parent = projectBaseDir.getParentFile();
         if (parent != null && parent.exists()) {
             setProjectsFolder(parent);
         }

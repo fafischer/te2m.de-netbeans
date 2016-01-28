@@ -1,0 +1,16 @@
+FROM java:8
+
+ENV VERTICLE_FILE ${pomInfo.artifactID}-${pomInfo.version}-fat.jar
+
+# Set the location of the verticles
+ENV VERTICLE_HOME /usr/verticles
+
+EXPOSE 8080
+
+# Copy your fat jar to the container
+COPY target/${r"$"}VERTICLE_FILE ${r"$"}VERTICLE_HOME/
+
+# Launch the verticle
+WORKDIR ${r"$"}VERTICLE_HOME
+ENTRYPOINT ["sh", "-c"]
+CMD ["java -jar ${r"$"}VERTICLE_FILE"]  
