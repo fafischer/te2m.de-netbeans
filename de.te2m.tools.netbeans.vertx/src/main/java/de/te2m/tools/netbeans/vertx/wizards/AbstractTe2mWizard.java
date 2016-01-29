@@ -25,13 +25,16 @@ import org.openide.filesystems.FileObject;
 import static org.openide.util.Exceptions.printStackTrace;
 import static org.openide.util.NbPreferences.forModule;
 import static java.lang.System.getProperty;
+import java.util.StringTokenizer;
+import org.openide.filesystems.FileUtil;
+import org.openide.loaders.DataFolder;
 
 /**
  * The Class AbstractTe2mWizard.
  *
  * @author ffischer
  */
-public class AbstractTe2mWizard implements TemplateKeys{
+public class AbstractTe2mWizard implements TemplateKeys {
 
     /**
      * Gets the sub dir.
@@ -83,9 +86,10 @@ public class AbstractTe2mWizard implements TemplateKeys{
     }
 
     /**
-     * Initialize the POM Info container.
-     * This container will be used in FreeMarker templates.
-     * It will be initialized based on the several Netbeans Options and the data provided by the current wizard.
+     * Initialize the POM Info container. This container will be used in
+     * FreeMarker templates. It will be initialized based on the several
+     * Netbeans Options and the data provided by the current wizard.
+     *
      * @param params the params
      * @param wiz the wizard descriptor
      */
@@ -132,6 +136,67 @@ public class AbstractTe2mWizard implements TemplateKeys{
         } else {
             return baseDir;
         }
+    }
+
+    protected FileObject getTemplateFolder() {
+        FileObject fo = FileUtil.getConfigFile("Templates"); // NOI18N
+
+        if (fo != null && fo.isFolder()) {
+
+            return fo;
+
+        }
+        return null;
+    }
+
+    protected FileObject getTemplateByNameAndFolder(String name, String folder) {
+        FileObject fo = FileUtil.getConfigFile("Templates"); // NOI18N
+
+        FileObject tmplFolder = getTemplateFolder(fo, folder);
+
+        if (null != tmplFolder && tmplFolder.isFolder()) {
+            return tmplFolder.getFileObject(name);
+        } else {
+            return null;
+        }
+
+    }
+
+    protected FileObject getTemplateFolder(FileObject base, String folder) {
+        if (null == base) {
+            return null;
+        }
+
+        if (!base.isFolder()) {
+            return null;
+        }
+
+        if (null == folder || folder.trim().length() == 0) {
+            return null;
+        }
+        
+        FileObject[] templates = base.getChildren();
+        
+        if (folder.contains("/")) {
+            // Folder name contains subfolders
+
+            StringTokenizer st = new StringTokenizer(folder, "/");
+
+            String nextSubfolderName = st.nextToken();
+
+            String remainingFolderName = folder.substring(nextSubfolderName.length()+1);
+
+            FileObject subfolder = base.getFileObject(nextSubfolderName);
+
+            return getTemplateFolder(subfolder, remainingFolderName);
+
+        } else {
+
+            FileObject fo = base.getFileObject(folder);
+
+            return fo;
+        }
+
     }
 
 }
