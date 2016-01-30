@@ -1,5 +1,5 @@
 /**
- * Provides a wizard for creating an test case for a Vertx.io Verticle..
+ * Provides a wizard for creating an Dockerfile for a Vertx.io Verticle..
  * 
  */
 

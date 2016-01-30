@@ -21,6 +21,8 @@ import java.util.Map;
 
 /**
  * The Class FreemarkerUtils.
+ * 
+ * @deprecated 
  *
  * @author ffischer
  */
@@ -93,6 +95,5 @@ public class FreemarkerUtils {
      * @param t the t
      */
     protected static void handleException(Throwable t) {
-        t.printStackTrace();
     }
 }
