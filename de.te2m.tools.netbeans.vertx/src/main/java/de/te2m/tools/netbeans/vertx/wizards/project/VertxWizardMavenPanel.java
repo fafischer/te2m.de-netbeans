@@ -60,6 +60,7 @@ public class VertxWizardMavenPanel implements WizardDescriptor.Panel,
     /* (non-Javadoc)
      * @see org.openide.WizardDescriptor.Panel#addChangeListener(javax.swing.event.ChangeListener)
      */
+    @Override
     public final void addChangeListener(ChangeListener l) {
         synchronized (listeners) {
             listeners.add(l);
@@ -75,14 +76,15 @@ public class VertxWizardMavenPanel implements WizardDescriptor.Panel,
             ls = new HashSet<>(listeners);
         }
         ChangeEvent ev = new ChangeEvent(this);
-        for (ChangeListener l : ls) {
+        ls.stream().forEach((l) -> {
             l.stateChanged(ev);
-        }
+        });
     }
 
     /* (non-Javadoc)
      * @see org.openide.WizardDescriptor.Panel#getComponent()
      */
+    @Override
     public Component getComponent() {
         if (component == null) {
             component = new VertxMavenPanelVisual(this);
@@ -94,6 +96,7 @@ public class VertxWizardMavenPanel implements WizardDescriptor.Panel,
     /* (non-Javadoc)
      * @see org.openide.WizardDescriptor.Panel#getHelp()
      */
+    @Override
     public HelpCtx getHelp() {
         return new HelpCtx(VertxWizardMavenPanel.class);
     }
@@ -101,13 +104,15 @@ public class VertxWizardMavenPanel implements WizardDescriptor.Panel,
     /* (non-Javadoc)
      * @see org.openide.WizardDescriptor.FinishablePanel#isFinishPanel()
      */
+    @Override
     public boolean isFinishPanel() {
-        return true;
+        return false;
     }
 
     /* (non-Javadoc)
      * @see org.openide.WizardDescriptor.Panel#isValid()
      */
+    @Override
     public boolean isValid() {
         getComponent();
         return component.valid(wizardDescriptor);
@@ -116,6 +121,7 @@ public class VertxWizardMavenPanel implements WizardDescriptor.Panel,
     /* (non-Javadoc)
      * @see org.openide.WizardDescriptor.Panel#readSettings(java.lang.Object)
      */
+    @Override
     public void readSettings(Object settings) {
         wizardDescriptor = (WizardDescriptor) settings;
         component.read(wizardDescriptor);
@@ -124,6 +130,7 @@ public class VertxWizardMavenPanel implements WizardDescriptor.Panel,
     /* (non-Javadoc)
      * @see org.openide.WizardDescriptor.Panel#removeChangeListener(javax.swing.event.ChangeListener)
      */
+    @Override
     public final void removeChangeListener(ChangeListener l) {
         synchronized (listeners) {
             listeners.remove(l);
@@ -133,6 +140,7 @@ public class VertxWizardMavenPanel implements WizardDescriptor.Panel,
     /* (non-Javadoc)
      * @see org.openide.WizardDescriptor.Panel#storeSettings(java.lang.Object)
      */
+    @Override
     public void storeSettings(Object settings) {
         WizardDescriptor d = (WizardDescriptor) settings;
         component.store(d);
@@ -141,6 +149,7 @@ public class VertxWizardMavenPanel implements WizardDescriptor.Panel,
     /* (non-Javadoc)
      * @see org.openide.WizardDescriptor.ValidatingPanel#validate()
      */
+    @Override
     public void validate() throws WizardValidationException {
         getComponent();
         component.validate(wizardDescriptor);

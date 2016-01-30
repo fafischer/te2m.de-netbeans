@@ -6,17 +6,17 @@
 * This file is part of the de.te2m.tools.netbeans.vertx project which is a sub project of the te2m.de Netbeans modules 
 * (https://github.com/fafischer/te2m.de-netbeans).
 * 
-*/
+ */
 package de.te2m.tools.netbeans.vertx.options;
 
+import de.te2m.tools.netbeans.vertx.Validator;
 import de.te2m.tools.netbeans.vertx.wizards.TemplateKeys;
 import static de.te2m.tools.netbeans.vertx.wizards.TemplateKeys.VERTX_USE_FAT_JAR_DEFAULT;
 import static de.te2m.tools.netbeans.vertx.wizards.TemplateKeys.VERTX_VERSION;
 import static org.openide.util.NbPreferences.forModule;
 
 /**
- * The Class MavenPanel.
- * Option panel used for handling Maven defaults.
+ * The Class MavenPanel. Option panel used for handling Maven defaults.
  *
  * @author ffischer
  * @version 1.0
@@ -32,12 +32,13 @@ public final class VertxPanel extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField defaultVersionText;
     private javax.swing.JCheckBox dockerfileDefaultCheckBox;
+    private javax.swing.JTextField dockerImageNameTextField;
     private javax.swing.JCheckBox fatJarCheckBox;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JTextField dockerImageNameTextField;
+    private javax.swing.JLabel msgLabel;
     // End of variables declaration//GEN-END:variables
     /**
      * Instantiates a new common panel.
@@ -75,6 +76,7 @@ public final class VertxPanel extends javax.swing.JPanel {
         dockerfileDefaultCheckBox = new javax.swing.JCheckBox();
         jLabel4 = new javax.swing.JLabel();
         dockerImageNameTextField = new javax.swing.JTextField();
+        msgLabel = new javax.swing.JLabel();
 
         org.openide.awt.Mnemonics.setLocalizedText(jLabel3, org.openide.util.NbBundle.getMessage(VertxPanel.class, "VertxPanel.jLabel3.text")); // NOI18N
 
@@ -113,6 +115,9 @@ public final class VertxPanel extends javax.swing.JPanel {
             }
         });
 
+        org.openide.awt.Mnemonics.setLocalizedText(msgLabel, org.openide.util.NbBundle.getMessage(VertxPanel.class, "VertxPanel.msgLabel.text")); // NOI18N
+        msgLabel.setToolTipText(org.openide.util.NbBundle.getMessage(VertxPanel.class, "VertxPanel.msgLabel.toolTipText")); // NOI18N
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -120,16 +125,19 @@ public final class VertxPanel extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel4))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(dockerImageNameTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 410, Short.MAX_VALUE)
-                    .addComponent(defaultVersionText)
-                    .addComponent(fatJarCheckBox)
-                    .addComponent(dockerfileDefaultCheckBox))
+                    .addComponent(msgLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel4))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(dockerImageNameTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 410, Short.MAX_VALUE)
+                            .addComponent(defaultVersionText)
+                            .addComponent(fatJarCheckBox)
+                            .addComponent(dockerfileDefaultCheckBox))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -151,7 +159,9 @@ public final class VertxPanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(dockerImageNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4))
-                .addContainerGap(126, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 97, Short.MAX_VALUE)
+                .addComponent(msgLabel)
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -169,18 +179,21 @@ public final class VertxPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_dockerfileDefaultCheckBoxActionPerformed
 
     private void dockerImageNameTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dockerImageNameTextFieldActionPerformed
-        // TODO add your handling code here:
+        if (dockerImageNameTextField.getText().length() > 0 && !Validator.validateDockerImageName(dockerImageNameTextField.getText())) {
+            msgLabel.setText("The name for the docker image is invalid");
+            msgLabel.setVisible(true);
+        }
     }//GEN-LAST:event_dockerImageNameTextFieldActionPerformed
 
     /**
-     * Load the option values.
-     * If no value is already available then default values will be used (if available)
+     * Load the option values. If no value is already available then default
+     * values will be used (if available)
      */
     void load() {
         defaultVersionText.setText(forModule(VertxPanel.class).get(VERTX_VERSION, "3.1.0"));
         fatJarCheckBox.setSelected(forModule(VertxPanel.class).getBoolean(VERTX_USE_FAT_JAR_DEFAULT, true));
         dockerfileDefaultCheckBox.setSelected(forModule(VertxPanel.class).getBoolean(TemplateKeys.VERTX_GENERATE_DOCKER_DEFAULT, true));
-        dockerImageNameTextField.setText(forModule(VertxPanel.class).get(TemplateKeys.VERTX_DOCKER_DEFAULT_IMAGE_NAME,""));
+        dockerImageNameTextField.setText(forModule(VertxPanel.class).get(TemplateKeys.VERTX_DOCKER_DEFAULT_IMAGE_NAME, ""));
     }
 
     /**
@@ -199,7 +212,12 @@ public final class VertxPanel extends javax.swing.JPanel {
      * @return true, if successful
      */
     boolean valid() {
-        // TODO check whether form is consistent and complete
+        if (dockerImageNameTextField.getText().length() > 0 && !Validator.validateDockerImageName(dockerImageNameTextField.getText())) {
+            msgLabel.setText("The name for the docker image is invalid");
+            msgLabel.setVisible(true);
+            return false;
+        }
+        msgLabel.setVisible(false);
         return true;
     }
 }

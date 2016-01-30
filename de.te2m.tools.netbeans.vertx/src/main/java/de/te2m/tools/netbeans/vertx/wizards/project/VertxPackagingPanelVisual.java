@@ -6,13 +6,15 @@
 * This file is part of the de.te2m.tools.netbeans.vertx project which is a sub project of the te2m.de Netbeans modules 
 * (https://github.com/fafischer/te2m.de-netbeans).
 * 
-*/
+ */
 package de.te2m.tools.netbeans.vertx.wizards.project;
 
+import de.te2m.tools.netbeans.vertx.Validator;
 import de.te2m.tools.netbeans.vertx.options.VertxPanel;
 import de.te2m.tools.netbeans.vertx.wizards.TemplateKeys;
-import static de.te2m.tools.netbeans.vertx.wizards.TemplateKeys.VERTX_VERSION;
 import javax.swing.JPanel;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.text.Document;
@@ -21,13 +23,14 @@ import org.openide.WizardValidationException;
 import static org.openide.util.NbPreferences.forModule;
 
 /**
- * The Class VertxPanelVisual.
+ * The Class VertxPanelVisual. Wizard panel for managing vertx deployment
+ * related options.
  *
  * @author ffischer
  * @version 1.0
  * @since 1.0
  */
-public class VertxPackagingPanelVisual extends JPanel implements DocumentListener {
+public class VertxPackagingPanelVisual extends JPanel implements DocumentListener, ChangeListener {
 
     /**
      * The Constant PROP_PROJECT_NAME.
@@ -37,7 +40,7 @@ public class VertxPackagingPanelVisual extends JPanel implements DocumentListene
     /**
      * The panel.
      */
-    private VertxWizardPackagingPanel panel;
+    private final VertxWizardPackagingPanel panel;
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     /**
@@ -46,9 +49,29 @@ public class VertxPackagingPanelVisual extends JPanel implements DocumentListene
     private javax.swing.JCheckBox createDockerCheckBox;
     
     /**
+     * The create docker image label.
+     */
+    private javax.swing.JLabel createDockerImageLabel;
+    
+    /**
      * The create fat jar check box.
      */
     private javax.swing.JCheckBox createFatJarCheckBox;
+    
+    /**
+     * The create fat jar label.
+     */
+    private javax.swing.JLabel createFatJarLabel;
+    
+    /**
+     * The docker image name label.
+     */
+    private javax.swing.JLabel dockerImageNameLabel;
+    
+    /**
+     * The docker image name text field.
+     */
+    private javax.swing.JTextField dockerImageNameTextField;
     // End of variables declaration//GEN-END:variables
 
     /**
@@ -60,8 +83,9 @@ public class VertxPackagingPanelVisual extends JPanel implements DocumentListene
         initComponents();
         this.panel = panel;
         // Register listener on the textFields to make the automatic updates
-        //projectNameTextField.getDocument().addDocumentListener(this);
-        //projectLocationTextField.getDocument().addDocumentListener(this);
+        dockerImageNameTextField.getDocument().addDocumentListener(this);
+        createFatJarCheckBox.addChangeListener(this);
+        createDockerCheckBox.addChangeListener(this);
     }
 
     /* (non-Javadoc)
@@ -78,9 +102,11 @@ public class VertxPackagingPanelVisual extends JPanel implements DocumentListene
     /* (non-Javadoc)
      * @see javax.swing.event.DocumentListener#changedUpdate(javax.swing.event.DocumentEvent)
      */
+    @Override
     public void changedUpdate(DocumentEvent e) {
-        updateTexts(e);
-        
+        panel.fireChangeEvent();        
+        //updateTexts(e);
+
     }
 
     /**
@@ -89,10 +115,13 @@ public class VertxPackagingPanelVisual extends JPanel implements DocumentListene
      * @param evt the evt
      */
     private void createFatJarCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createFatJarCheckBoxActionPerformed
-       
+
         // enable docker creation if FatJar is selected
-        createDockerCheckBox.setEnabled(createFatJarCheckBox.isSelected());
-        
+        Boolean value = createFatJarCheckBox.isSelected();
+        createDockerCheckBox.setVisible(value);
+        createDockerImageLabel.setVisible(value);
+        dockerImageNameTextField.setVisible(value && createDockerCheckBox.isSelected());
+        dockerImageNameLabel.setVisible(value && createDockerCheckBox.isSelected());
     }//GEN-LAST:event_createFatJarCheckBoxActionPerformed
 
     /**
@@ -105,40 +134,69 @@ public class VertxPackagingPanelVisual extends JPanel implements DocumentListene
 
         createFatJarCheckBox = new javax.swing.JCheckBox();
         createDockerCheckBox = new javax.swing.JCheckBox();
+        createFatJarLabel = new javax.swing.JLabel();
+        createDockerImageLabel = new javax.swing.JLabel();
+        dockerImageNameLabel = new javax.swing.JLabel();
+        dockerImageNameTextField = new javax.swing.JTextField();
 
         org.openide.awt.Mnemonics.setLocalizedText(createFatJarCheckBox, org.openide.util.NbBundle.getMessage(VertxPackagingPanelVisual.class, "VertxPackagingPanelVisual.createFatJarCheckBox.text")); // NOI18N
+        createFatJarCheckBox.setToolTipText(org.openide.util.NbBundle.getMessage(VertxPackagingPanelVisual.class, "VertxPackagingPanelVisual.createFatJarCheckBox.toolTipText")); // NOI18N
         createFatJarCheckBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 createFatJarCheckBoxActionPerformed(evt);
             }
         });
 
-        createDockerCheckBox.setLabel(org.openide.util.NbBundle.getMessage(VertxPackagingPanelVisual.class, "VertxPackagingPanelVisual.createDockerCheckBox.label")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(createDockerCheckBox, org.openide.util.NbBundle.getMessage(VertxPackagingPanelVisual.class, "VertxPackagingPanelVisual.createDockerCheckBox.text_1")); // NOI18N
+        createDockerCheckBox.setToolTipText(org.openide.util.NbBundle.getMessage(VertxPackagingPanelVisual.class, "VertxPackagingPanelVisual.createDockerCheckBox.toolTipText")); // NOI18N
         createDockerCheckBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 createDockerCheckBoxActionPerformed(evt);
             }
         });
 
+        org.openide.awt.Mnemonics.setLocalizedText(createFatJarLabel, org.openide.util.NbBundle.getMessage(VertxPackagingPanelVisual.class, "VertxPackagingPanelVisual.createFatJarLabel.text")); // NOI18N
+
+        org.openide.awt.Mnemonics.setLocalizedText(createDockerImageLabel, org.openide.util.NbBundle.getMessage(VertxPackagingPanelVisual.class, "VertxPackagingPanelVisual.createDockerImageLabel.text")); // NOI18N
+
+        org.openide.awt.Mnemonics.setLocalizedText(dockerImageNameLabel, org.openide.util.NbBundle.getMessage(VertxPackagingPanelVisual.class, "VertxPackagingPanelVisual.dockerImageNameLabel.text")); // NOI18N
+
+        dockerImageNameTextField.setText(org.openide.util.NbBundle.getMessage(VertxPackagingPanelVisual.class, "VertxPackagingPanelVisual.dockerImageNameTextField.text")); // NOI18N
+        dockerImageNameTextField.setToolTipText(org.openide.util.NbBundle.getMessage(VertxPackagingPanelVisual.class, "VertxPackagingPanelVisual.dockerImageNameTextField.toolTipText")); // NOI18N
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(28, 28, 28)
+                .addGap(24, 24, 24)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(createFatJarLabel)
+                    .addComponent(createDockerImageLabel)
+                    .addComponent(dockerImageNameLabel))
+                .addGap(44, 44, 44)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(createDockerCheckBox)
-                    .addComponent(createFatJarCheckBox))
-                .addContainerGap(493, Short.MAX_VALUE))
+                    .addComponent(createFatJarCheckBox)
+                    .addComponent(dockerImageNameTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 469, Short.MAX_VALUE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(32, 32, 32)
-                .addComponent(createFatJarCheckBox)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(createFatJarCheckBox)
+                    .addComponent(createFatJarLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(createDockerCheckBox)
+                    .addComponent(createDockerImageLabel))
                 .addGap(18, 18, 18)
-                .addComponent(createDockerCheckBox)
-                .addContainerGap(209, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(dockerImageNameLabel)
+                    .addComponent(dockerImageNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(178, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -148,14 +206,17 @@ public class VertxPackagingPanelVisual extends JPanel implements DocumentListene
      * @param evt the evt
      */
     private void createDockerCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createDockerCheckBoxActionPerformed
-        // TODO add your handling code here:
+        dockerImageNameLabel.setVisible(createDockerCheckBox.isVisible() && createDockerCheckBox.isSelected());
+        dockerImageNameTextField.setVisible(createDockerCheckBox.isVisible() && createDockerCheckBox.isSelected());
     }//GEN-LAST:event_createDockerCheckBoxActionPerformed
 
     /* (non-Javadoc)
      * @see javax.swing.event.DocumentListener#insertUpdate(javax.swing.event.DocumentEvent)
      */
+    @Override
     public void insertUpdate(DocumentEvent e) {
-        updateTexts(e);
+        panel.fireChangeEvent();
+        //updateTexts(e);
     }
 
     /**
@@ -168,23 +229,37 @@ public class VertxPackagingPanelVisual extends JPanel implements DocumentListene
         if (value == null) {
             value = forModule(VertxPanel.class).getBoolean(TemplateKeys.VERTX_USE_FAT_JAR_DEFAULT, false);
         }
-        
+
         createFatJarCheckBox.setSelected(value);
         // docker will be only enabled if an FatJar is created
-        createDockerCheckBox.setEnabled(value);
-        value = (Boolean) settings.getProperty(TemplateKeys.PKG_CREATE_DOCKER);
-        if(null==value)
-        {
-            value=Boolean.FALSE;
+        //createDockerCheckBox.setEnabled(value);
+        createDockerCheckBox.setVisible(value);
+
+        Boolean dockervalue = (Boolean) settings.getProperty(TemplateKeys.PKG_CREATE_DOCKER);
+        if (null == dockervalue) {
+            dockervalue = Boolean.FALSE;
         }
-        createDockerCheckBox.setSelected(value);
+        createDockerCheckBox.setSelected(dockervalue);
+        createDockerImageLabel.setVisible(value);
+
+        String txt = (String) settings.getProperty(TemplateKeys.PKG_DOCKER_IMAGE_NAME);
+        if (txt == null) {
+            txt = forModule(VertxPanel.class).get(TemplateKeys.VERTX_DOCKER_DEFAULT_IMAGE_NAME, "");
+        }
+        dockerImageNameTextField.setText(txt);
+        //dockerImageNameTextField.setEnabled(value && dockervalue);
+        dockerImageNameTextField.setVisible(value && dockervalue);
+        dockerImageNameLabel.setVisible(value && dockervalue);
+
     }
 
     /* (non-Javadoc)
      * @see javax.swing.event.DocumentListener#removeUpdate(javax.swing.event.DocumentEvent)
      */
+    @Override
     public void removeUpdate(DocumentEvent e) {
-        updateTexts(e);
+        panel.fireChangeEvent();
+        //updateTexts(e);
     }
 
     /**
@@ -194,31 +269,34 @@ public class VertxPackagingPanelVisual extends JPanel implements DocumentListene
      */
     void store(WizardDescriptor d) {
         Boolean fatJarValue = createFatJarCheckBox.isSelected();
-        Boolean dockerValue = createFatJarCheckBox.isSelected();
+        Boolean dockerValue = createDockerCheckBox.isSelected();
         d.putProperty(TemplateKeys.PKG_CREATE_FAT_JAR, fatJarValue);
         d.putProperty(TemplateKeys.PKG_CREATE_DOCKER, dockerValue);
+        d.putProperty(TemplateKeys.PKG_DOCKER_IMAGE_NAME, dockerImageNameTextField.getText());
     }
 
     /**
-     * Handles changes in the Project name and project directory,.
-     *
-     * @param e the e
-     */
-    private void updateTexts(DocumentEvent e) {
-        
-        Document doc = e.getDocument();
-        
-        panel.fireChangeEvent(); // Notify that the panel changed
-    }
-
-    /**
-     * Valid.
+     * Checks if the entered values are valid.
      *
      * @param wizardDescriptor the wizard descriptor
      * @return true, if successful
      */
     boolean valid(WizardDescriptor wizardDescriptor) {
-        
+
+        if (dockerImageNameTextField.isVisible()) {
+            String imageName = dockerImageNameTextField.getText();
+
+            if (null == imageName || imageName.trim().length() == 0) {
+                wizardDescriptor.putProperty("WizardPanel_errorMessage", "Docker image name is missing");
+                return false;
+            } else if (imageName.length() > 256) {
+                wizardDescriptor.putProperty("WizardPanel_errorMessage", "Docker image name is too long");
+                return false;
+            } else if (!Validator.validateDockerImageName(imageName)) {
+                wizardDescriptor.putProperty("WizardPanel_errorMessage", "Docker image name invalid");
+                return false;
+            }
+        }
         wizardDescriptor.putProperty("WizardPanel_errorMessage", "");
         return true;
     }
@@ -232,5 +310,10 @@ public class VertxPackagingPanelVisual extends JPanel implements DocumentListene
     void validate(WizardDescriptor d) throws WizardValidationException {
         // nothing to validate
     }
-    
+
+    @Override
+    public void stateChanged(ChangeEvent e) {
+        panel.fireChangeEvent();
+    }
+
 }

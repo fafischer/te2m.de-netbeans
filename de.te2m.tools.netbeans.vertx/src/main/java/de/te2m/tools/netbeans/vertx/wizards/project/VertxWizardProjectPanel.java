@@ -60,6 +60,7 @@ public class VertxWizardProjectPanel implements WizardDescriptor.Panel,
     /* (non-Javadoc)
      * @see org.openide.WizardDescriptor.Panel#addChangeListener(javax.swing.event.ChangeListener)
      */
+    @Override
     public final void addChangeListener(ChangeListener l) {
         synchronized (listeners) {
             listeners.add(l);
@@ -105,7 +106,7 @@ public class VertxWizardProjectPanel implements WizardDescriptor.Panel,
      */
     @Override
     public boolean isFinishPanel() {
-        return true;
+        return false;
     }
 
     /* (non-Javadoc)

@@ -17,12 +17,19 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="createFatJarLabel" min="-2" max="-2" attributes="0"/>
+                  <Component id="createDockerImageLabel" min="-2" max="-2" attributes="0"/>
+                  <Component id="dockerImageNameLabel" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" pref="44" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="createDockerCheckBox" min="-2" max="-2" attributes="0"/>
                   <Component id="createFatJarCheckBox" min="-2" max="-2" attributes="0"/>
+                  <Component id="dockerImageNameTextField" alignment="0" pref="469" max="32767" attributes="0"/>
               </Group>
-              <EmptySpace pref="493" max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -30,10 +37,21 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
-              <Component id="createFatJarCheckBox" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="createFatJarCheckBox" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="createFatJarLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="createDockerCheckBox" min="-2" max="-2" attributes="0"/>
+                  <Component id="createDockerImageLabel" min="-2" max="-2" attributes="0"/>
+              </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="createDockerCheckBox" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="209" max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="dockerImageNameLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="dockerImageNameTextField" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace pref="178" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -44,6 +62,9 @@
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
           <ResourceString bundle="de/te2m/tools/netbeans/vertx/wizards/project/Bundle.properties" key="VertxPackagingPanelVisual.createFatJarCheckBox.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
         </Property>
+        <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+          <ResourceString bundle="de/te2m/tools/netbeans/vertx/wizards/project/Bundle.properties" key="VertxPackagingPanelVisual.createFatJarCheckBox.toolTipText" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+        </Property>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="createFatJarCheckBoxActionPerformed"/>
@@ -51,13 +72,47 @@
     </Component>
     <Component class="javax.swing.JCheckBox" name="createDockerCheckBox">
       <Properties>
-        <Property name="label" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="de/te2m/tools/netbeans/vertx/wizards/project/Bundle.properties" key="VertxPackagingPanelVisual.createDockerCheckBox.label" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+          <ResourceString bundle="de/te2m/tools/netbeans/vertx/wizards/project/Bundle.properties" key="VertxPackagingPanelVisual.createDockerCheckBox.text_1" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+        </Property>
+        <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+          <ResourceString bundle="de/te2m/tools/netbeans/vertx/wizards/project/Bundle.properties" key="VertxPackagingPanelVisual.createDockerCheckBox.toolTipText" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
         </Property>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="createDockerCheckBoxActionPerformed"/>
       </Events>
+    </Component>
+    <Component class="javax.swing.JLabel" name="createFatJarLabel">
+      <Properties>
+        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+          <ResourceString bundle="de/te2m/tools/netbeans/vertx/wizards/project/Bundle.properties" key="VertxPackagingPanelVisual.createFatJarLabel.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+        </Property>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="createDockerImageLabel">
+      <Properties>
+        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+          <ResourceString bundle="de/te2m/tools/netbeans/vertx/wizards/project/Bundle.properties" key="VertxPackagingPanelVisual.createDockerImageLabel.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+        </Property>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="dockerImageNameLabel">
+      <Properties>
+        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+          <ResourceString bundle="de/te2m/tools/netbeans/vertx/wizards/project/Bundle.properties" key="VertxPackagingPanelVisual.dockerImageNameLabel.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+        </Property>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="dockerImageNameTextField">
+      <Properties>
+        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+          <ResourceString bundle="de/te2m/tools/netbeans/vertx/wizards/project/Bundle.properties" key="VertxPackagingPanelVisual.dockerImageNameTextField.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+        </Property>
+        <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+          <ResourceString bundle="de/te2m/tools/netbeans/vertx/wizards/project/Bundle.properties" key="VertxPackagingPanelVisual.dockerImageNameTextField.toolTipText" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+        </Property>
+      </Properties>
     </Component>
   </SubComponents>
 </Form>
