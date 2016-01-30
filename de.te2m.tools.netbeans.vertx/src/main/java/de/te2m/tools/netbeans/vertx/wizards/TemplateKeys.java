@@ -11,7 +11,7 @@ package de.te2m.tools.netbeans.vertx.wizards;
 
 /**
  * The Interface TemplateKeys.
- * Contains constants for accessing certain values in wizards and Freemarker templates.
+ * Contains constants for accessing certain values in options, wizards and Freemarker templates.
  *
  * @author ffischer
  */
@@ -132,4 +132,16 @@ public interface TemplateKeys {
      * The Constant PKG_CREATE_DOCKER.
      */
     public static final String PKG_CREATE_DOCKER="createDocker";
+    
+    /**
+     * The Constant VERTX_GENERATE_DOCKER_DEFAULT.
+     * Used for storing the default if a dockerfile should be created or not 
+     */
+    public static final String VERTX_GENERATE_DOCKER_DEFAULT="Vertx_Generate_Dockerfile_Default";
+    
+    /**
+     * The Constant VERTX_DOCKER_DEFAULT_IMAGE_NAME.
+     * Used for storing the default docker image name  
+     */
+    public static final String VERTX_DOCKER_DEFAULT_IMAGE_NAME="Vertx_Default_DockerImage_Name";
 }
