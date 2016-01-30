@@ -1,5 +1,5 @@
 # te2m.de-netbeans
-This repository contains several Netbeans Modules provided by te2m.de
+This repository contains several Netbeans Modules
 
 ## Modules
 
