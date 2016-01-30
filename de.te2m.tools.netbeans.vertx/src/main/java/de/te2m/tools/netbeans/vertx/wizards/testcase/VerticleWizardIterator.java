@@ -181,9 +181,9 @@ public final class VerticleWizardIterator extends AbstractTe2mWizard implements 
 
         String packName = (String) wizard.getProperty(PROPERTY_PACKAGE);
 
-        params.put(PROPERTY_NAME, fName);
+        params.put(PROPERTY_CLASS_NAME, fName);
         params.put(PROPERTY_PACKAGE, packName);
-        params.put(PROPERTY_DESCRIPTION, wizard.getProperty(PROPERTY_DESCRIPTION));
+        params.put(PROPERTY_CLASS_DESCRIPTION, wizard.getProperty(PROPERTY_DESCRIPTION));
 
         initializeCommonProperties(params);
         //Get the template and convert it:

@@ -214,18 +214,27 @@ public class VertxWizardIterator extends AbstractTe2mWizard implements WizardDes
         resultSet.add(createdFile);
 
         FileObject mainJavaRoot = lookupSubDir(projectBaseDirFO, "src/main/java");
-
+        FileObject mainTestRoot = lookupSubDir(projectBaseDirFO, "src/test/java");
         String folder = null!=pkgName? pkgName: "";
 
-        FileObject res = lookupSubDir(mainJavaRoot, folder.replace(".", "/"));
+        FileObject res;
 
         FileObject fo = getTemplateByNameAndFolder("BaseVerticle.java", "Vertx.io");
 
         if (null != fo) {
+            res = lookupSubDir(mainJavaRoot, folder.replace(".", "/"));
             DataObject currentTemplateDO = find(fo);
             DataObject classDO = currentTemplateDO.createFromTemplate(findFolder(res), className + ".java", params);
             resultSet.add(classDO.getPrimaryFile());
-            //System.out.println(">>>>>  "+i+"  >>>>> "+currentTemplate.getNameExt());
+        }
+        
+        fo = getTemplateByNameAndFolder("VerticleUnitTest.java", "Vertx.io");
+
+        if (null != fo) {
+            res = lookupSubDir(mainTestRoot, folder.replace(".", "/"));
+            DataObject currentTemplateDO = find(fo);
+            DataObject classDO = currentTemplateDO.createFromTemplate(findFolder(res), className + "Test.java", params);
+            resultSet.add(classDO.getPrimaryFile());
         }
 
         if (Boolean.TRUE.equals(createDocker) && Boolean.TRUE.equals(createFatJar)) {

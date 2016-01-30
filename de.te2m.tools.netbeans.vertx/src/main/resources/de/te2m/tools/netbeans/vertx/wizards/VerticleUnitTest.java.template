@@ -11,7 +11,7 @@ import org.junit.runner.RunWith;
 import static org.junit.Assert.*;
 
 /*
-* Test case for ${TargetName}
+* Test case for ${TargetClassName}
 *
 * created on ${CreationDate}
 *
@@ -19,27 +19,29 @@ import static org.junit.Assert.*;
 * @since ${Version}
 */
 @RunWith(VertxUnitRunner.class)
-public class ${TargetName}Test {
+public class ${TargetClassName}Test {
 
-  private Vertx vertx;
+    private Vertx vertx;
 
-  @Before
-  public void setUp(TestContext context) {
-    vertx = Vertx.vertx();
-    vertx.deployVerticle(${TargetName}.class.getName(),
-        context.asyncAssertSuccess());
-  }
+    @Before
+    public void setUp(TestContext context) {
+        vertx = Vertx.vertx();
+        vertx.deployVerticle(${TargetClassName}.class.getName(),
+            context.asyncAssertSuccess());
+    }
 
-  @After
-  public void tearDown(TestContext context) {
-    vertx.close(context.asyncAssertSuccess());
-  }
+    @After
+    public void tearDown(TestContext context) {
+        vertx.close(context.asyncAssertSuccess());
+    }
 
-  @Test
-  public void testMyApplication(TestContext context) {
+    @Test
+    public void test${TargetClassName}Default(TestContext context) {
 
-    // TODO Implement tests
-    fail("Not implemented yet");
+        // TODO Implement tests
+        fail("Not implemented yet");
 
-  }
+    }
+
+    // TODO Implement more tests
 }

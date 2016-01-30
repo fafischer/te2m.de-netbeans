@@ -12,8 +12,6 @@ package de.te2m.tools.netbeans.vertx.wizards.verticle.base;
 import de.te2m.tools.netbeans.vertx.wizards.VerticleWizardPanel;
 import de.te2m.tools.netbeans.vertx.wizards.AbstractTe2mWizard;
 import de.te2m.tools.netbeans.vertx.wizards.TemplateIDs;
-import static de.te2m.tools.netbeans.vertx.wizards.TemplateKeys.PROPERTY_DESCRIPTION;
-import static de.te2m.tools.netbeans.vertx.wizards.TemplateKeys.PROPERTY_NAME;
 import static de.te2m.tools.netbeans.vertx.wizards.TemplateKeys.PROPERTY_PACKAGE;
 import java.awt.Component;
 import java.io.IOException;
@@ -177,12 +175,11 @@ public final class VerticleWizardIterator extends AbstractTe2mWizard implements 
         Map<String, Object> params = new HashMap<>();
 
         String fName = (String) wizard.getProperty(PROPERTY_CLASS_NAME);
-
         String packName = (String) wizard.getProperty(PROPERTY_PACKAGE);
         
-                params.put(PROPERTY_CLASS_NAME, fName);
+        params.put(PROPERTY_CLASS_NAME, fName);
         params.put(PROPERTY_PACKAGE, packName);
-        params.put(PROPERTY_DESCRIPTION, wizard.getProperty(PROPERTY_CLASS_DESCRIPTION));
+        params.put(PROPERTY_CLASS_DESCRIPTION, wizard.getProperty(PROPERTY_CLASS_DESCRIPTION));
 
         initializeCommonProperties(params);
         
