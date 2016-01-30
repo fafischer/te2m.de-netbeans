@@ -1,12 +1,12 @@
 /*
 * DockerfileWizardIterator.java
 *   
-* Copyright 2009 - 2015 Frank Fischer (email: frank@te2m.de)
+* Copyright 2009 - 2016 Frank Fischer (email: frank@te2m.de)
 *
 * This file is part of the de.te2m.tools.netbeans.vertx project which is a sub project of the te2m.de Netbeans modules 
 * (https://github.com/fafischer/te2m.de-netbeans).
 * 
- */
+*/
 package de.te2m.tools.netbeans.vertx.wizards.dockerfile;
 import de.te2m.tools.netbeans.vertx.wizards.AbstractTe2mWizard;
 import de.te2m.tools.netbeans.vertx.wizards.TemplateIDs;

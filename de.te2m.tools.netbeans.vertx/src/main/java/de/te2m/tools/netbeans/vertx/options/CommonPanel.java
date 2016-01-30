@@ -1,12 +1,12 @@
 /*
 * CommonPanel.java
 *   
-* Copyright 2009 - 2015 Frank Fischer (email: frank@te2m.de)
+* Copyright 2009 - 2016 Frank Fischer (email: frank@te2m.de)
 *
 * This file is part of the de.te2m.tools.netbeans.vertx project which is a sub project of the te2m.de Netbeans modules 
 * (https://github.com/fafischer/te2m.de-netbeans).
 * 
- */
+*/
 package de.te2m.tools.netbeans.vertx.options;
 
 import static de.te2m.tools.netbeans.vertx.wizards.TemplateKeys.PROPERTY_COMPANY;
@@ -33,15 +33,54 @@ public final class CommonPanel extends javax.swing.JPanel {
     private final CommonOptionsPanelController controller;
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    /**
+     * The company url text field.
+     */
     private javax.swing.JTextField companyUrlTextField;
+    
+    /**
+     * The default company name text.
+     */
     private javax.swing.JTextField defaultCompanyNameText;
+    
+    /**
+     * The j label1.
+     */
     private javax.swing.JLabel jLabel1;
+    
+    /**
+     * The j label2.
+     */
     private javax.swing.JLabel jLabel2;
+    
+    /**
+     * The j label4.
+     */
     private javax.swing.JLabel jLabel4;
+    
+    /**
+     * The j label5.
+     */
     private javax.swing.JLabel jLabel5;
+    
+    /**
+     * The user display name label.
+     */
     private javax.swing.JLabel userDisplayNameLabel;
+    
+    /**
+     * The user display name text field.
+     */
     private javax.swing.JTextField userDisplayNameTextField;
+    
+    /**
+     * The user e mail text.
+     */
     private javax.swing.JTextField userEMailText;
+    
+    /**
+     * The user name text.
+     */
     private javax.swing.JTextField userNameText;
     // End of variables declaration//GEN-END:variables
 

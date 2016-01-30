@@ -1,7 +1,7 @@
 /*
 * TemplateKeys.java
 *   
-* Copyright 2009 - 2015 Frank Fischer (email: frank@te2m.de)
+* Copyright 2009 - 2016 Frank Fischer (email: frank@te2m.de)
 *
 * This file is part of the de.te2m.tools.netbeans.vertx project which is a sub project of the te2m.de Netbeans modules 
 * (https://github.com/fafischer/te2m.de-netbeans).
@@ -42,8 +42,14 @@ public interface TemplateKeys {
      */
     public static final String MVN_VERSION="Version";
 
+    /**
+     * The Constant VERTX_VERSION.
+     */
     public static final String VERTX_VERSION="Vertx_Version";
     
+    /**
+     * The Constant VERTX_USE_FAT_JAR_DEFAULT.
+     */
     public static final String VERTX_USE_FAT_JAR_DEFAULT="Vertx_Use_Fat_Jar_Default";
     
     /**
@@ -77,6 +83,9 @@ public interface TemplateKeys {
     public static final String PROPERTY_USER = "CurrentUser";
     
     
+    /**
+     * The Constant PROPERTY_VERTX_VERSION.
+     */
     public static final String PROPERTY_VERTX_VERSION ="vertxDefaultVersion";
 
     /**
@@ -119,5 +128,8 @@ public interface TemplateKeys {
      */
     public static final String PROPERTY_INCLUDE_USER="includeUserInfo";
     
+    /**
+     * The Constant PKG_CREATE_DOCKER.
+     */
     public static final String PKG_CREATE_DOCKER="createDocker";
 }

@@ -1,12 +1,12 @@
 /*
 * VertxPackagingPanelVisual.java
 *   
-* Copyright 2009 - 2015 Frank Fischer (email: frank@te2m.de)
+* Copyright 2009 - 2016 Frank Fischer (email: frank@te2m.de)
 *
 * This file is part of the de.te2m.tools.netbeans.vertx project which is a sub project of the te2m.de Netbeans modules 
 * (https://github.com/fafischer/te2m.de-netbeans).
 * 
- */
+*/
 package de.te2m.tools.netbeans.vertx.wizards.project;
 
 import de.te2m.tools.netbeans.vertx.options.VertxPanel;
@@ -40,7 +40,14 @@ public class VertxPackagingPanelVisual extends JPanel implements DocumentListene
     private VertxWizardPackagingPanel panel;
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    /**
+     * The create docker check box.
+     */
     private javax.swing.JCheckBox createDockerCheckBox;
+    
+    /**
+     * The create fat jar check box.
+     */
     private javax.swing.JCheckBox createFatJarCheckBox;
     // End of variables declaration//GEN-END:variables
 
@@ -77,7 +84,7 @@ public class VertxPackagingPanelVisual extends JPanel implements DocumentListene
     }
 
     /**
-     * Action listener when createFatJar checkbox is toggled; 
+     * Action listener when createFatJar checkbox is toggled;.
      *
      * @param evt the evt
      */
@@ -135,6 +142,11 @@ public class VertxPackagingPanelVisual extends JPanel implements DocumentListene
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Creates the docker check box action performed.
+     *
+     * @param evt the evt
+     */
     private void createDockerCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createDockerCheckBoxActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_createDockerCheckBoxActionPerformed

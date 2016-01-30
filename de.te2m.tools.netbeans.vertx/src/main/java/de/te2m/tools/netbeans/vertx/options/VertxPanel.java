@@ -1,12 +1,12 @@
 /*
-* MavenPanel.java
+* VertxPanel.java
 *   
-* Copyright 2009 - 2015 Frank Fischer (email: frank@te2m.de)
+* Copyright 2009 - 2016 Frank Fischer (email: frank@te2m.de)
 *
 * This file is part of the de.te2m.tools.netbeans.vertx project which is a sub project of the te2m.de Netbeans modules 
 * (https://github.com/fafischer/te2m.de-netbeans).
 * 
- */
+*/
 package de.te2m.tools.netbeans.vertx.options;
 
 import static de.te2m.tools.netbeans.vertx.wizards.TemplateKeys.VERTX_USE_FAT_JAR_DEFAULT;
@@ -29,9 +29,24 @@ public final class VertxPanel extends javax.swing.JPanel {
     private final VertxPanelController controller;
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    /**
+     * The default version text.
+     */
     private javax.swing.JTextField defaultVersionText;
+    
+    /**
+     * The fat jar check box.
+     */
     private javax.swing.JCheckBox fatJarCheckBox;
+    
+    /**
+     * The j label1.
+     */
     private javax.swing.JLabel jLabel1;
+    
+    /**
+     * The j label3.
+     */
     private javax.swing.JLabel jLabel3;
     // End of variables declaration//GEN-END:variables
 
@@ -115,6 +130,11 @@ public final class VertxPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Fat jar check box action performed.
+     *
+     * @param evt the evt
+     */
     private void fatJarCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fatJarCheckBoxActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_fatJarCheckBoxActionPerformed

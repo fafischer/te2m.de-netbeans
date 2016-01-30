@@ -1,12 +1,12 @@
 /*
 * MavenPanel.java
 *   
-* Copyright 2009 - 2015 Frank Fischer (email: frank@te2m.de)
+* Copyright 2009 - 2016 Frank Fischer (email: frank@te2m.de)
 *
 * This file is part of the de.te2m.tools.netbeans.vertx project which is a sub project of the te2m.de Netbeans modules 
 * (https://github.com/fafischer/te2m.de-netbeans).
 * 
- */
+*/
 package de.te2m.tools.netbeans.vertx.options;
 
 import static de.te2m.tools.netbeans.vertx.wizards.TemplateKeys.MVN_ARTIFACT_ID;
@@ -30,11 +30,34 @@ public final class MavenPanel extends javax.swing.JPanel {
     private final MavenPanelController controller;
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    /**
+     * The artifact id text field.
+     */
     private javax.swing.JTextField artifactIDTextField;
+    
+    /**
+     * The default version text.
+     */
     private javax.swing.JTextField defaultVersionText;
+    
+    /**
+     * The group id text field.
+     */
     private javax.swing.JTextField groupIDTextField;
+    
+    /**
+     * The j label1.
+     */
     private javax.swing.JLabel jLabel1;
+    
+    /**
+     * The j label2.
+     */
     private javax.swing.JLabel jLabel2;
+    
+    /**
+     * The j label3.
+     */
     private javax.swing.JLabel jLabel3;
     // End of variables declaration//GEN-END:variables
 

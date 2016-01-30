@@ -1,12 +1,12 @@
 /*
 * AbstractTe2mWizard.java
 *   
-* Copyright 2009 - 2015 Frank Fischer (email: frank@te2m.de)
+* Copyright 2009 - 2016 Frank Fischer (email: frank@te2m.de)
 *
 * This file is part of the de.te2m.tools.netbeans.vertx project which is a sub project of the te2m.de Netbeans modules 
 * (https://github.com/fafischer/te2m.de-netbeans).
 * 
- */
+*/
 package de.te2m.tools.netbeans.vertx.wizards;
 
 import de.te2m.tools.netbeans.vertx.internal.model.PomInfo;
@@ -16,7 +16,6 @@ import de.te2m.tools.netbeans.vertx.options.GeneratePanel;
 import de.te2m.tools.netbeans.vertx.options.MavenPanel;
 import de.te2m.tools.netbeans.vertx.options.VertxPanel;
 import java.io.IOException;
-import static java.lang.System.getProperty;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
@@ -27,7 +26,6 @@ import static org.openide.util.NbPreferences.forModule;
 import static java.lang.System.getProperty;
 import java.util.StringTokenizer;
 import org.openide.filesystems.FileUtil;
-import org.openide.loaders.DataFolder;
 
 /**
  * The Class AbstractTe2mWizard.
@@ -138,6 +136,11 @@ public class AbstractTe2mWizard implements TemplateKeys {
         }
     }
 
+    /**
+     * Gets the FileObject of the templates base folder.
+     *
+     * @return the template folder
+     */
     protected FileObject getTemplateFolder() {
         FileObject fo = FileUtil.getConfigFile("Templates"); // NOI18N
 
@@ -149,6 +152,13 @@ public class AbstractTe2mWizard implements TemplateKeys {
         return null;
     }
 
+    /**
+     * Gets the file object for an template by its name and folder.
+     *
+     * @param name the name
+     * @param folder the folder
+     * @return the template by name and folder
+     */
     protected FileObject getTemplateByNameAndFolder(String name, String folder) {
         FileObject fo = FileUtil.getConfigFile("Templates"); // NOI18N
 
@@ -162,6 +172,13 @@ public class AbstractTe2mWizard implements TemplateKeys {
 
     }
 
+    /**
+     * Gets the template folder.
+     *
+     * @param base the base
+     * @param folder the folder
+     * @return the template folder
+     */
     protected FileObject getTemplateFolder(FileObject base, String folder) {
         if (null == base) {
             return null;
@@ -174,8 +191,6 @@ public class AbstractTe2mWizard implements TemplateKeys {
         if (null == folder || folder.trim().length() == 0) {
             return null;
         }
-        
-        FileObject[] templates = base.getChildren();
         
         if (folder.contains("/")) {
             // Folder name contains subfolders

@@ -1,7 +1,7 @@
 /*
 * DockerfileVisualPanel1.java
 *   
-* Copyright 2009 - 2015 Frank Fischer (email: frank@te2m.de)
+* Copyright 2009 - 2016 Frank Fischer (email: frank@te2m.de)
 *
 * This file is part of the de.te2m.tools.netbeans.vertx project which is a sub project of the te2m.de Netbeans modules 
 * (https://github.com/fafischer/te2m.de-netbeans).
@@ -22,12 +22,39 @@ import javax.swing.JPanel;
 public final class DockerfileVisualPanel1 extends JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    /**
+     * The description text area.
+     */
     private javax.swing.JTextArea descriptionTextArea;
+    
+    /**
+     * The j label1.
+     */
     private javax.swing.JLabel jLabel1;
+    
+    /**
+     * The j label2.
+     */
     private javax.swing.JLabel jLabel2;
+    
+    /**
+     * The j label3.
+     */
     private javax.swing.JLabel jLabel3;
+    
+    /**
+     * The j scroll pane1.
+     */
     private javax.swing.JScrollPane jScrollPane1;
+    
+    /**
+     * The name text field.
+     */
     private javax.swing.JTextField nameTextField;
+    
+    /**
+     * The package text field.
+     */
     private javax.swing.JTextField packageTextField;
     // End of variables declaration//GEN-END:variables
 
