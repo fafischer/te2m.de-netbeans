@@ -78,6 +78,8 @@ public interface TemplateKeys {
      */
     public static final String PROPERTY_DESCRIPTION = "TargetDescription";
 
+    public static final String PROPERTY_CLASS_DESCRIPTION = "TargetClassDescription";
+    
     /**
      * The property folder.
      */
@@ -98,6 +100,8 @@ public interface TemplateKeys {
      * The property name.
      */
     public static final String PROPERTY_NAME = "TargetName";
+
+    public static final String PROPERTY_CLASS_NAME = "TargetClassName";
     
     /**
      * The property name space.

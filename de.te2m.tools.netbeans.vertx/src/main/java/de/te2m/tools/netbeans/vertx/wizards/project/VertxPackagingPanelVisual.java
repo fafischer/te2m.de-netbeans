@@ -17,7 +17,6 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-import javax.swing.text.Document;
 import org.openide.WizardDescriptor;
 import org.openide.WizardValidationException;
 import static org.openide.util.NbPreferences.forModule;

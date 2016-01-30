@@ -9,7 +9,7 @@
 */
 package de.te2m.tools.netbeans.vertx.wizards.verticle.http;
 
-import de.te2m.tools.netbeans.vertx.wizards.verticle.VerticleWizardPanel1;
+import de.te2m.tools.netbeans.vertx.wizards.VerticleWizardPanel;
 import de.te2m.tools.netbeans.vertx.wizards.AbstractTe2mWizard;
 import static de.te2m.tools.netbeans.vertx.wizards.TemplateKeys.PROPERTY_DESCRIPTION;
 import static de.te2m.tools.netbeans.vertx.wizards.TemplateKeys.PROPERTY_NAME;
@@ -120,7 +120,7 @@ public final class HTTPVerticleWizardIterator extends AbstractTe2mWizard impleme
     private List<WizardDescriptor.Panel<WizardDescriptor>> getPanels() {
         if (panels == null) {
             panels = new ArrayList<>();
-            panels.add(new VerticleWizardPanel1());
+            panels.add(new VerticleWizardPanel());
             String[] steps = createSteps();
             for (int i = 0; i < panels.size(); i++) {
                 Component c = panels.get(i).getComponent();

@@ -4,15 +4,15 @@ import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Future;
 
 /*
-* ${TargetName}
+* ${TargetClassName}
 *
-* ${TargetDescription}
+* ${TargetClassDescription}
 * created on ${CreationDate}
 *
 * @author ${CurrentUser} 
 * @since ${Version}
 */
-public class ${TargetName} extends AbstractVerticle {
+public class ${TargetClassName} extends AbstractVerticle {
 
     @Override
     public void start(Future<Void> future) {

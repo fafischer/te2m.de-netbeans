@@ -78,8 +78,7 @@
                                     implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
                                     <manifestEntries>
                                         <Main-Class>io.vertx.core.Starter</Main-Class>
-                                        <!-- TODO: Replace with the mane of the real main verticle -->
-                                        <Main-Verticle>todo.insert.name.of.main.verticle.here</Main-Verticle>
+                                        <Main-Verticle>${TargetPackage}.${TargetClassName}</Main-Verticle>
                                     </manifestEntries>
                                 </transformer>
                             </transformers>

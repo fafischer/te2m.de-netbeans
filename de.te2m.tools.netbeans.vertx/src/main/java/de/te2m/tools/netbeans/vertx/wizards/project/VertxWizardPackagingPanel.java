@@ -85,7 +85,7 @@ public class VertxWizardPackagingPanel implements WizardDescriptor.Panel,
     public Component getComponent() {
         if (component == null) {
             component = new VertxPackagingPanelVisual(this);
-            component.setName(getMessage(VertxWizardPackagingPanel.class, "LBL_CreatePackagingStep"));
+            component.setName(getMessage(VertxWizardPackagingPanel.class, "LBL_CreateVerticleStep"));
         }
         return component;
     }

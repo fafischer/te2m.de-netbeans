@@ -20,6 +20,9 @@ import java.util.StringTokenizer;
  */
 public class Validator {
     
+    public static final String REGEX_PACKAGE_NAME="^([a-zA-Z_]{1}[a-zA-Z0-9_]*(\\.[a-zA-Z_]{1}[a-zA-Z0-9_]*)*)?$";
+    public static final String REGEX_CLASS_NAME="[A-Z]{1}[a-zA-Z0-9]*";
+    public static final String REGEX_DOCKER_SEGMENT = "[a-z0-9]+(?:[._-][a-z0-9]+)*";
     /**
      * Validate docker image name.
      * It follows the rules as described here: https://docs.docker.com/registry/spec/api/
@@ -47,7 +50,7 @@ public class Validator {
             {
                 return false;
             }
-            if(!segment.matches("[a-z0-9]+(?:[._-][a-z0-9]+)*"))
+            if(!segment.matches(REGEX_DOCKER_SEGMENT))
             {
                 return false;
             }
@@ -55,4 +58,5 @@ public class Validator {
         }
         return true;
     }
+
 }

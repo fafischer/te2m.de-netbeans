@@ -6,13 +6,15 @@
 * This file is part of the de.te2m.tools.netbeans.vertx project which is a sub project of the te2m.de Netbeans modules 
 * (https://github.com/fafischer/te2m.de-netbeans).
 * 
-*/
+ */
 package de.te2m.tools.netbeans.vertx.wizards.project;
 
 import de.te2m.tools.netbeans.vertx.wizards.AbstractTe2mWizard;
 import de.te2m.tools.netbeans.vertx.wizards.TemplateIDs;
 import de.te2m.tools.netbeans.vertx.wizards.TemplateKeys;
 import static de.te2m.tools.netbeans.vertx.wizards.TemplateKeys.PKG_CREATE_FAT_JAR;
+import static de.te2m.tools.netbeans.vertx.wizards.TemplateKeys.PROPERTY_PACKAGE;
+import de.te2m.tools.netbeans.vertx.wizards.VerticleWizardPanel;
 import java.awt.Component;
 import java.io.File;
 import java.io.IOException;
@@ -46,7 +48,7 @@ import static org.openide.util.NbBundle.getMessage;
  */
 @TemplateRegistrations({
     @TemplateRegistration(folder = "Project/Vertx.io", displayName = "#Vertx_displayName", description = "VertxDescription.html", iconBase = "de/te2m/tools/netbeans/vertx/icons/logo16.png", content = "../" + TemplateIDs.VERTX_POM + ".template", scriptEngine = "freemarker")
-    //,@TemplateRegistration(folder = "Project/vertx.io", content = "../" + TemplateIDs.VERTX_DOCKER + ".template", scriptEngine = "freemarker")
+//,@TemplateRegistration(folder = "Project/vertx.io", content = "../" + TemplateIDs.VERTX_DOCKER + ".template", scriptEngine = "freemarker")
 })
 @Messages("Vertx_displayName=Create a new Vertx.io 3.1 Project")
 public class VertxWizardIterator extends AbstractTe2mWizard implements WizardDescriptor./*Progress*/InstantiatingIterator {
@@ -95,8 +97,12 @@ public class VertxWizardIterator extends AbstractTe2mWizard implements WizardDes
      * @return the wizard descriptor. panel[]
      */
     private WizardDescriptor.Panel[] createPanels() {
+
         return new WizardDescriptor.Panel[]{
-            new VertxWizardProjectPanel(), new VertxWizardMavenPanel(), new VertxWizardPackagingPanel()};
+            new VertxWizardProjectPanel(),
+            new VerticleWizardPanel(),
+            new VertxWizardMavenPanel(),
+            new VertxWizardPackagingPanel()};
     }
 
     /**
@@ -107,6 +113,7 @@ public class VertxWizardIterator extends AbstractTe2mWizard implements WizardDes
     private String[] createSteps() {
         return new String[]{
             getMessage(VertxWizardIterator.class, "LBL_CreateProjectStep"),
+            getMessage(VertxWizardIterator.class, "LBL_CreateVerticleStep"),
             getMessage(VertxWizardIterator.class, "LBL_CreateMavenStep"),
             getMessage(VertxWizardIterator.class, "LBL_CreatePackagingStep")
         };
@@ -171,13 +178,21 @@ public class VertxWizardIterator extends AbstractTe2mWizard implements WizardDes
     @Override
     public Set/*<FileObject>*/ instantiate(/*ProgressHandle handle*/) throws IOException {
 
+        // initialize reused values
+        String className = (String) wiz.getProperty(PROPERTY_CLASS_NAME);
+        String pkgName = (String) wiz.getProperty(PROPERTY_PACKAGE);
+        Boolean createDocker = (Boolean) wiz.getProperty(PKG_CREATE_DOCKER);
+        Boolean createFatJar = (Boolean) wiz.getProperty(PKG_CREATE_FAT_JAR);
+        
+        // initialize parameters
         Map<String, Object> params = new HashMap<>();
         initializeCommonProperties(params);
-        initializePomInfo(params, wiz);
-        Boolean createFatJar = (Boolean) wiz.getProperty(PKG_CREATE_FAT_JAR);
-        Boolean createDocker = (Boolean) wiz.getProperty(PKG_CREATE_DOCKER);
+        initializePomInfo(params, wiz);        
+        params.put(PROPERTY_CLASS_NAME, className);
+        params.put(PROPERTY_PACKAGE, pkgName);
+        params.put(PROPERTY_CLASS_DESCRIPTION, wiz.getProperty(PROPERTY_CLASS_DESCRIPTION));
         params.put(PKG_CREATE_DOCKER, createDocker);
-        params.put(PKG_CREATE_FAT_JAR, createFatJar);
+        params.put(PKG_CREATE_FAT_JAR,createFatJar);
         params.put(TemplateKeys.PKG_DOCKER_IMAGE_NAME, wiz.getProperty(TemplateKeys.PKG_DOCKER_IMAGE_NAME));
         //params.put(PROPERTY_VERTX_VERSION, wiz.getProperty(VERTX_VERSION));
         Set<FileObject> resultSet = new LinkedHashSet<>();
@@ -186,27 +201,38 @@ public class VertxWizardIterator extends AbstractTe2mWizard implements WizardDes
 
         FileObject template = getTemplate(wiz);
         DataObject dTemplate = find(template);
-        FileObject dir = toFileObject(projectBaseDir);
+        FileObject projectBaseDirFO = toFileObject(projectBaseDir);
 
-        FileObject templateRoot = template.getParent();
+        // Always open top projectBaseDirFO as a project:
+        resultSet.add(projectBaseDirFO);
 
-        FileObject[] allTemplates = templateRoot.getChildren();
-
-        // Always open top dir as a project:
-        resultSet.add(dir);
-
-        DataObject dobj = dTemplate.createFromTemplate(findFolder(dir), "pom.xml", params);
+        DataObject dobj = dTemplate.createFromTemplate(findFolder(projectBaseDirFO), "pom.xml", params);
 
         //Obtain a FileObject:
         FileObject createdFile = dobj.getPrimaryFile();
 
         resultSet.add(createdFile);
 
+        FileObject mainJavaRoot = lookupSubDir(projectBaseDirFO, "src/main/java");
+
+        String folder = null!=pkgName? pkgName: "";
+
+        FileObject res = lookupSubDir(mainJavaRoot, folder.replace(".", "/"));
+
+        FileObject fo = getTemplateByNameAndFolder("BaseVerticle.java", "Vertx.io");
+
+        if (null != fo) {
+            DataObject currentTemplateDO = find(fo);
+            DataObject classDO = currentTemplateDO.createFromTemplate(findFolder(res), className + ".java", params);
+            resultSet.add(classDO.getPrimaryFile());
+            //System.out.println(">>>>>  "+i+"  >>>>> "+currentTemplate.getNameExt());
+        }
+
         if (Boolean.TRUE.equals(createDocker) && Boolean.TRUE.equals(createFatJar)) {
-            FileObject fo = getTemplateByNameAndFolder("dockerfile-fatjar", "Vertx.io");
-            
+            fo = getTemplateByNameAndFolder("dockerfile-fatjar", "Vertx.io");
+
             if (null != fo) {
-                FileObject dockerDir = lookupSubDir(dir, "src/main/docker");
+                FileObject dockerDir = lookupSubDir(projectBaseDirFO, "src/main/docker");
                 DataObject currentTemplateDO = find(fo);
                 DataObject dockerObj = currentTemplateDO.createFromTemplate(findFolder(dockerDir), "Dockerfile", params);
                 resultSet.add(dockerObj.getPrimaryFile());

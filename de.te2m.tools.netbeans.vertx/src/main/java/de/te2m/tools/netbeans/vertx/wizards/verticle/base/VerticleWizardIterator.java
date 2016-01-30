@@ -9,7 +9,7 @@
 */
 package de.te2m.tools.netbeans.vertx.wizards.verticle.base;
 
-import de.te2m.tools.netbeans.vertx.wizards.verticle.VerticleWizardPanel1;
+import de.te2m.tools.netbeans.vertx.wizards.VerticleWizardPanel;
 import de.te2m.tools.netbeans.vertx.wizards.AbstractTe2mWizard;
 import de.te2m.tools.netbeans.vertx.wizards.TemplateIDs;
 import static de.te2m.tools.netbeans.vertx.wizards.TemplateKeys.PROPERTY_DESCRIPTION;
@@ -121,7 +121,7 @@ public final class VerticleWizardIterator extends AbstractTe2mWizard implements 
     private List<WizardDescriptor.Panel<WizardDescriptor>> getPanels() {
         if (panels == null) {
             panels = new ArrayList<>();
-            panels.add(new VerticleWizardPanel1());
+            panels.add(new VerticleWizardPanel());
             String[] steps = createSteps();
             for (int i = 0; i < panels.size(); i++) {
                 Component c = panels.get(i).getComponent();
@@ -176,21 +176,19 @@ public final class VerticleWizardIterator extends AbstractTe2mWizard implements 
 
         Map<String, Object> params = new HashMap<>();
 
-        String fName = (String) wizard.getProperty(PROPERTY_NAME);
+        String fName = (String) wizard.getProperty(PROPERTY_CLASS_NAME);
 
         String packName = (String) wizard.getProperty(PROPERTY_PACKAGE);
         
-                params.put(PROPERTY_NAME, fName);
+                params.put(PROPERTY_CLASS_NAME, fName);
         params.put(PROPERTY_PACKAGE, packName);
-        params.put(PROPERTY_DESCRIPTION, wizard.getProperty(PROPERTY_DESCRIPTION));
+        params.put(PROPERTY_DESCRIPTION, wizard.getProperty(PROPERTY_CLASS_DESCRIPTION));
 
         initializeCommonProperties(params);
         
         //Get the template and convert it:
         FileObject template = getTemplate(wizard);
         DataObject dTemplate = find(template);
-
-        String tmpl = dTemplate.getPrimaryFile().asText();
 
         Project pRoot = getProject(wizard);
 
