@@ -13,6 +13,12 @@ import de.te2m.tools.netbeans.vertx.Validator;
 import de.te2m.tools.netbeans.vertx.wizards.TemplateKeys;
 import static de.te2m.tools.netbeans.vertx.wizards.TemplateKeys.VERTX_USE_FAT_JAR_DEFAULT;
 import static de.te2m.tools.netbeans.vertx.wizards.TemplateKeys.VERTX_VERSION;
+import java.util.HashSet;
+import java.util.Set;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import static org.openide.util.NbPreferences.forModule;
 
 /**
@@ -22,7 +28,7 @@ import static org.openide.util.NbPreferences.forModule;
  * @version 1.0
  * @since 1.0
  */
-public final class VertxPanel extends javax.swing.JPanel {
+public final class VertxPanel extends javax.swing.JPanel implements DocumentListener{
 
     /**
      * The controller.
@@ -49,6 +55,8 @@ public final class VertxPanel extends javax.swing.JPanel {
         this.controller = controller;
         initComponents();
         // TODO listen to changes in form fields and call controller.changed()
+        dockerImageNameTextField.getDocument().addDocumentListener(this);
+        
     }
 
     /**
@@ -219,5 +227,24 @@ public final class VertxPanel extends javax.swing.JPanel {
         }
         msgLabel.setVisible(false);
         return true;
+    }
+
+    @Override
+    public void insertUpdate(DocumentEvent e) {
+        fireChangeEvent();
+    }
+
+    @Override
+    public void removeUpdate(DocumentEvent e) {
+        fireChangeEvent();
+    }
+
+    @Override
+    public void changedUpdate(DocumentEvent e) {
+        fireChangeEvent();
+    }
+    
+    protected void fireChangeEvent() {
+        controller.changed();
     }
 }
