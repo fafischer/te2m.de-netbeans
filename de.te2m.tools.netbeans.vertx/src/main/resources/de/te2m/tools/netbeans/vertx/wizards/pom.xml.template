@@ -107,7 +107,7 @@
                 <configuration>
                     <dockerDirectory>${r"${"}project.basedir}/src/main/docker</dockerDirectory>
                     <!-- Configure the image name -->
-                    <imageName>${r"${"}project.groupId}/${r"${"}project.artifactId}</imageName>
+                    <imageName>${DockerImageName}</imageName>
                     <resources>
                         <resource>
                             <targetPath>/verticles</targetPath>

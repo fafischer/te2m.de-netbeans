@@ -11,6 +11,7 @@ package de.te2m.tools.netbeans.vertx.wizards.project;
 
 import de.te2m.tools.netbeans.vertx.wizards.AbstractTe2mWizard;
 import de.te2m.tools.netbeans.vertx.wizards.TemplateIDs;
+import de.te2m.tools.netbeans.vertx.wizards.TemplateKeys;
 import static de.te2m.tools.netbeans.vertx.wizards.TemplateKeys.PKG_CREATE_FAT_JAR;
 import java.awt.Component;
 import java.io.File;
@@ -177,6 +178,7 @@ public class VertxWizardIterator extends AbstractTe2mWizard implements WizardDes
         Boolean createDocker = (Boolean) wiz.getProperty(PKG_CREATE_DOCKER);
         params.put(PKG_CREATE_DOCKER, createDocker);
         params.put(PKG_CREATE_FAT_JAR, createFatJar);
+        params.put(TemplateKeys.PKG_DOCKER_IMAGE_NAME, wiz.getProperty(TemplateKeys.PKG_DOCKER_IMAGE_NAME));
         //params.put(PROPERTY_VERTX_VERSION, wiz.getProperty(VERTX_VERSION));
         Set<FileObject> resultSet = new LinkedHashSet<>();
         File projectBaseDir = normalizeFile((File) wiz.getProperty("projdir"));
