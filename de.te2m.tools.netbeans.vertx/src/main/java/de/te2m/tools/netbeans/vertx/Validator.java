@@ -22,16 +22,25 @@ public class Validator {
     
     /**
      * The Constant REGEX_PACKAGE_NAME.
+     * Regular expression used to check entered java package names.
      */
     public static final String REGEX_PACKAGE_NAME="^([a-zA-Z_]{1}[a-zA-Z0-9_]*(\\.[a-zA-Z_]{1}[a-zA-Z0-9_]*)*)?$";
     
     /**
      * The Constant REGEX_CLASS_NAME.
+     * Regular expression used to check entered java class names.
      */
     public static final String REGEX_CLASS_NAME="[A-Z]{1}[a-zA-Z0-9]*";
     
     /**
      * The Constant REGEX_DOCKER_SEGMENT.
+     * Regular expression used to check parts of an entered Docker image name.
+     * <p>
+     * <b>Known Limitations:</b><br>
+     * Currently no length checks are included (mav 30),
+     * A Docker image name might also include several repository names (segments) separated by '/'
+     * This and the max overall length of 255 is also not checked by this expression.
+     * </p>
      */
     public static final String REGEX_DOCKER_SEGMENT = "[a-z0-9]+(?:[._-][a-z0-9]+)*";
     /**
