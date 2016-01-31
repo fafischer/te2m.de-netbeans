@@ -36,14 +36,49 @@ public final class VertxPanel extends javax.swing.JPanel implements DocumentList
     private final VertxPanelController controller;
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    /**
+     * The default version text.
+     */
     private javax.swing.JTextField defaultVersionText;
+    
+    /**
+     * The dockerfile default check box.
+     */
     private javax.swing.JCheckBox dockerfileDefaultCheckBox;
+    
+    /**
+     * The docker image name text field.
+     */
     private javax.swing.JTextField dockerImageNameTextField;
+    
+    /**
+     * The fat jar check box.
+     */
     private javax.swing.JCheckBox fatJarCheckBox;
+    
+    /**
+     * The j label1.
+     */
     private javax.swing.JLabel jLabel1;
+    
+    /**
+     * The j label2.
+     */
     private javax.swing.JLabel jLabel2;
+    
+    /**
+     * The j label3.
+     */
     private javax.swing.JLabel jLabel3;
+    
+    /**
+     * The j label4.
+     */
     private javax.swing.JLabel jLabel4;
+    
+    /**
+     * The msg label.
+     */
     private javax.swing.JLabel msgLabel;
     // End of variables declaration//GEN-END:variables
     /**
@@ -182,10 +217,20 @@ public final class VertxPanel extends javax.swing.JPanel implements DocumentList
         // TODO add your handling code here:
     }//GEN-LAST:event_fatJarCheckBoxActionPerformed
 
+    /**
+     * Dockerfile default check box action performed.
+     *
+     * @param evt the evt
+     */
     private void dockerfileDefaultCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dockerfileDefaultCheckBoxActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_dockerfileDefaultCheckBoxActionPerformed
 
+    /**
+     * Docker image name text field action performed.
+     *
+     * @param evt the evt
+     */
     private void dockerImageNameTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dockerImageNameTextFieldActionPerformed
         if (dockerImageNameTextField.getText().length() > 0 && !Validator.validateDockerImageName(dockerImageNameTextField.getText())) {
             msgLabel.setText("The name for the docker image is invalid");
@@ -229,21 +274,33 @@ public final class VertxPanel extends javax.swing.JPanel implements DocumentList
         return true;
     }
 
+    /* (non-Javadoc)
+     * @see javax.swing.event.DocumentListener#insertUpdate(javax.swing.event.DocumentEvent)
+     */
     @Override
     public void insertUpdate(DocumentEvent e) {
         fireChangeEvent();
     }
 
+    /* (non-Javadoc)
+     * @see javax.swing.event.DocumentListener#removeUpdate(javax.swing.event.DocumentEvent)
+     */
     @Override
     public void removeUpdate(DocumentEvent e) {
         fireChangeEvent();
     }
 
+    /* (non-Javadoc)
+     * @see javax.swing.event.DocumentListener#changedUpdate(javax.swing.event.DocumentEvent)
+     */
     @Override
     public void changedUpdate(DocumentEvent e) {
         fireChangeEvent();
     }
     
+    /**
+     * Fire change event.
+     */
     protected void fireChangeEvent() {
         controller.changed();
     }

@@ -43,6 +43,9 @@ public class VerticleWizardPanel implements WizardDescriptor.Panel<WizardDescrip
      */
     private VerticleWizardPanelVisual component;
 
+    /* (non-Javadoc)
+     * @see org.openide.WizardDescriptor.Panel#addChangeListener(javax.swing.event.ChangeListener)
+     */
     @Override
     public final void addChangeListener(ChangeListener l) {
         synchronized (listeners) {

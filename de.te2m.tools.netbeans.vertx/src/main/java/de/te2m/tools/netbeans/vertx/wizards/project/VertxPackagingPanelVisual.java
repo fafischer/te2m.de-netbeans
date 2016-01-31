@@ -310,6 +310,9 @@ public class VertxPackagingPanelVisual extends JPanel implements DocumentListene
         // nothing to validate
     }
 
+    /* (non-Javadoc)
+     * @see javax.swing.event.ChangeListener#stateChanged(javax.swing.event.ChangeEvent)
+     */
     @Override
     public void stateChanged(ChangeEvent e) {
         panel.fireChangeEvent();

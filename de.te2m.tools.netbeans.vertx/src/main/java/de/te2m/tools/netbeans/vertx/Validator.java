@@ -20,8 +20,19 @@ import java.util.StringTokenizer;
  */
 public class Validator {
     
+    /**
+     * The Constant REGEX_PACKAGE_NAME.
+     */
     public static final String REGEX_PACKAGE_NAME="^([a-zA-Z_]{1}[a-zA-Z0-9_]*(\\.[a-zA-Z_]{1}[a-zA-Z0-9_]*)*)?$";
+    
+    /**
+     * The Constant REGEX_CLASS_NAME.
+     */
     public static final String REGEX_CLASS_NAME="[A-Z]{1}[a-zA-Z0-9]*";
+    
+    /**
+     * The Constant REGEX_DOCKER_SEGMENT.
+     */
     public static final String REGEX_DOCKER_SEGMENT = "[a-z0-9]+(?:[._-][a-z0-9]+)*";
     /**
      * Validate docker image name.

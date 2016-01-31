@@ -32,17 +32,46 @@ public final class VerticleWizardPanelVisual extends JPanel implements DocumentL
     private final VerticleWizardPanel panel;
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    /**
+     * The description text area.
+     */
     private javax.swing.JTextArea descriptionTextArea;
+    
+    /**
+     * The j label1.
+     */
     private javax.swing.JLabel jLabel1;
+    
+    /**
+     * The j label2.
+     */
     private javax.swing.JLabel jLabel2;
+    
+    /**
+     * The j label3.
+     */
     private javax.swing.JLabel jLabel3;
+    
+    /**
+     * The j scroll pane1.
+     */
     private javax.swing.JScrollPane jScrollPane1;
+    
+    /**
+     * The name text field.
+     */
     private javax.swing.JTextField nameTextField;
+    
+    /**
+     * The package text field.
+     */
     private javax.swing.JTextField packageTextField;
     // End of variables declaration//GEN-END:variables
 
     /**
      * Creates new form VerticleVisualPanel1.
+     *
+     * @param panel the panel
      */
     public VerticleWizardPanelVisual(VerticleWizardPanel panel) {
         initComponents();
@@ -171,16 +200,25 @@ public final class VerticleWizardPanelVisual extends JPanel implements DocumentL
         // TODO add your handling code here:
     }//GEN-LAST:event_packageTextFieldActionPerformed
 
+    /* (non-Javadoc)
+     * @see javax.swing.event.DocumentListener#insertUpdate(javax.swing.event.DocumentEvent)
+     */
     @Override
     public void insertUpdate(DocumentEvent e) {
         panel.fireChangeEvent();
     }
 
+    /* (non-Javadoc)
+     * @see javax.swing.event.DocumentListener#removeUpdate(javax.swing.event.DocumentEvent)
+     */
     @Override
     public void removeUpdate(DocumentEvent e) {
         panel.fireChangeEvent();
     }
 
+    /* (non-Javadoc)
+     * @see javax.swing.event.DocumentListener#changedUpdate(javax.swing.event.DocumentEvent)
+     */
     @Override
     public void changedUpdate(DocumentEvent e) {
         panel.fireChangeEvent();

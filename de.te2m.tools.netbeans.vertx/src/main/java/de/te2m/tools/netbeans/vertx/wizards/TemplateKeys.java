@@ -78,6 +78,9 @@ public interface TemplateKeys {
      */
     public static final String PROPERTY_DESCRIPTION = "TargetDescription";
 
+    /**
+     * The Constant PROPERTY_CLASS_DESCRIPTION.
+     */
     public static final String PROPERTY_CLASS_DESCRIPTION = "TargetClassDescription";
     
     /**
@@ -101,6 +104,9 @@ public interface TemplateKeys {
      */
     public static final String PROPERTY_NAME = "TargetName";
 
+    /**
+     * The Constant PROPERTY_CLASS_NAME.
+     */
     public static final String PROPERTY_CLASS_NAME = "TargetClassName";
     
     /**
