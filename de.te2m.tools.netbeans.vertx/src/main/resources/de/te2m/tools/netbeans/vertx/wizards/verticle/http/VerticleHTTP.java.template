@@ -20,7 +20,10 @@ import io.vertx.ext.web.handler.StaticHandler;
 */
 public class ${TargetName} extends AbstractVerticle {
 
-    
+    /**
+     * Start the Verticle
+     * @param future
+     */    
     @Override    
     public void start(Future<Void> future) {
         // initialize Router
@@ -32,6 +35,9 @@ public class ${TargetName} extends AbstractVerticle {
                 .listen(config().getInteger("http.port", 8080));
     }
     
+    /**
+     * Stop the Verticle
+     */
     @Override
     public void stop() {
         // Optional - called when verticle is undeployed

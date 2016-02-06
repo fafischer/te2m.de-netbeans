@@ -6,7 +6,7 @@
 * This file is part of the de.te2m.tools.netbeans.vertx project which is a sub project of the te2m.de Netbeans modules 
 * (https://github.com/fafischer/te2m.de-netbeans).
 * 
-*/
+ */
 package de.te2m.tools.netbeans.vertx.wizards.verticle.base;
 
 import de.te2m.tools.netbeans.vertx.wizards.VerticleWizardPanel;
@@ -30,6 +30,7 @@ import static org.netbeans.api.project.ProjectUtils.getSources;
 import org.netbeans.api.project.SourceGroup;
 import org.netbeans.api.project.Sources;
 import org.netbeans.api.templates.TemplateRegistration;
+import org.netbeans.api.templates.TemplateRegistrations;
 import static org.netbeans.spi.project.ui.templates.support.Templates.getProject;
 import static org.netbeans.spi.project.ui.templates.support.Templates.getTemplate;
 import org.openide.WizardDescriptor;
@@ -52,8 +53,11 @@ import org.openide.util.NbBundle.Messages;
  * @version 1.0
  * @since 1.0
  */
-@TemplateRegistration(folder = "Vertx.io", displayName = "#BasicVerticleWizardIterator_displayName", iconBase = "de/te2m/tools/netbeans/vertx/icons/logo16.png", description = "verticle.html",
-        content = "../../"+TemplateIDs.VERTICLE_BASE+".template", scriptEngine = "freemarker")
+@TemplateRegistrations({
+    @TemplateRegistration(folder = "Vertx.io", displayName = "#BasicVerticleWizardIterator_displayName", iconBase = "de/te2m/tools/netbeans/vertx/icons/logo16.png", description = "verticle.html",
+            content = "../../" + TemplateIDs.VERTICLE_BASE + ".template", scriptEngine = "freemarker"),
+    @TemplateRegistration(folder = "Vertx.io", content = "../../" + TemplateIDs.JUNIT_BASE + ".template", scriptEngine = "freemarker", category="hidden")
+})
 @Messages("BasicVerticleWizardIterator_displayName=Verticle")
 public final class VerticleWizardIterator extends AbstractTe2mWizard implements WizardDescriptor.InstantiatingIterator<WizardDescriptor> {
 
@@ -63,10 +67,10 @@ public final class VerticleWizardIterator extends AbstractTe2mWizard implements 
     private int index;
 
     /**
-     * The wizard. 
+     * The wizard.
      */
     private WizardDescriptor wizard;
-    
+
     /**
      * The panels.
      */
@@ -127,7 +131,7 @@ public final class VerticleWizardIterator extends AbstractTe2mWizard implements 
                     // Default step name to component name of panel. Mainly
                     // useful for getting the name of the target chooser to
                     // appear in the list of steps.
-                    steps[i] = c.getName(); 
+                    steps[i] = c.getName();
                 }
                 if (c instanceof JComponent) { // assume Swing components
                     JComponent jc = (JComponent) c;
@@ -176,13 +180,13 @@ public final class VerticleWizardIterator extends AbstractTe2mWizard implements 
 
         String fName = (String) wizard.getProperty(PROPERTY_CLASS_NAME);
         String packName = (String) wizard.getProperty(PROPERTY_PACKAGE);
-        
+
         params.put(PROPERTY_CLASS_NAME, fName);
         params.put(PROPERTY_PACKAGE, packName);
         params.put(PROPERTY_CLASS_DESCRIPTION, wizard.getProperty(PROPERTY_CLASS_DESCRIPTION));
 
         initializeCommonProperties(params);
-        
+
         //Get the template and convert it:
         FileObject template = getTemplate(wizard);
         DataObject dTemplate = find(template);

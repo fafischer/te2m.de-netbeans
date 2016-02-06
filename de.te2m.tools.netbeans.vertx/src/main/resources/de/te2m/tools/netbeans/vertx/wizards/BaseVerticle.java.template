@@ -3,7 +3,7 @@ package ${TargetPackage};
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Future;
 
-/*
+/**
 * ${TargetClassName}
 *
 * ${TargetClassDescription}
@@ -14,12 +14,19 @@ import io.vertx.core.Future;
 */
 public class ${TargetClassName} extends AbstractVerticle {
 
+    /**
+     * Start the Verticle
+     * @param future
+     */
     @Override
     public void start(Future<Void> future) {
 
         // @TODO Add business logic here
     }
 
+    /**
+     * Stop the Verticle
+     */
     @Override
     public void stop() {
         // Optional - called when verticle is undeployed

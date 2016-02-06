@@ -10,7 +10,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import static org.junit.Assert.*;
 
-/*
+/**
 * Test case for ${TargetClassName}
 *
 * created on ${CreationDate}
@@ -23,6 +23,10 @@ public class ${TargetClassName}Test {
 
     private Vertx vertx;
 
+    /**
+     * Prepare the Vertx environment for testing
+     * @param context
+     */
     @Before
     public void setUp(TestContext context) {
         vertx = Vertx.vertx();
@@ -30,11 +34,20 @@ public class ${TargetClassName}Test {
             context.asyncAssertSuccess());
     }
 
+    /**
+     * Clean up after finishing the tests
+     * @param context
+     */
     @After
     public void tearDown(TestContext context) {
         vertx.close(context.asyncAssertSuccess());
     }
 
+    /**
+     * Basic test for the Verticle ${TargetClassName}
+     * (the happy path)
+     * @param context
+     */    
     @Test
     public void test${TargetClassName}Default(TestContext context) {
 
