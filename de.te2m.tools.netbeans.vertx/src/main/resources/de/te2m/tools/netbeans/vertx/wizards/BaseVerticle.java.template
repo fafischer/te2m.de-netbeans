@@ -1,3 +1,7 @@
+<#assign licenseFirst = "/*">
+<#assign licensePrefix = " * ">
+<#assign licenseLast = " */">
+<#include "${project.licensePath}">
 package ${TargetPackage};
 
 import io.vertx.core.AbstractVerticle;

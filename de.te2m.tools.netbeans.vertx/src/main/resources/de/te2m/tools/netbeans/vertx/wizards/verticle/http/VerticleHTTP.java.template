@@ -1,3 +1,7 @@
+<#assign licenseFirst = "/*">
+<#assign licensePrefix = " * ">
+<#assign licenseLast = " */">
+<#include "${project.licensePath}">
 package ${TargetPackage};
 
 import io.vertx.core.AbstractVerticle;
@@ -6,9 +10,9 @@ import io.vertx.ext.web.Router;
 import io.vertx.ext.web.handler.StaticHandler;
 
 /**
-* ${TargetName}
+* ${TargetClassName}
 *
-* ${TargetDescription}
+* ${TargetClassDescription}
 * <p>
 * This Verticle provides an simple web server for static content.
 * </p>
@@ -18,7 +22,7 @@ import io.vertx.ext.web.handler.StaticHandler;
 * @author ${CurrentUser} 
 * @since ${Version}
 */
-public class ${TargetName} extends AbstractVerticle {
+public class ${TargetClassName} extends AbstractVerticle {
 
     /**
      * Start the Verticle

@@ -175,13 +175,13 @@ public final class HTTPVerticleWizardIterator extends AbstractTe2mWizard impleme
 
         Map<String, Object> params = new HashMap<>();
 
-        String fName = (String) wizard.getProperty(PROPERTY_NAME);
+        String fName = (String) wizard.getProperty(PROPERTY_CLASS_NAME);
 
         String packName = (String) wizard.getProperty(PROPERTY_PACKAGE);
         
-                params.put(PROPERTY_NAME, fName);
+                params.put(PROPERTY_CLASS_NAME, fName);
         params.put(PROPERTY_PACKAGE, packName);
-        params.put(PROPERTY_DESCRIPTION, wizard.getProperty(PROPERTY_DESCRIPTION));
+        params.put(PROPERTY_CLASS_DESCRIPTION, wizard.getProperty(PROPERTY_CLASS_DESCRIPTION));
 
         initializeCommonProperties(params);
         

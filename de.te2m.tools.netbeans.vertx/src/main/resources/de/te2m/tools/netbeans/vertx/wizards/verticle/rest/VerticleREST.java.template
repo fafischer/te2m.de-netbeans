@@ -1,3 +1,7 @@
+<#assign licenseFirst = "/*">
+<#assign licensePrefix = " * ">
+<#assign licenseLast = " */">
+<#include "${project.licensePath}">
 package ${TargetPackage};
 
 import io.vertx.core.AbstractVerticle;
@@ -10,9 +14,9 @@ import io.vertx.ext.web.RoutingContext;
 import io.vertx.ext.web.handler.BodyHandler;
 
 /**
-* ${TargetName}
+* ${TargetClassName}
 *
-* ${TargetDescription}
+* ${TargetClassDescription}
 * <p>
 * This Verticle provides an REST based interface for CRUD (Create, Read, Update, Delete) 
 * operations for an certain entity.
@@ -31,7 +35,7 @@ import io.vertx.ext.web.handler.BodyHandler;
 * @author ${CurrentUser} 
 * @since ${Version}
 */
-public class ${TargetName} extends AbstractVerticle {
+public class ${TargetClassName} extends AbstractVerticle {
 
      /**
      * Constant used for REST base URL.
