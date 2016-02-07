@@ -243,7 +243,7 @@ public final class VertxPanel extends javax.swing.JPanel implements DocumentList
      * values will be used (if available)
      */
     void load() {
-        defaultVersionText.setText(forModule(VertxPanel.class).get(VERTX_VERSION, "3.1.0"));
+        defaultVersionText.setText(forModule(VertxPanel.class).get(VERTX_VERSION, "3.2.1"));
         fatJarCheckBox.setSelected(forModule(VertxPanel.class).getBoolean(VERTX_USE_FAT_JAR_DEFAULT, true));
         dockerfileDefaultCheckBox.setSelected(forModule(VertxPanel.class).getBoolean(TemplateKeys.VERTX_GENERATE_DOCKER_DEFAULT, true));
         dockerImageNameTextField.setText(forModule(VertxPanel.class).get(TemplateKeys.VERTX_DOCKER_DEFAULT_IMAGE_NAME, ""));

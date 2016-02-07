@@ -72,7 +72,7 @@ public class AbstractTe2mWizard implements TemplateKeys {
         SimpleDateFormat sdf = new SimpleDateFormat(forModule(FormattingPanel.class).get(PROPERTY_DATE_FORMAT, "dd.MM.yyyy"));
         String defaultVersion = forModule(MavenPanel.class).get(MVN_VERSION, "1.0-SNAPSHOT");
         String companyName = forModule(CommonPanel.class).get(PROPERTY_COMPANY, "");
-        String vertxDefaultVersion = forModule(VertxPanel.class).get(VERTX_VERSION, "3.1.0");
+        String vertxDefaultVersion = forModule(VertxPanel.class).get(VERTX_VERSION, "3.2.1");
         String username = forModule(CommonPanel.class).get(PROPERTY_USER, getProperty("user.name"));
         String userDisplayName = forModule(CommonPanel.class).get(PROPERTY_USER_DISPLAY_NAME, getProperty("user.name"));
         params.put(PROPERTY_USER, username);
