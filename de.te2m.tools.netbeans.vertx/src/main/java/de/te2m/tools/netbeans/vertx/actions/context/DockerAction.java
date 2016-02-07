@@ -33,7 +33,7 @@ import org.openide.util.NbBundle.Messages;
         iconBase = "de/te2m/tools/netbeans/vertx/icons/logo16.png",
         displayName = "#CTL_DockerAction"
 )
-@ActionReference(path = "Loaders/text/x-java/Actions", position = -100)
+@ActionReference(path = "Loaders/text/x-java/Actions", position = 100)
 @Messages("CTL_DockerAction=Create Dockerfile")
 public final class DockerAction implements ActionListener {
 

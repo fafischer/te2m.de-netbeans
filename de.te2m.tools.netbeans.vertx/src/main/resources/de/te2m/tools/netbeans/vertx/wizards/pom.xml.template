@@ -112,10 +112,10 @@
                     <imageName>${DockerImageName}</imageName>
                     <resources>
                         <resource>
-                            <targetPath>/verticles</targetPath>
+                            <targetPath>/</targetPath>
                             <directory>${r"${"}project.build.directory}</directory>
                             <includes>
-                                <include>${r"${"}project.build.directory}/${r"${"}project.artifactId}-${r"${"}project.version}-fat.jar</include>
+                                <include>${r"${"}project.artifactId}-${r"${"}project.version}-fat.jar</include>
                             </includes>
                         </resource>
                         <!-- don't forget to also add all the dependencies required by your application -->
