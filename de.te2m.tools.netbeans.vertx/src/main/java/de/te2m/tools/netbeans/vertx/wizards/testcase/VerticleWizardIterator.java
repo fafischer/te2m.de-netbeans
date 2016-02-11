@@ -13,7 +13,6 @@ import de.te2m.tools.netbeans.vertx.wizards.AbstractTe2mWizard;
 import de.te2m.tools.netbeans.vertx.wizards.TemplateIDs;
 import static de.te2m.tools.netbeans.vertx.wizards.TemplateKeys.PROPERTY_DESCRIPTION;
 import static de.te2m.tools.netbeans.vertx.wizards.TemplateKeys.PROPERTY_NAME;
-import static de.te2m.tools.netbeans.vertx.wizards.TemplateKeys.PROPERTY_PACKAGE;
 import java.awt.Component;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -44,6 +43,7 @@ import static org.openide.loaders.DataFolder.findFolder;
 import org.openide.loaders.DataObject;
 import static org.openide.loaders.DataObject.find;
 import org.openide.util.NbBundle.Messages;
+import static de.te2m.tools.netbeans.vertx.wizards.TemplateKeys.DN_PROPERTY_PACKAGE;
 
 // TODO define position attribute
 /**
@@ -179,11 +179,11 @@ public final class VerticleWizardIterator extends AbstractTe2mWizard implements 
 
         String fName = (String) wizard.getProperty(PROPERTY_NAME);
 
-        String packName = (String) wizard.getProperty(PROPERTY_PACKAGE);
+        String packName = (String) wizard.getProperty(DN_PROPERTY_PACKAGE);
 
-        params.put(PROPERTY_CLASS_NAME, fName);
-        params.put(PROPERTY_PACKAGE, packName);
-        params.put(PROPERTY_CLASS_DESCRIPTION, wizard.getProperty(PROPERTY_DESCRIPTION));
+        params.put(DN_PROPERTY_CLASS_NAME, fName);
+        params.put(DN_PROPERTY_PACKAGE, packName);
+        params.put(DN_PROPERTY_CLASS_DESCRIPTION, wizard.getProperty(PROPERTY_DESCRIPTION));
 
         initializeCommonProperties(params);
         //Get the template and convert it:
@@ -206,7 +206,7 @@ public final class VerticleWizardIterator extends AbstractTe2mWizard implements 
             mainJavaRoot = lookupSubDir(pRoot.getProjectDirectory(), "src/test/java");
         }
 
-        String folder = null != wizard.getProperty(PROPERTY_PACKAGE) ? (String) wizard.getProperty(PROPERTY_PACKAGE) : "";
+        String folder = null != wizard.getProperty(DN_PROPERTY_PACKAGE) ? (String) wizard.getProperty(DN_PROPERTY_PACKAGE) : "";
 
         FileObject res = lookupSubDir(mainJavaRoot, folder.replace(".", "/"));
 

@@ -12,8 +12,6 @@ package de.te2m.tools.netbeans.vertx.wizards.project;
 import de.te2m.tools.netbeans.vertx.wizards.AbstractTe2mWizard;
 import de.te2m.tools.netbeans.vertx.wizards.TemplateIDs;
 import de.te2m.tools.netbeans.vertx.wizards.TemplateKeys;
-import static de.te2m.tools.netbeans.vertx.wizards.TemplateKeys.PKG_CREATE_FAT_JAR;
-import static de.te2m.tools.netbeans.vertx.wizards.TemplateKeys.PROPERTY_PACKAGE;
 import de.te2m.tools.netbeans.vertx.wizards.VerticleWizardPanel;
 import java.awt.Component;
 import java.io.File;
@@ -36,8 +34,9 @@ import static org.openide.filesystems.FileUtil.toFileObject;
 import static org.openide.loaders.DataFolder.findFolder;
 import org.openide.loaders.DataObject;
 import static org.openide.loaders.DataObject.find;
+import org.openide.util.NbBundle;
 import org.openide.util.NbBundle.Messages;
-import static org.openide.util.NbBundle.getMessage;
+
 
 /**
  * The Class VertxWizardIterator.
@@ -112,10 +111,10 @@ public class VertxWizardIterator extends AbstractTe2mWizard implements WizardDes
      */
     private String[] createSteps() {
         return new String[]{
-            getMessage(VertxWizardIterator.class, "LBL_CreateProjectStep"),
-            getMessage(VertxWizardIterator.class, "LBL_CreateVerticleStep"),
-            getMessage(VertxWizardIterator.class, "LBL_CreateMavenStep"),
-            getMessage(VertxWizardIterator.class, "LBL_CreatePackagingStep")
+            NbBundle.getMessage(VertxWizardIterator.class, "LBL_CreateProjectStep"),
+            NbBundle.getMessage(VertxWizardIterator.class, "LBL_CreateVerticleStep"),
+            NbBundle.getMessage(VertxWizardIterator.class, "LBL_CreateMavenStep"),
+            NbBundle.getMessage(VertxWizardIterator.class, "LBL_CreatePackagingStep")
         };
     }
 
@@ -179,21 +178,22 @@ public class VertxWizardIterator extends AbstractTe2mWizard implements WizardDes
     public Set/*<FileObject>*/ instantiate(/*ProgressHandle handle*/) throws IOException {
 
         // initialize reused values
-        String className = (String) wiz.getProperty(PROPERTY_CLASS_NAME);
-        String pkgName = (String) wiz.getProperty(PROPERTY_PACKAGE);
-        Boolean createDocker = (Boolean) wiz.getProperty(PKG_CREATE_DOCKER);
-        Boolean createFatJar = (Boolean) wiz.getProperty(PKG_CREATE_FAT_JAR);
-        
+        String className = (String) wiz.getProperty(DN_PROPERTY_CLASS_NAME);
+        String pkgName = (String) wiz.getProperty(DN_PROPERTY_PACKAGE);
+        Boolean createDocker = (Boolean) wiz.getProperty(GEN_CFG_CREATE_DOCKER);
+        Boolean createFatJar = (Boolean) wiz.getProperty(GEN_CFG_CREATE_FAT_JAR);
+        Boolean createVerticleTest = (Boolean) wiz.getProperty(GEN_CFG_CREATE_VERTICLE_TEST);
+
         // initialize parameters
         Map<String, Object> params = new HashMap<>();
         initializeCommonProperties(params);
-        initializePomInfo(params, wiz);        
-        params.put(PROPERTY_CLASS_NAME, className);
-        params.put(PROPERTY_PACKAGE, pkgName);
-        params.put(PROPERTY_CLASS_DESCRIPTION, wiz.getProperty(PROPERTY_CLASS_DESCRIPTION));
-        params.put(PKG_CREATE_DOCKER, createDocker);
-        params.put(PKG_CREATE_FAT_JAR,createFatJar);
-        params.put(TemplateKeys.PKG_DOCKER_IMAGE_NAME, wiz.getProperty(TemplateKeys.PKG_DOCKER_IMAGE_NAME));
+        initializePomInfo(params, wiz);
+        params.put(DN_PROPERTY_CLASS_NAME, className);
+        params.put(DN_PROPERTY_PACKAGE, pkgName);
+        params.put(DN_PROPERTY_CLASS_DESCRIPTION, wiz.getProperty(DN_PROPERTY_CLASS_DESCRIPTION));
+        params.put(GEN_CFG_CREATE_DOCKER, createDocker);
+        params.put(GEN_CFG_CREATE_FAT_JAR, createFatJar);
+        params.put(TemplateKeys.DN_DOCKER_IMAGE_NAME, wiz.getProperty(TemplateKeys.DN_DOCKER_IMAGE_NAME));
         //params.put(PROPERTY_VERTX_VERSION, wiz.getProperty(VERTX_VERSION));
         Set<FileObject> resultSet = new LinkedHashSet<>();
         File projectBaseDir = normalizeFile((File) wiz.getProperty("projdir"));
@@ -214,8 +214,8 @@ public class VertxWizardIterator extends AbstractTe2mWizard implements WizardDes
         resultSet.add(createdFile);
 
         FileObject mainJavaRoot = lookupSubDir(projectBaseDirFO, "src/main/java");
-        FileObject mainTestRoot = lookupSubDir(projectBaseDirFO, "src/test/java");
-        String folder = null!=pkgName? pkgName: "";
+        
+        String folder = null != pkgName ? pkgName : "";
 
         FileObject res;
 
@@ -227,16 +227,20 @@ public class VertxWizardIterator extends AbstractTe2mWizard implements WizardDes
             DataObject classDO = currentTemplateDO.createFromTemplate(findFolder(res), className + ".java", params);
             resultSet.add(classDO.getPrimaryFile());
         }
-        
-        fo = getTemplateByNameAndFolder("VerticleUnitTest.java", "Vertx.io");
 
-        if (null != fo) {
-            res = lookupSubDir(mainTestRoot, folder.replace(".", "/"));
-            DataObject currentTemplateDO = find(fo);
-            DataObject classDO = currentTemplateDO.createFromTemplate(findFolder(res), className + "Test.java", params);
-            resultSet.add(classDO.getPrimaryFile());
+        if (Boolean.TRUE.equals(createVerticleTest)) {
+            
+            FileObject mainTestRoot = lookupSubDir(projectBaseDirFO, "src/test/java");
+            
+            fo = getTemplateByNameAndFolder("VerticleUnitTest.java", "Vertx.io");
+
+            if (null != fo) {
+                res = lookupSubDir(mainTestRoot, folder.replace(".", "/"));
+                DataObject currentTemplateDO = find(fo);
+                DataObject classDO = currentTemplateDO.createFromTemplate(findFolder(res), className + "Test.java", params);
+                resultSet.add(classDO.getPrimaryFile());
+            }
         }
-
         if (Boolean.TRUE.equals(createDocker) && Boolean.TRUE.equals(createFatJar)) {
             fo = getTemplateByNameAndFolder("dockerfile-fatjar", "Vertx.io");
 

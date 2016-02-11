@@ -10,12 +10,11 @@
 package de.te2m.tools.netbeans.vertx.wizards;
 
 import de.te2m.tools.netbeans.vertx.Validator;
-import static de.te2m.tools.netbeans.vertx.wizards.TemplateKeys.PROPERTY_PACKAGE;
 import javax.swing.JPanel;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import org.openide.WizardDescriptor;
-import static org.openide.util.NbBundle.getMessage;
+import org.openide.util.NbBundle;
 
 /**
  * The Class VerticleWizardPanelVisual.
@@ -32,40 +31,15 @@ public final class VerticleWizardPanelVisual extends JPanel implements DocumentL
     private final VerticleWizardPanel panel;
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    /**
-     * The description text area.
-     */
     private javax.swing.JTextArea descriptionTextArea;
-    
-    /**
-     * The j label1.
-     */
     private javax.swing.JLabel jLabel1;
-    
-    /**
-     * The j label2.
-     */
     private javax.swing.JLabel jLabel2;
-    
-    /**
-     * The j label3.
-     */
     private javax.swing.JLabel jLabel3;
-    
-    /**
-     * The j scroll pane1.
-     */
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
-    
-    /**
-     * The name text field.
-     */
     private javax.swing.JTextField nameTextField;
-    
-    /**
-     * The package text field.
-     */
     private javax.swing.JTextField packageTextField;
+    private javax.swing.JCheckBox testCaseCheckBox;
     // End of variables declaration//GEN-END:variables
 
     /**
@@ -85,7 +59,7 @@ public final class VerticleWizardPanelVisual extends JPanel implements DocumentL
      */
     @Override
     public String getName() {
-        return getMessage(VerticleWizardPanel.class, "LBL_CreateVerticleStep");
+        return NbBundle.getMessage(VerticleWizardPanel.class, "LBL_CreateVerticleStep");
     }
 
     /**
@@ -130,6 +104,8 @@ public final class VerticleWizardPanelVisual extends JPanel implements DocumentL
         descriptionTextArea = new javax.swing.JTextArea();
         jLabel3 = new javax.swing.JLabel();
         packageTextField = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        testCaseCheckBox = new javax.swing.JCheckBox();
 
         org.openide.awt.Mnemonics.setLocalizedText(jLabel1, org.openide.util.NbBundle.getMessage(VerticleWizardPanelVisual.class, "VerticleWizardPanelVisual.jLabel1.text")); // NOI18N
 
@@ -150,6 +126,12 @@ public final class VerticleWizardPanelVisual extends JPanel implements DocumentL
             }
         });
 
+        org.openide.awt.Mnemonics.setLocalizedText(jLabel4, org.openide.util.NbBundle.getMessage(VerticleWizardPanelVisual.class, "VerticleWizardPanelVisual.jLabel4.text")); // NOI18N
+
+        org.openide.awt.Mnemonics.setLocalizedText(testCaseCheckBox, org.openide.util.NbBundle.getMessage(VerticleWizardPanelVisual.class, "VerticleWizardPanelVisual.testCaseCheckBox.text")); // NOI18N
+        testCaseCheckBox.setToolTipText(org.openide.util.NbBundle.getMessage(VerticleWizardPanelVisual.class, "VerticleWizardPanelVisual.testCaseCheckBox.toolTipText")); // NOI18N
+        testCaseCheckBox.setActionCommand(org.openide.util.NbBundle.getMessage(VerticleWizardPanelVisual.class, "VerticleWizardPanelVisual.testCaseCheckBox.actionCommand")); // NOI18N
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -167,9 +149,13 @@ public final class VerticleWizardPanelVisual extends JPanel implements DocumentL
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addGap(31, 31, 31)
-                        .addComponent(packageTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 288, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel4))
+                        .addGap(27, 27, 27)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(testCaseCheckBox)
+                            .addComponent(packageTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 288, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(22, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -187,7 +173,11 @@ public final class VerticleWizardPanelVisual extends JPanel implements DocumentL
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(packageTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3))
-                .addContainerGap(127, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel4)
+                    .addComponent(testCaseCheckBox))
+                .addContainerGap(97, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -229,12 +219,13 @@ public final class VerticleWizardPanelVisual extends JPanel implements DocumentL
     /**
      * Store the values created in this wizard.
      *
-     * @param d the d
+     * @param wizDesc the wizard descriptor
      */
-    void store(WizardDescriptor d) {
-        d.putProperty(TemplateKeys.PROPERTY_CLASS_NAME, nameTextField.getText());
-        d.putProperty(TemplateKeys.PROPERTY_CLASS_DESCRIPTION, descriptionTextArea.getText());
-        d.putProperty(PROPERTY_PACKAGE, packageTextField.getText());
+    void store(WizardDescriptor wizDesc) {
+        wizDesc.putProperty(TemplateKeys.DN_PROPERTY_CLASS_NAME, nameTextField.getText());
+        wizDesc.putProperty(TemplateKeys.DN_PROPERTY_CLASS_DESCRIPTION, descriptionTextArea.getText());
+        wizDesc.putProperty(TemplateKeys.DN_PROPERTY_PACKAGE, packageTextField.getText());
+        wizDesc.putProperty(TemplateKeys.GEN_CFG_CREATE_VERTICLE_TEST, testCaseCheckBox.isSelected());
     }
 
     /**
@@ -243,9 +234,11 @@ public final class VerticleWizardPanelVisual extends JPanel implements DocumentL
      * @param settings the settings
      */
     void read(WizardDescriptor settings) {
-        nameTextField.setText((String) settings.getProperty(TemplateKeys.PROPERTY_CLASS_NAME));
-        packageTextField.setText((String) settings.getProperty(PROPERTY_PACKAGE));
-        descriptionTextArea.setText((String) settings.getProperty(TemplateKeys.PROPERTY_CLASS_DESCRIPTION));
+        nameTextField.setText((String) settings.getProperty(TemplateKeys.DN_PROPERTY_CLASS_NAME));
+        packageTextField.setText((String) settings.getProperty(TemplateKeys.DN_PROPERTY_PACKAGE));
+        descriptionTextArea.setText((String) settings.getProperty(TemplateKeys.DN_PROPERTY_CLASS_DESCRIPTION));
+        Boolean createTest = (Boolean) settings.getProperty(TemplateKeys.GEN_CFG_CREATE_VERTICLE_TEST);
+        testCaseCheckBox.setSelected(null!=createTest?createTest:Boolean.TRUE);
     }
 
     /**

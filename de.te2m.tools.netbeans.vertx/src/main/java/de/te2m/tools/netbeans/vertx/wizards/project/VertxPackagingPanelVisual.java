@@ -224,7 +224,7 @@ public class VertxPackagingPanelVisual extends JPanel implements DocumentListene
      * @param settings the settings
      */
     void read(WizardDescriptor settings) {
-        Boolean value = (Boolean) settings.getProperty(TemplateKeys.PKG_CREATE_FAT_JAR);
+        Boolean value = (Boolean) settings.getProperty(TemplateKeys.GEN_CFG_CREATE_FAT_JAR);
         if (value == null) {
             value = forModule(VertxPanel.class).getBoolean(TemplateKeys.VERTX_USE_FAT_JAR_DEFAULT, false);
         }
@@ -234,14 +234,14 @@ public class VertxPackagingPanelVisual extends JPanel implements DocumentListene
         //createDockerCheckBox.setEnabled(value);
         createDockerCheckBox.setVisible(value);
 
-        Boolean dockervalue = (Boolean) settings.getProperty(TemplateKeys.PKG_CREATE_DOCKER);
+        Boolean dockervalue = (Boolean) settings.getProperty(TemplateKeys.GEN_CFG_CREATE_DOCKER);
         if (null == dockervalue) {
             dockervalue = Boolean.FALSE;
         }
         createDockerCheckBox.setSelected(dockervalue);
         createDockerImageLabel.setVisible(value);
 
-        String txt = (String) settings.getProperty(TemplateKeys.PKG_DOCKER_IMAGE_NAME);
+        String txt = (String) settings.getProperty(TemplateKeys.DN_DOCKER_IMAGE_NAME);
         if (txt == null) {
             txt = forModule(VertxPanel.class).get(TemplateKeys.VERTX_DOCKER_DEFAULT_IMAGE_NAME, "");
         }
@@ -269,9 +269,9 @@ public class VertxPackagingPanelVisual extends JPanel implements DocumentListene
     void store(WizardDescriptor d) {
         Boolean fatJarValue = createFatJarCheckBox.isSelected();
         Boolean dockerValue = createDockerCheckBox.isSelected();
-        d.putProperty(TemplateKeys.PKG_CREATE_FAT_JAR, fatJarValue);
-        d.putProperty(TemplateKeys.PKG_CREATE_DOCKER, dockerValue);
-        d.putProperty(TemplateKeys.PKG_DOCKER_IMAGE_NAME, dockerImageNameTextField.getText());
+        d.putProperty(TemplateKeys.GEN_CFG_CREATE_FAT_JAR, fatJarValue);
+        d.putProperty(TemplateKeys.GEN_CFG_CREATE_DOCKER, dockerValue);
+        d.putProperty(TemplateKeys.DN_DOCKER_IMAGE_NAME, dockerImageNameTextField.getText());
     }
 
     /**

@@ -204,18 +204,18 @@ public class VertxMavenPanelVisual extends JPanel implements DocumentListener {
      */
     void read(WizardDescriptor settings) {
 
-        String groupID = (String) settings.getProperty(TemplateKeys.MVN_GROUP_ID);
+        String groupID = (String) settings.getProperty(TemplateKeys.DN_MVN_GROUP_ID);
         if(null==groupID||groupID.trim().length()==0)
         {
-            groupID = NbPreferences.forModule(MavenPanel.class).get(TemplateKeys.MVN_GROUP_ID, "");
+            groupID = NbPreferences.forModule(MavenPanel.class).get(TemplateKeys.DN_MVN_GROUP_ID, "");
         }
         
         this.groupIDTextField.setText(groupID);
         
-        String artifactID = (String) settings.getProperty(TemplateKeys.MVN_ARTIFACT_ID);
+        String artifactID = (String) settings.getProperty(TemplateKeys.DN_MVN_ARTIFACT_ID);
         if(null==artifactID||artifactID.trim().length()==0)
         {
-            artifactID = NbPreferences.forModule(MavenPanel.class).get(TemplateKeys.MVN_ARTIFACT_ID, "");
+            artifactID = NbPreferences.forModule(MavenPanel.class).get(TemplateKeys.DN_MVN_ARTIFACT_ID, "");
         }
         this.artifactIDTextField.setText(artifactID);
         
@@ -248,8 +248,8 @@ public class VertxMavenPanelVisual extends JPanel implements DocumentListener {
         String version = versionTextField.getText().trim();
 
 
-        d.putProperty(TemplateKeys.MVN_ARTIFACT_ID,artifactID);
-        d.putProperty(TemplateKeys.MVN_GROUP_ID,groupID);
+        d.putProperty(TemplateKeys.DN_MVN_ARTIFACT_ID,artifactID);
+        d.putProperty(TemplateKeys.DN_MVN_GROUP_ID,groupID);
         d.putProperty(TemplateKeys.MVN_VERSION,version);
     }
 
