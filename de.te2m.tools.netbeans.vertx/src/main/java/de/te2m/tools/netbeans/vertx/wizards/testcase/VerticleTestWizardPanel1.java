@@ -1,5 +1,5 @@
 /*
-* VerticleWizardPanel1.java
+* VerticleTestWizardPanel1.java
 *   
 * Copyright 2009 - 2016 Frank Fischer (email: frank@te2m.de)
 *
@@ -18,19 +18,19 @@ import static org.openide.util.HelpCtx.DEFAULT_HELP;
 import static de.te2m.tools.netbeans.vertx.wizards.TemplateKeys.DN_PROPERTY_PACKAGE;
 
 /**
- * The Class VerticleWizardPanel1.
+ * The Class VerticleTestWizardPanel1.
  *
  * @author ffischer
  * @version 1.0
  * @since 1.0
  */
-public class VerticleWizardPanel1 implements WizardDescriptor.Panel<WizardDescriptor> {
+public class VerticleTestWizardPanel1 implements WizardDescriptor.Panel<WizardDescriptor> {
 
     /**
      * The visual component that displays this panel. If you need to access the
      * component from this class, just use getComponent().
      */
-    private VerticleVisualPanel1 component;
+    private VerticleTestVisualPanel1 component;
 
     /* (non-Javadoc)
      * @see org.openide.WizardDescriptor.Panel#addChangeListener(javax.swing.event.ChangeListener)
@@ -47,9 +47,9 @@ public class VerticleWizardPanel1 implements WizardDescriptor.Panel<WizardDescri
      * @see org.openide.WizardDescriptor.Panel#getComponent()
      */
     @Override
-    public VerticleVisualPanel1 getComponent() {
+    public VerticleTestVisualPanel1 getComponent() {
         if (component == null) {
-            component = new VerticleVisualPanel1();
+            component = new VerticleTestVisualPanel1();
         }
         return component;
     }
@@ -60,7 +60,7 @@ public class VerticleWizardPanel1 implements WizardDescriptor.Panel<WizardDescri
      * @return the description from visual panel
      */
     private String getDescriptionFromVisualPanel() {
-        return ((VerticleVisualPanel1) component).getTargetDescription();
+        return ((VerticleTestVisualPanel1) component).getTargetDescription();
     }
 
     /* (non-Javadoc)
@@ -80,7 +80,7 @@ public class VerticleWizardPanel1 implements WizardDescriptor.Panel<WizardDescri
      * @return the name from visual panel
      */
     private String getNameFromVisualPanel() {
-        return ((VerticleVisualPanel1) component).getTargetName();
+        return ((VerticleTestVisualPanel1) component).getTargetName();
     }
 
     /**
@@ -89,7 +89,7 @@ public class VerticleWizardPanel1 implements WizardDescriptor.Panel<WizardDescri
      * @return the folder from visual panel
      */
     private String getPackageFromVisualPanel() {
-        return ((VerticleVisualPanel1) component).getTargetPackage();
+        return ((VerticleTestVisualPanel1) component).getTargetPackage();
     }
 
     /* (non-Javadoc)

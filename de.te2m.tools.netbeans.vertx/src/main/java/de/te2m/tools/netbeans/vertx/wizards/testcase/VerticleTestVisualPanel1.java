@@ -1,5 +1,5 @@
 /*
-* VerticleVisualPanel1.java
+* VerticleTestVisualPanel1.java
 *   
 * Copyright 2009 - 2016 Frank Fischer (email: frank@te2m.de)
 *
@@ -12,55 +12,28 @@ package de.te2m.tools.netbeans.vertx.wizards.testcase;
 import javax.swing.JPanel;
 
 /**
- * The Class VerticleVisualPanel1.
+ * The Class VerticleTestVisualPanel1.
  *
  * @author ffischer
  * @version 1.0
  * @since 1.0
  */
-public final class VerticleVisualPanel1 extends JPanel {
+public final class VerticleTestVisualPanel1 extends JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    /**
-     * The description text area.
-     */
     private javax.swing.JTextArea descriptionTextArea;
-    
-    /**
-     * The j label1.
-     */
     private javax.swing.JLabel jLabel1;
-    
-    /**
-     * The j label2.
-     */
     private javax.swing.JLabel jLabel2;
-    
-    /**
-     * The j label3.
-     */
     private javax.swing.JLabel jLabel3;
-    
-    /**
-     * The j scroll pane1.
-     */
     private javax.swing.JScrollPane jScrollPane1;
-    
-    /**
-     * The name text field.
-     */
     private javax.swing.JTextField nameTextField;
-    
-    /**
-     * The package text field.
-     */
     private javax.swing.JTextField packageTextField;
     // End of variables declaration//GEN-END:variables
 
     /**
      * Creates new form VerticleVisualPanel1.
      */
-    public VerticleVisualPanel1() {
+    public VerticleTestVisualPanel1() {
         initComponents();
     }
     
@@ -115,19 +88,19 @@ public final class VerticleVisualPanel1 extends JPanel {
         jLabel3 = new javax.swing.JLabel();
         packageTextField = new javax.swing.JTextField();
 
-        org.openide.awt.Mnemonics.setLocalizedText(jLabel1, org.openide.util.NbBundle.getMessage(VerticleVisualPanel1.class, "VerticleVisualPanel1.jLabel1.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(jLabel1, org.openide.util.NbBundle.getMessage(VerticleTestVisualPanel1.class, "VerticleTestVisualPanel1.jLabel1.text")); // NOI18N
 
-        nameTextField.setText(org.openide.util.NbBundle.getMessage(VerticleVisualPanel1.class, "VerticleVisualPanel1.nameTextField.text")); // NOI18N
+        nameTextField.setText(org.openide.util.NbBundle.getMessage(VerticleTestVisualPanel1.class, "VerticleTestVisualPanel1.nameTextField.text")); // NOI18N
 
-        org.openide.awt.Mnemonics.setLocalizedText(jLabel2, org.openide.util.NbBundle.getMessage(VerticleVisualPanel1.class, "VerticleVisualPanel1.jLabel2.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(jLabel2, org.openide.util.NbBundle.getMessage(VerticleTestVisualPanel1.class, "VerticleTestVisualPanel1.jLabel2.text")); // NOI18N
 
         descriptionTextArea.setColumns(20);
         descriptionTextArea.setRows(5);
         jScrollPane1.setViewportView(descriptionTextArea);
 
-        org.openide.awt.Mnemonics.setLocalizedText(jLabel3, org.openide.util.NbBundle.getMessage(VerticleVisualPanel1.class, "VerticleVisualPanel1.jLabel3.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(jLabel3, org.openide.util.NbBundle.getMessage(VerticleTestVisualPanel1.class, "VerticleTestVisualPanel1.jLabel3.text")); // NOI18N
 
-        packageTextField.setText(org.openide.util.NbBundle.getMessage(VerticleVisualPanel1.class, "VerticleVisualPanel1.packageTextField.text")); // NOI18N
+        packageTextField.setText(org.openide.util.NbBundle.getMessage(VerticleTestVisualPanel1.class, "VerticleTestVisualPanel1.packageTextField.text")); // NOI18N
         packageTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 packageTextFieldActionPerformed(evt);

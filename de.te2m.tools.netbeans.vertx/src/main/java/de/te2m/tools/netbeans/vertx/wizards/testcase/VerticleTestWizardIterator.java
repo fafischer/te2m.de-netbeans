@@ -1,5 +1,5 @@
 /*
-* VerticleWizardIterator.java
+* VerticleTestWizardIterator.java
 *   
 * Copyright 2009 - 2016 Frank Fischer (email: frank@te2m.de)
 *
@@ -47,7 +47,7 @@ import static de.te2m.tools.netbeans.vertx.wizards.TemplateKeys.DN_PROPERTY_PACK
 
 // TODO define position attribute
 /**
- * The Class VerticleWizardIterator.
+ * The Class VerticleTestWizardIterator.
  *
  * @author ffischer
  * @version 1.0
@@ -56,7 +56,7 @@ import static de.te2m.tools.netbeans.vertx.wizards.TemplateKeys.DN_PROPERTY_PACK
 @TemplateRegistration(folder = "Vertx.io", displayName = "#VerticleWizardIterator_displayName", iconBase = "de/te2m/tools/netbeans/vertx/icons/logo16.png", description = "verticleTest.html",
         content = "../"+TemplateIDs.JUNIT_BASE+".template", scriptEngine = "freemarker")
 @Messages("VerticleWizardIterator_displayName=Testcase for Verticle")
-public final class VerticleWizardIterator extends AbstractTe2mWizard implements WizardDescriptor.InstantiatingIterator<WizardDescriptor> {
+public final class VerticleTestWizardIterator extends AbstractTe2mWizard implements WizardDescriptor.InstantiatingIterator<WizardDescriptor> {
 
     /**
      * The index.
@@ -120,7 +120,7 @@ public final class VerticleWizardIterator extends AbstractTe2mWizard implements 
     private List<WizardDescriptor.Panel<WizardDescriptor>> getPanels() {
         if (panels == null) {
             panels = new ArrayList<>();
-            panels.add(new VerticleWizardPanel1());
+            panels.add(new VerticleTestWizardPanel1());
             String[] steps = createSteps();
             for (int i = 0; i < panels.size(); i++) {
                 Component c = panels.get(i).getComponent();
