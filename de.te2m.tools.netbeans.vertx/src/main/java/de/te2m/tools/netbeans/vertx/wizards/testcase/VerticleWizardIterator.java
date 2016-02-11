@@ -190,8 +190,6 @@ public final class VerticleWizardIterator extends AbstractTe2mWizard implements 
         FileObject template = getTemplate(wizard);
         DataObject dTemplate = find(template);
 
-        String tmpl = dTemplate.getPrimaryFile().asText();
-
         Project pRoot = getProject(wizard);
 
         FileObject mainJavaRoot = null;

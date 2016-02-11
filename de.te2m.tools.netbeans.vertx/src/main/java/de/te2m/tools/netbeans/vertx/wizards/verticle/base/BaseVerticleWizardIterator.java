@@ -1,5 +1,5 @@
 /*
-* VerticleWizardIterator.java
+* BaseVerticleWizardIterator.java
 *   
 * Copyright 2009 - 2016 Frank Fischer (email: frank@te2m.de)
 *
@@ -15,7 +15,6 @@ import de.te2m.tools.netbeans.vertx.wizards.TemplateIDs;
 import java.awt.Component;
 import java.io.IOException;
 import java.util.ArrayList;
-import static java.util.Collections.singleton;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,7 +22,6 @@ import java.util.NoSuchElementException;
 import java.util.Set;
 import javax.swing.JComponent;
 import javax.swing.event.ChangeListener;
-import static org.netbeans.api.java.project.JavaProjectConstants.SOURCES_TYPE_JAVA;
 import org.netbeans.api.project.Project;
 import static org.netbeans.api.project.ProjectUtils.getSources;
 import org.netbeans.api.project.SourceGroup;
@@ -44,10 +42,12 @@ import org.openide.loaders.DataObject;
 import static org.openide.loaders.DataObject.find;
 import org.openide.util.NbBundle.Messages;
 import static de.te2m.tools.netbeans.vertx.wizards.TemplateKeys.DN_PROPERTY_PACKAGE;
+import java.util.LinkedHashSet;
+import org.netbeans.api.java.project.JavaProjectConstants;
 
 // TODO define position attribute
 /**
- * The Class VerticleWizardIterator.
+ * The Class BaseVerticleWizardIterator.
  *
  * @author ffischer
  * @version 1.0
@@ -56,10 +56,10 @@ import static de.te2m.tools.netbeans.vertx.wizards.TemplateKeys.DN_PROPERTY_PACK
 @TemplateRegistrations({
     @TemplateRegistration(folder = "Vertx.io", displayName = "#BasicVerticleWizardIterator_displayName", iconBase = "de/te2m/tools/netbeans/vertx/icons/logo16.png", description = "verticle.html",
             content = "../../" + TemplateIDs.VERTICLE_BASE + ".template", scriptEngine = "freemarker"),
-    @TemplateRegistration(folder = "Vertx.io", content = "../../" + TemplateIDs.JUNIT_BASE + ".template", scriptEngine = "freemarker", category="hidden")
+    @TemplateRegistration(folder = "Vertx.io", content = "../../" + TemplateIDs.JUNIT_BASE + ".template", scriptEngine = "freemarker", category = "hidden")
 })
 @Messages("BasicVerticleWizardIterator_displayName=Verticle")
-public final class VerticleWizardIterator extends AbstractTe2mWizard implements WizardDescriptor.InstantiatingIterator<WizardDescriptor> {
+public final class BaseVerticleWizardIterator extends AbstractTe2mWizard implements WizardDescriptor.InstantiatingIterator<WizardDescriptor> {
 
     /**
      * The index.
@@ -176,7 +176,11 @@ public final class VerticleWizardIterator extends AbstractTe2mWizard implements 
     @Override
     public Set<?> instantiate() throws IOException {
 
+        Set<FileObject> resultSet = new LinkedHashSet<>();
+
         Map<String, Object> params = new HashMap<>();
+
+        Boolean createVerticleTest = (Boolean) wizard.getProperty(GEN_CFG_CREATE_VERTICLE_TEST);
 
         String fName = (String) wizard.getProperty(DN_PROPERTY_CLASS_NAME);
         String packName = (String) wizard.getProperty(DN_PROPERTY_PACKAGE);
@@ -197,7 +201,7 @@ public final class VerticleWizardIterator extends AbstractTe2mWizard implements 
 
         Sources sources = getSources(pRoot);
 
-        SourceGroup[] sgs = sources.getSourceGroups(SOURCES_TYPE_JAVA);
+        SourceGroup[] sgs = sources.getSourceGroups(JavaProjectConstants.SOURCES_TYPE_JAVA);
 
         if (sgs.length > 0) {
             mainJavaRoot = sgs[0].getRootFolder();
@@ -210,11 +214,32 @@ public final class VerticleWizardIterator extends AbstractTe2mWizard implements 
         FileObject res = lookupSubDir(mainJavaRoot, folder.replace(".", "/"));
 
         DataObject dobj = dTemplate.createFromTemplate(findFolder(res), fName + ".java", params);
+        
+        resultSet.add(dobj.getPrimaryFile());
 
-        //Obtain a FileObject:
-        FileObject createdFile = dobj.getPrimaryFile();
+        if (Boolean.TRUE.equals(createVerticleTest)) {
 
-        return singleton(createdFile);
+            FileObject mainTestRoot = null;
+
+            sgs = sources.getSourceGroups(JavaProjectConstants.SOURCES_HINT_TEST);
+
+            if (sgs.length > 0) {
+                mainTestRoot = sgs[0].getRootFolder();
+            } else {
+                mainTestRoot = lookupSubDir(pRoot.getProjectDirectory(), "src/test/java");
+            }
+
+            FileObject fo = getTemplateByNameAndFolder("VerticleUnitTest.java", "Vertx.io");
+
+            if (null != fo) {
+                res = lookupSubDir(mainTestRoot, folder.replace(".", "/"));
+                DataObject currentTemplateDO = find(fo);
+                DataObject classDO = currentTemplateDO.createFromTemplate(findFolder(res), fName + "Test.java", params);
+                resultSet.add(classDO.getPrimaryFile());
+            }
+        }
+
+        return resultSet;
     }
 
 

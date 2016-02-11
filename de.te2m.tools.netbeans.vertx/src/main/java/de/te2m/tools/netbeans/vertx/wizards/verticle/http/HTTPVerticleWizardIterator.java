@@ -11,8 +11,6 @@ package de.te2m.tools.netbeans.vertx.wizards.verticle.http;
 
 import de.te2m.tools.netbeans.vertx.wizards.VerticleWizardPanel;
 import de.te2m.tools.netbeans.vertx.wizards.AbstractTe2mWizard;
-import static de.te2m.tools.netbeans.vertx.wizards.TemplateKeys.PROPERTY_DESCRIPTION;
-import static de.te2m.tools.netbeans.vertx.wizards.TemplateKeys.PROPERTY_NAME;
 import java.awt.Component;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -44,6 +42,10 @@ import org.openide.loaders.DataObject;
 import static org.openide.loaders.DataObject.find;
 import org.openide.util.NbBundle.Messages;
 import static de.te2m.tools.netbeans.vertx.wizards.TemplateKeys.DN_PROPERTY_PACKAGE;
+import java.util.LinkedHashSet;
+import org.netbeans.api.java.project.JavaProjectConstants;
+import static org.openide.loaders.DataFolder.findFolder;
+import static org.openide.loaders.DataObject.find;
 
 // TODO define position attribute
 /**
@@ -173,13 +175,17 @@ public final class HTTPVerticleWizardIterator extends AbstractTe2mWizard impleme
     @Override
     public Set<?> instantiate() throws IOException {
 
+        Set<FileObject> resultSet = new LinkedHashSet<>();
+        
         Map<String, Object> params = new HashMap<>();
 
+        Boolean createVerticleTest = (Boolean) wizard.getProperty(GEN_CFG_CREATE_VERTICLE_TEST);
+        
         String fName = (String) wizard.getProperty(DN_PROPERTY_CLASS_NAME);
 
         String packName = (String) wizard.getProperty(DN_PROPERTY_PACKAGE);
         
-                params.put(DN_PROPERTY_CLASS_NAME, fName);
+        params.put(DN_PROPERTY_CLASS_NAME, fName);
         params.put(DN_PROPERTY_PACKAGE, packName);
         params.put(DN_PROPERTY_CLASS_DESCRIPTION, wizard.getProperty(DN_PROPERTY_CLASS_DESCRIPTION));
 
@@ -204,7 +210,6 @@ public final class HTTPVerticleWizardIterator extends AbstractTe2mWizard impleme
         } else {
             mainJavaRoot = lookupSubDir(pRoot.getProjectDirectory(), "src/main/java");
         }
-
         String folder = null != wizard.getProperty(DN_PROPERTY_PACKAGE) ? (String) wizard.getProperty(DN_PROPERTY_PACKAGE) : "";
 
         FileObject res = lookupSubDir(mainJavaRoot, folder.replace(".", "/"));
@@ -213,8 +218,29 @@ public final class HTTPVerticleWizardIterator extends AbstractTe2mWizard impleme
 
         //Obtain a FileObject:
         FileObject createdFile = dobj.getPrimaryFile();
+        if (Boolean.TRUE.equals(createVerticleTest)) {
 
-        return singleton(createdFile);
+            FileObject mainTestRoot = null;
+
+            sgs = sources.getSourceGroups(JavaProjectConstants.SOURCES_HINT_TEST);
+
+            if (sgs.length > 0) {
+                mainTestRoot = sgs[0].getRootFolder();
+            } else {
+                mainTestRoot = lookupSubDir(pRoot.getProjectDirectory(), "src/test/java");
+            }
+
+            FileObject fo = getTemplateByNameAndFolder("VerticleUnitTest.java", "Vertx.io");
+
+            if (null != fo) {
+                res = lookupSubDir(mainTestRoot, folder.replace(".", "/"));
+                DataObject currentTemplateDO = find(fo);
+                DataObject classDO = currentTemplateDO.createFromTemplate(findFolder(res), fName + "Test.java", params);
+                resultSet.add(classDO.getPrimaryFile());
+            }
+        }
+
+        return resultSet;
     }
 
 
