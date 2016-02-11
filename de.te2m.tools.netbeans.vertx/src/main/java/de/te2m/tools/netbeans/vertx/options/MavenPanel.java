@@ -9,10 +9,10 @@
 */
 package de.te2m.tools.netbeans.vertx.options;
 
-import static de.te2m.tools.netbeans.vertx.wizards.TemplateKeys.MVN_VERSION;
 import static org.openide.util.NbPreferences.forModule;
 import static de.te2m.tools.netbeans.vertx.wizards.TemplateKeys.DN_MVN_GROUP_ID;
 import static de.te2m.tools.netbeans.vertx.wizards.TemplateKeys.DN_MVN_ARTIFACT_ID;
+import static de.te2m.tools.netbeans.vertx.wizards.TemplateKeys.DN_VERTX_VERSION;
 
 /**
  * The Class MavenPanel.
@@ -159,7 +159,7 @@ public final class MavenPanel extends javax.swing.JPanel {
      * If no value is already available then default values will be used (if available)
      */
     void load() {
-        defaultVersionText.setText(forModule(MavenPanel.class).get(MVN_VERSION, "1.0-SNAPSHOT"));
+        defaultVersionText.setText(forModule(MavenPanel.class).get(DN_VERTX_VERSION, "1.0-SNAPSHOT"));
         artifactIDTextField.setText(forModule(MavenPanel.class).get(DN_MVN_ARTIFACT_ID, ""));
         groupIDTextField.setText(forModule(MavenPanel.class).get(DN_MVN_GROUP_ID, ""));
     }
@@ -168,7 +168,7 @@ public final class MavenPanel extends javax.swing.JPanel {
      * Store the option values.
      */
     void store() {
-        forModule(MavenPanel.class).put(MVN_VERSION, defaultVersionText.getText());
+        forModule(MavenPanel.class).put(DN_VERTX_VERSION, defaultVersionText.getText());
         forModule(MavenPanel.class).put(DN_MVN_ARTIFACT_ID, artifactIDTextField.getText());
         forModule(MavenPanel.class).put(DN_MVN_GROUP_ID, groupIDTextField.getText());
     }

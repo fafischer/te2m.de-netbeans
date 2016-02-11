@@ -9,13 +9,13 @@
 */
 package de.te2m.tools.netbeans.vertx.wizards.testcase;
 
-import static de.te2m.tools.netbeans.vertx.wizards.TemplateKeys.PROPERTY_DESCRIPTION;
 import static de.te2m.tools.netbeans.vertx.wizards.TemplateKeys.PROPERTY_NAME;
 import javax.swing.event.ChangeListener;
 import org.openide.WizardDescriptor;
 import org.openide.util.HelpCtx;
 import static org.openide.util.HelpCtx.DEFAULT_HELP;
 import static de.te2m.tools.netbeans.vertx.wizards.TemplateKeys.DN_PROPERTY_PACKAGE;
+import static de.te2m.tools.netbeans.vertx.wizards.TemplateKeys.DN_DESCRIPTION;
 
 /**
  * The Class VerticleTestWizardPanel1.
@@ -126,7 +126,7 @@ public class VerticleTestWizardPanel1 implements WizardDescriptor.Panel<WizardDe
     @Override
     public void storeSettings(WizardDescriptor wiz) {
         wiz.putProperty(PROPERTY_NAME, getNameFromVisualPanel());
-        wiz.putProperty(PROPERTY_DESCRIPTION, getDescriptionFromVisualPanel());
+        wiz.putProperty(DN_DESCRIPTION, getDescriptionFromVisualPanel());
         wiz.putProperty(DN_PROPERTY_PACKAGE, getPackageFromVisualPanel());
     }
 

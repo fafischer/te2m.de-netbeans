@@ -219,11 +219,11 @@ public class VertxMavenPanelVisual extends JPanel implements DocumentListener {
         }
         this.artifactIDTextField.setText(artifactID);
         
-        String version = (String) settings.getProperty(TemplateKeys.MVN_VERSION);
+        String version = (String) settings.getProperty(TemplateKeys.DN_VERTX_VERSION);
         
         if(null==version||version.trim().length()==0)
         {
-            version = NbPreferences.forModule(MavenPanel.class).get(TemplateKeys.MVN_VERSION, "1.0-SNAPSHOT");
+            version = NbPreferences.forModule(MavenPanel.class).get(TemplateKeys.DN_VERTX_VERSION, "1.0-SNAPSHOT");
         }
         
         this.versionTextField.setText(version);
@@ -250,7 +250,7 @@ public class VertxMavenPanelVisual extends JPanel implements DocumentListener {
 
         d.putProperty(TemplateKeys.DN_MVN_ARTIFACT_ID,artifactID);
         d.putProperty(TemplateKeys.DN_MVN_GROUP_ID,groupID);
-        d.putProperty(TemplateKeys.MVN_VERSION,version);
+        d.putProperty(TemplateKeys.DN_VERTX_VERSION,version);
     }
 
     /**

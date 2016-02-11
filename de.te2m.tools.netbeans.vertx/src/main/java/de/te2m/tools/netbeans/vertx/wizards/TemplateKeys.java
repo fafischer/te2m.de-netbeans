@@ -30,9 +30,9 @@ public interface TemplateKeys {
     public static final String DN_MVN_GROUP_ID="groupID";
     
     /**
-     * The Constant MVN_VERSION.
+     * The Constant DN_VERTX_VERSION.
      */
-    public static final String MVN_VERSION="Version";
+    public static final String DN_VERTX_VERSION="Version";
 
     /**
      * The Constant GEN_CFG_CREATE_DOCKER.
@@ -77,7 +77,7 @@ public interface TemplateKeys {
     /**
      * The property creation date.
      */
-    public static final String PROPERTY_CREATION_DATE = "CreationDate";
+    public static final String DN_CREATION_DATE = "CreationDate";
 
     /**
      * The Constant PROPERTY_DATE_FORMAT.
@@ -85,9 +85,9 @@ public interface TemplateKeys {
     public static final String PROPERTY_DATE_FORMAT="DefaultDateFormat";
 
     /**
-     * The property decription.
+     * The property description.
      */
-    public static final String PROPERTY_DESCRIPTION = "TargetDescription";
+    public static final String DN_DESCRIPTION = "TargetDescription";
 
     /**
      * The Constant DN_PROPERTY_CLASS_DESCRIPTION.

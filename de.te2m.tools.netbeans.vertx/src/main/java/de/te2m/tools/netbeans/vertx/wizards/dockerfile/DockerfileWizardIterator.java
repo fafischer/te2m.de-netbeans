@@ -10,7 +10,6 @@
 package de.te2m.tools.netbeans.vertx.wizards.dockerfile;
 import de.te2m.tools.netbeans.vertx.wizards.AbstractTe2mWizard;
 import de.te2m.tools.netbeans.vertx.wizards.TemplateIDs;
-import static de.te2m.tools.netbeans.vertx.wizards.TemplateKeys.PROPERTY_DESCRIPTION;
 import static de.te2m.tools.netbeans.vertx.wizards.TemplateKeys.PROPERTY_NAME;
 import java.awt.Component;
 import java.io.IOException;
@@ -43,6 +42,7 @@ import org.openide.loaders.DataObject;
 import static org.openide.loaders.DataObject.find;
 import org.openide.util.NbBundle.Messages;
 import static de.te2m.tools.netbeans.vertx.wizards.TemplateKeys.DN_PROPERTY_PACKAGE;
+import static de.te2m.tools.netbeans.vertx.wizards.TemplateKeys.DN_DESCRIPTION;
 
 // TODO define position attribute
 /**
@@ -181,7 +181,7 @@ public final class DockerfileWizardIterator extends AbstractTe2mWizard implement
 
         params.put(PROPERTY_NAME, fName);
         params.put(DN_PROPERTY_PACKAGE, packName);
-        params.put(PROPERTY_DESCRIPTION, wizard.getProperty(PROPERTY_DESCRIPTION));
+        params.put(DN_DESCRIPTION, wizard.getProperty(DN_DESCRIPTION));
 
         initializeCommonProperties(params);
         //Get the template and convert it:

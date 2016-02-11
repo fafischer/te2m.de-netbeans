@@ -11,7 +11,6 @@ package de.te2m.tools.netbeans.vertx.wizards.testcase;
 
 import de.te2m.tools.netbeans.vertx.wizards.AbstractTe2mWizard;
 import de.te2m.tools.netbeans.vertx.wizards.TemplateIDs;
-import static de.te2m.tools.netbeans.vertx.wizards.TemplateKeys.PROPERTY_DESCRIPTION;
 import static de.te2m.tools.netbeans.vertx.wizards.TemplateKeys.PROPERTY_NAME;
 import java.awt.Component;
 import java.io.IOException;
@@ -44,6 +43,7 @@ import org.openide.loaders.DataObject;
 import static org.openide.loaders.DataObject.find;
 import org.openide.util.NbBundle.Messages;
 import static de.te2m.tools.netbeans.vertx.wizards.TemplateKeys.DN_PROPERTY_PACKAGE;
+import static de.te2m.tools.netbeans.vertx.wizards.TemplateKeys.DN_DESCRIPTION;
 
 // TODO define position attribute
 /**
@@ -183,7 +183,7 @@ public final class VerticleTestWizardIterator extends AbstractTe2mWizard impleme
 
         params.put(DN_PROPERTY_CLASS_NAME, fName);
         params.put(DN_PROPERTY_PACKAGE, packName);
-        params.put(DN_PROPERTY_CLASS_DESCRIPTION, wizard.getProperty(PROPERTY_DESCRIPTION));
+        params.put(DN_PROPERTY_CLASS_DESCRIPTION, wizard.getProperty(DN_DESCRIPTION));
 
         initializeCommonProperties(params);
         //Get the template and convert it:

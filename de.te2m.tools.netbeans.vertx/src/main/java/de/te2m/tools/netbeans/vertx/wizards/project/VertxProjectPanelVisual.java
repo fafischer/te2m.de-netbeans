@@ -289,7 +289,7 @@ public class VertxProjectPanelVisual extends JPanel implements DocumentListener 
         this.projectNameTextField.setText(projectName);
         this.projectNameTextField.selectAll();
         
-        this.descriptionText.setText((String) settings.getProperty(TemplateKeys.PROPERTY_DESCRIPTION));
+        this.descriptionText.setText((String) settings.getProperty(TemplateKeys.DN_DESCRIPTION));
     }
 
     /* (non-Javadoc)
@@ -313,7 +313,7 @@ public class VertxProjectPanelVisual extends JPanel implements DocumentListener 
         String desc = descriptionText.getText().trim();
         d.putProperty("projdir", new File(folder));
         d.putProperty(TemplateKeys.PROPERTY_NAME, name);
-        d.putProperty(TemplateKeys.PROPERTY_DESCRIPTION, desc!=null?desc:"");
+        d.putProperty(TemplateKeys.DN_DESCRIPTION, desc!=null?desc:"");
     }
 
     /**
