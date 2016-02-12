@@ -5,4 +5,5 @@
     <mapID target="de.te2m.tools.netbeans.vertx.features" url="features.html"/>
     <mapID target="de.te2m.tools.netbeans.vertx.wizard_new_project" url="new_project_wizard.html"/>
     <mapID target="de.te2m.tools.netbeans.vertx.wizards" url="wizards.html"/>
+    <mapID target="de.te2m.tools.netbeans.vertx.config" url="config.html"/>
 </map>
