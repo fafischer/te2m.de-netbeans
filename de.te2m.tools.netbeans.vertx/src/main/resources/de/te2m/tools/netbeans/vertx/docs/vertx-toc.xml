@@ -6,7 +6,7 @@
         <tocitem text="Features" target="de.te2m.tools.netbeans.vertx.features">
             <tocitem text="Wizards" target="de.te2m.tools.netbeans.vertx.wizards">
                 <tocitem text="New Project Wizard" target="de.te2m.tools.netbeans.vertx.wizard_new_project"/>
-            
+                <tocitem text="Sample Project Wizard" target="de.te2m.tools.netbeans.vertx.wizard_sample_project"/>
             </tocitem>
         </tocitem>
         <tocitem text="Configuration" target="de.te2m.tools.netbeans.vertx.config">
