@@ -18,7 +18,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 -->
 <!DOCTYPE helpset PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp HelpSet Version 2.0//EN" "http://java.sun.com/products/javahelp/helpset_2_0.dtd">
 <helpset version="2.0">
-    <title>vertx.io Netbeans Module Help</title>
+    <title>Tools for vertx.io Help</title>
     <maps>
         <homeID>de.te2m.tools.netbeans.vertx.about</homeID>
         <mapref location="vertx-map.xml"/>
