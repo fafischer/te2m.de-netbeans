@@ -9,6 +9,9 @@
             
             </tocitem>
         </tocitem>
-        <tocitem text="Configuration" target="de.te2m.tools.netbeans.vertx.config"/>
+        <tocitem text="Configuration" target="de.te2m.tools.netbeans.vertx.config">
+            <tocitem text="Options" target="de.te2m.tools.netbeans.vertx.options"/>
+            <tocitem text="Template Customizing" target="de.te2m.tools.netbeans.vertx.customizing"/>
+        </tocitem>
     </tocitem>
 </toc>
