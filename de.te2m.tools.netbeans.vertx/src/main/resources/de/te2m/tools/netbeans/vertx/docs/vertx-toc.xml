@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE toc PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp TOC Version 2.0//EN" "http://java.sun.com/products/javahelp/toc_2_0.dtd">
 <toc version="2.0">
-    <tocitem text="vertx.io Netbeans Module">
-        <tocitem text="About vertx.io Netbeans Module" target="de.te2m.tools.netbeans.vertx.about"/>
+    <tocitem text="Tools for vertx.io">
+        <tocitem text="About" target="de.te2m.tools.netbeans.vertx.about"/>
         <tocitem text="Features" target="de.te2m.tools.netbeans.vertx.features">
             <tocitem text="Wizards" target="de.te2m.tools.netbeans.vertx.wizards">
                 <tocitem text="New Project Wizard" target="de.te2m.tools.netbeans.vertx.wizard_new_project"/>
