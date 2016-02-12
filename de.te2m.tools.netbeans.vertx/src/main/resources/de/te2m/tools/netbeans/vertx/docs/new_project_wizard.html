@@ -6,9 +6,32 @@
     </head>
     <body>
         <h2>New Project Wizard</h2>
-        <h3>Description</h3>
-        <h3>Usage</h3>
-        
+        <p>
+        Its possible to create a new Maven based Vertx.io project in a few little steps.
+        </p>
+        <h3>Select Wizard</h3>
+        <p>Open create new projects and select "Create new Vertx.io Project"</p>
+        <img alt="Select New Project Wizard" src="img/NewProjectWizard_1.png"/>
+        <h3>Project Settings</h3>
+        <p>Enter the basic settings for the new project. This includes project name, location and description.</p>
+        <img alt="Basic Settings" src="img/NewProjectWizard_2.png"/>
+        <h3>Main Verticle</h3>
+        <p>A Vertx.io project requires at least one main verticle. Enter all required information about it.</p>
+        <img alt="Main Verticle" src="img/NewProjectWizard_3.png"/>
+        <p>By enabling the related check box also a (empty) test case will be created for it.</p>
+        <h3>Maven Settings</h3>
+        <p>Enter the basic maven configuration. This includes group id, artifact id and version.</p>
+        <img alt="Maven Settings" src="img/NewProjectWizard_4.png"/>
+        <p>The default settings can be defined in the related options panel.</p>
+        <h3>Packaging</h3>
+        <p>Configure the packaging options.</p>
+        <img alt="Packaging" src="img/NewProjectWizard_5.png"/>
+        <p>The default settings can be defined in the related options panel.</p>
+        <p>There are some dependencies between the settings:</p>
+        <ul>
+            <li>Docker is only enabled for Fat-Jars</li>
+            <li>The creation of a Dockerfile is only available if Fat-Jar and docker support are enabled</li>
+        </ul>
     </body>
 </html>
 <!--
