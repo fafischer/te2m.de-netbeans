@@ -9,4 +9,7 @@
     <mapID target="de.te2m.tools.netbeans.vertx.config" url="config.html"/>
     <mapID target="de.te2m.tools.netbeans.vertx.customizing" url="customizing.html"/>
     <mapID target="de.te2m.tools.netbeans.vertx.options" url="options.html"/>
+    <mapID target="de.te2m.tools.netbeans.vertx.wizard_base_verticle" url="base_verticle_wizard.html"/>
+    <mapID target="de.te2m.tools.netbeans.vertx.wizard_http_verticle" url="http_verticle_wizard.html"/>
+    <mapID target="de.te2m.tools.netbeans.vertx.wizard_rest_verticle" url="rest_verticle_wizard.html"/>    
 </map>

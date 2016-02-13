@@ -7,6 +7,9 @@
             <tocitem text="Wizards" target="de.te2m.tools.netbeans.vertx.wizards">
                 <tocitem text="New Project Wizard" target="de.te2m.tools.netbeans.vertx.wizard_new_project"/>
                 <tocitem text="Sample Project Wizard" target="de.te2m.tools.netbeans.vertx.wizard_sample_project"/>
+                <tocitem text="Basic Verticle Wizard" target="de.te2m.tools.netbeans.vertx.wizard_base_verticle"/>
+                <tocitem text="Web Server Verticle Wizard" target="de.te2m.tools.netbeans.vertx.wizard_http_verticle"/>
+                <tocitem text="REST Verticle Wizard" target="de.te2m.tools.netbeans.vertx.wizard_rest_verticle"/>
             </tocitem>
         </tocitem>
         <tocitem text="Configuration" target="de.te2m.tools.netbeans.vertx.config">
