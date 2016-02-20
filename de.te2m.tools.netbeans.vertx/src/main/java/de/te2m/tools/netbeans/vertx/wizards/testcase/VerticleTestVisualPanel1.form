@@ -25,7 +25,7 @@
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jScrollPane1" pref="371" max="32767" attributes="0"/>
+                  <Component id="jScrollPane1" pref="565" max="32767" attributes="0"/>
                   <Component id="packageTextField" max="32767" attributes="0"/>
                   <Component id="nameTextField" max="32767" attributes="0"/>
               </Group>
