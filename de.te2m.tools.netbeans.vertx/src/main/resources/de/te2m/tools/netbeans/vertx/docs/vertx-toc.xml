@@ -10,6 +10,7 @@
                 <tocitem text="Basic Verticle Wizard" target="de.te2m.tools.netbeans.vertx.wizard_base_verticle"/>
                 <tocitem text="Web Server Verticle Wizard" target="de.te2m.tools.netbeans.vertx.wizard_http_verticle"/>
                 <tocitem text="REST Verticle Wizard" target="de.te2m.tools.netbeans.vertx.wizard_rest_verticle"/>
+                <tocitem text="Verticle Test Case Wizard" target="de.te2m.tools.netbeans.vertx.wizard_verticle_test"/>
             </tocitem>
         </tocitem>
         <tocitem text="Configuration" target="de.te2m.tools.netbeans.vertx.config">
