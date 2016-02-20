@@ -55,8 +55,7 @@ import org.netbeans.api.java.project.JavaProjectConstants;
  */
 @TemplateRegistrations({
     @TemplateRegistration(folder = "Vertx.io", displayName = "#BasicVerticleWizardIterator_displayName", iconBase = "de/te2m/tools/netbeans/vertx/icons/logo16.png", description = "base_verticle.html",
-            content = "../../" + TemplateIDs.VERTICLE_BASE + ".template", scriptEngine = "freemarker"),
-    @TemplateRegistration(folder = "Vertx.io", content = "../../" + TemplateIDs.JUNIT_BASE + ".template", scriptEngine = "freemarker", category = "hidden")
+            content = "../../" + TemplateIDs.VERTICLE_BASE + ".template", scriptEngine = "freemarker")
 })
 @Messages("BasicVerticleWizardIterator_displayName=Basic Verticle")
 public final class BaseVerticleWizardIterator extends AbstractTe2mWizard implements WizardDescriptor.InstantiatingIterator<WizardDescriptor> {
