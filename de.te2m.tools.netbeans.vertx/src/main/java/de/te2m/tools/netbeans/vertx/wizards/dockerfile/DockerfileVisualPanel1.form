@@ -25,7 +25,7 @@
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jScrollPane1" pref="371" max="32767" attributes="0"/>
+                  <Component id="jScrollPane1" pref="553" max="32767" attributes="0"/>
                   <Component id="packageTextField" max="32767" attributes="0"/>
                   <Component id="nameTextField" max="32767" attributes="0"/>
               </Group>
@@ -70,6 +70,9 @@
           <ResourceString bundle="de/te2m/tools/netbeans/vertx/wizards/verticle/Bundle.properties" key="DockerfileVisualPanel1.nameTextField.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="nameTextFieldActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel2">
       <Properties>

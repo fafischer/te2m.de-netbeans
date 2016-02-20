@@ -9,7 +9,6 @@
 */
 package de.te2m.tools.netbeans.vertx.wizards.dockerfile;
 
-import de.te2m.tools.netbeans.vertx.wizards.testcase.*;
 import javax.swing.JPanel;
 
 /**
@@ -22,39 +21,12 @@ import javax.swing.JPanel;
 public final class DockerfileVisualPanel1 extends JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    /**
-     * The description text area.
-     */
     private javax.swing.JTextArea descriptionTextArea;
-    
-    /**
-     * The j label1.
-     */
     private javax.swing.JLabel jLabel1;
-    
-    /**
-     * The j label2.
-     */
     private javax.swing.JLabel jLabel2;
-    
-    /**
-     * The j label3.
-     */
     private javax.swing.JLabel jLabel3;
-    
-    /**
-     * The j scroll pane1.
-     */
     private javax.swing.JScrollPane jScrollPane1;
-    
-    /**
-     * The name text field.
-     */
     private javax.swing.JTextField nameTextField;
-    
-    /**
-     * The package text field.
-     */
     private javax.swing.JTextField packageTextField;
     // End of variables declaration//GEN-END:variables
 
@@ -119,6 +91,11 @@ public final class DockerfileVisualPanel1 extends JPanel {
         org.openide.awt.Mnemonics.setLocalizedText(jLabel1, org.openide.util.NbBundle.getMessage(DockerfileVisualPanel1.class, "DockerfileVisualPanel1.jLabel1.text")); // NOI18N
 
         nameTextField.setText(org.openide.util.NbBundle.getMessage(DockerfileVisualPanel1.class, "DockerfileVisualPanel1.nameTextField.text")); // NOI18N
+        nameTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nameTextFieldActionPerformed(evt);
+            }
+        });
 
         org.openide.awt.Mnemonics.setLocalizedText(jLabel2, org.openide.util.NbBundle.getMessage(DockerfileVisualPanel1.class, "DockerfileVisualPanel1.jLabel2.text")); // NOI18N
 
@@ -147,7 +124,7 @@ public final class DockerfileVisualPanel1 extends JPanel {
                     .addComponent(jLabel1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 371, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 553, Short.MAX_VALUE)
                     .addComponent(packageTextField)
                     .addComponent(nameTextField))
                 .addContainerGap())
@@ -179,4 +156,8 @@ public final class DockerfileVisualPanel1 extends JPanel {
     private void packageTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_packageTextFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_packageTextFieldActionPerformed
+
+    private void nameTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nameTextFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_nameTextFieldActionPerformed
 }

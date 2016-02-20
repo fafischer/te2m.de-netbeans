@@ -47,7 +47,6 @@ import org.openide.util.NbBundle.Messages;
  */
 @TemplateRegistrations({
     @TemplateRegistration(folder = "Project/Vertx.io", displayName = "#Vertx_displayName", description = "VertxDescription.html", iconBase = "de/te2m/tools/netbeans/vertx/icons/logo16.png", content = "../" + TemplateIDs.VERTX_POM + ".template", scriptEngine = "freemarker")
-//,@TemplateRegistration(folder = "Project/vertx.io", content = "../" + TemplateIDs.VERTX_DOCKER + ".template", scriptEngine = "freemarker")
 })
 @Messages("Vertx_displayName=Create a new Vertx.io 3.1 Project")
 public class VertxWizardIterator extends AbstractTe2mWizard implements WizardDescriptor./*Progress*/InstantiatingIterator {
