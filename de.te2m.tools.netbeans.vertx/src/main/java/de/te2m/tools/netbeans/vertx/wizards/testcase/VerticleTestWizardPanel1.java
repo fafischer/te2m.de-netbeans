@@ -110,7 +110,7 @@ public class VerticleTestWizardPanel1 implements WizardDescriptor.Panel<WizardDe
      */
     @Override
     public void readSettings(WizardDescriptor wiz) {
-        // use wiz.getProperty to retrieve previous panel state
+        component.read(wiz);
     }
 
     /* (non-Javadoc)
@@ -125,9 +125,7 @@ public class VerticleTestWizardPanel1 implements WizardDescriptor.Panel<WizardDe
      */
     @Override
     public void storeSettings(WizardDescriptor wiz) {
-        wiz.putProperty(PROPERTY_NAME, getNameFromVisualPanel());
-        wiz.putProperty(DN_DESCRIPTION, getDescriptionFromVisualPanel());
-        wiz.putProperty(DN_PROPERTY_PACKAGE, getPackageFromVisualPanel());
+        component.store(wiz);
     }
 
 }

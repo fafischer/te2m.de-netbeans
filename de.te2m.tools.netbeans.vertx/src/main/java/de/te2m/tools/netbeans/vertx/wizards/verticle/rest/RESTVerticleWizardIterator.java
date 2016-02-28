@@ -10,7 +10,7 @@
 package de.te2m.tools.netbeans.vertx.wizards.verticle.rest;
  
 import de.te2m.tools.netbeans.vertx.wizards.VerticleWizardPanel;
-import de.te2m.tools.netbeans.vertx.wizards.AbstractTe2mWizard;
+import de.te2m.tools.netbeans.vertx.wizards.Te2mWizardBase;
 import java.awt.Component;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -59,7 +59,7 @@ import static org.openide.loaders.DataObject.find;
 @TemplateRegistration(folder = "Vertx.io", displayName = "#RESTVerticleWizardIterator_displayName", iconBase = "de/te2m/tools/netbeans/vertx/icons/logo16.png", description = "verticleREST.html",
         content = "VerticleREST.java.template", scriptEngine = "freemarker")
 @Messages("RESTVerticleWizardIterator_displayName=REST Verticle (CRUD)")
-public final class RESTVerticleWizardIterator extends AbstractTe2mWizard implements WizardDescriptor.InstantiatingIterator<WizardDescriptor> {
+public final class RESTVerticleWizardIterator extends Te2mWizardBase implements WizardDescriptor.InstantiatingIterator<WizardDescriptor> {
 
     /**
      * The index.

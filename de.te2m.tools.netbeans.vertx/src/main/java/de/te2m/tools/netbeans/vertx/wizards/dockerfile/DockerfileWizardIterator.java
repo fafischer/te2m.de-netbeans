@@ -8,7 +8,7 @@
 * 
 */
 package de.te2m.tools.netbeans.vertx.wizards.dockerfile;
-import de.te2m.tools.netbeans.vertx.wizards.AbstractTe2mWizard;
+import de.te2m.tools.netbeans.vertx.wizards.Te2mWizardBase;
 import de.te2m.tools.netbeans.vertx.wizards.TemplateIDs;
 import static de.te2m.tools.netbeans.vertx.wizards.TemplateKeys.PROPERTY_NAME;
 import java.awt.Component;
@@ -54,7 +54,7 @@ import static de.te2m.tools.netbeans.vertx.wizards.TemplateKeys.DN_DESCRIPTION;
  */
 @TemplateRegistration(folder = "Vertx.io", displayName = "#VerticleWizardIterator_displayName", iconBase = "de/te2m/tools/netbeans/vertx/icons/logo16.png", description = "Dockerfile.html", content = "../" + TemplateIDs.VERTX_DOCKER + ".template", scriptEngine = "freemarker")
 @Messages("VerticleWizardIterator_displayName=Dockerfile")
-public final class DockerfileWizardIterator extends AbstractTe2mWizard implements WizardDescriptor.InstantiatingIterator<WizardDescriptor> {
+public final class DockerfileWizardIterator extends Te2mWizardBase implements WizardDescriptor.InstantiatingIterator<WizardDescriptor> {
 
     /**
      * The index.

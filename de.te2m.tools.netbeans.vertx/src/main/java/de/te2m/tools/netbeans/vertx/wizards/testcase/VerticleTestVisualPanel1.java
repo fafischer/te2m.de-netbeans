@@ -9,7 +9,9 @@
 */
 package de.te2m.tools.netbeans.vertx.wizards.testcase;
 
+import de.te2m.tools.netbeans.vertx.wizards.TemplateKeys;
 import javax.swing.JPanel;
+import org.openide.WizardDescriptor;
 
 /**
  * The Class VerticleTestVisualPanel1.
@@ -42,7 +44,7 @@ public final class VerticleTestVisualPanel1 extends JPanel {
      */
     @Override
     public String getName() {
-        return "Step #1";
+        return "Test Case Details";
     }
     
     /**
@@ -151,4 +153,28 @@ public final class VerticleTestVisualPanel1 extends JPanel {
     private void packageTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_packageTextFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_packageTextFieldActionPerformed
+
+    /**
+     * Store the values created in this wizard.
+     *
+     * @param wizDesc the wizard descriptor
+     */
+    void store(WizardDescriptor wizDesc) {
+        wizDesc.putProperty(TemplateKeys.DN_PROPERTY_CLASS_NAME, nameTextField.getText());
+        wizDesc.putProperty(TemplateKeys.DN_PROPERTY_CLASS_DESCRIPTION, descriptionTextArea.getText());
+        wizDesc.putProperty(TemplateKeys.DN_PROPERTY_PACKAGE, packageTextField.getText());
+
+    }
+
+    /**
+     * Read the current settings and initialize the values.
+     *
+     * @param settings the settings
+     */
+    void read(WizardDescriptor settings) {
+        nameTextField.setText((String) settings.getProperty(TemplateKeys.DN_PROPERTY_CLASS_NAME));
+        packageTextField.setText((String) settings.getProperty(TemplateKeys.DN_PROPERTY_PACKAGE));
+        descriptionTextArea.setText((String) settings.getProperty(TemplateKeys.DN_PROPERTY_CLASS_DESCRIPTION));
+    }
+
 }

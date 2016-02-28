@@ -19,14 +19,13 @@ import org.openide.util.Exceptions;
 import org.openide.util.HelpCtx;
 import org.openide.util.actions.NodeAction;
 
-public abstract class AbstractVerticleBasedNodeAction extends NodeAction  {
+public abstract class AbstractVerticleBasedNodeAction extends NodeAction {
 
     private TypeElement te;
 
     public AbstractVerticleBasedNodeAction() {
         super();
     }
-
 
     protected final void determineSelectedClass(DataObject dObj) throws IllegalArgumentException {
         if (null != dObj) {
@@ -99,7 +98,6 @@ public abstract class AbstractVerticleBasedNodeAction extends NodeAction  {
 
     }
 
-
     @Override
     protected boolean enable(Node[] nodes) {
 
@@ -114,11 +112,13 @@ public abstract class AbstractVerticleBasedNodeAction extends NodeAction  {
 
         return isEnabled();
     }
-    
-    
-        @Override
+
+    @Override
     public HelpCtx getHelpCtx() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    public TypeElement getTypeElement() {
+        return te;
+    }
 }

@@ -10,7 +10,7 @@
 package de.te2m.tools.netbeans.vertx.wizards.verticle.base;
 
 import de.te2m.tools.netbeans.vertx.wizards.VerticleWizardPanel;
-import de.te2m.tools.netbeans.vertx.wizards.AbstractTe2mWizard;
+import de.te2m.tools.netbeans.vertx.wizards.Te2mWizardBase;
 import de.te2m.tools.netbeans.vertx.wizards.TemplateIDs;
 import java.awt.Component;
 import java.io.IOException;
@@ -58,7 +58,7 @@ import org.netbeans.api.java.project.JavaProjectConstants;
             content = "../../" + TemplateIDs.VERTICLE_BASE + ".template", scriptEngine = "freemarker")
 })
 @Messages("BasicVerticleWizardIterator_displayName=Basic Verticle")
-public final class BaseVerticleWizardIterator extends AbstractTe2mWizard implements WizardDescriptor.InstantiatingIterator<WizardDescriptor> {
+public final class BaseVerticleWizardIterator extends Te2mWizardBase implements WizardDescriptor.InstantiatingIterator<WizardDescriptor> {
 
     /**
      * The index.
