@@ -1,50 +1,127 @@
-/*
- * Copyright (C) 2016 ffi
- *
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
- */
 package de.te2m.tools.netbeans.vertx.actions.context;
 
-import java.awt.event.ActionEvent;
+import com.sun.source.tree.ClassTree;
+import com.sun.source.tree.CompilationUnitTree;
+import com.sun.source.util.TreePathScanner;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import javax.lang.model.element.Element;
+import javax.lang.model.element.TypeElement;
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.text.Document;
+import org.netbeans.api.java.source.CompilationController;
+import org.netbeans.api.java.source.CompilationInfo;
+import org.netbeans.api.java.source.JavaSource;
 import org.openide.loaders.DataObject;
-import org.openide.awt.ActionID;
-import org.openide.awt.ActionReference;
-import org.openide.awt.ActionRegistration;
-import org.openide.util.NbBundle.Messages;
+import org.openide.awt.StatusDisplayer;
+import org.openide.filesystems.FileObject;
+import org.openide.nodes.Node;
+import org.openide.util.ContextAwareAction;
+import org.openide.util.Exceptions;
+import org.openide.util.Lookup;
+import org.openide.util.LookupEvent;
+import org.openide.util.LookupListener;
+import org.openide.util.actions.NodeAction;
 
-@ActionID(
-        category = "Tools",
-        id = "de.te2m.tools.netbeans.vertx.actions.context.DockerAction"
-)
-@ActionRegistration(
-        iconBase = "de/te2m/tools/netbeans/vertx/icons/logo16.png",
-        displayName = "#CTL_DockerAction"
-)
-@ActionReference(path = "Loaders/text/x-java/Actions", position = 100)
-@Messages("CTL_DockerAction=Create Dockerfile")
-public final class DockerAction implements ActionListener {
+public abstract class AbstractVerticleBasedAction extends NodeAction implements ActionListener {
 
     private final DataObject context;
+    private TypeElement te;
 
-    public DockerAction(DataObject context) {
+    public AbstractVerticleBasedAction(DataObject context) {
         this.context = context;
+        determineSelectedClass();
+    }
+
+    public AbstractVerticleBasedAction() {
+        super();
+        context = null;
+    }
+
+    protected DataObject getContext() {
+        return context;
+    }
+
+    protected final void determineSelectedClass() throws IllegalArgumentException {
+        // context.
+        FileObject fo = context.getPrimaryFile();
+
+        JavaSource jsource = JavaSource.forFileObject(fo);
+
+        if (jsource == null) {
+            StatusDisplayer.getDefault().setStatusText("Not a Java file: " + fo.getPath());
+        } else {
+            //StatusDisplayer.getDefault().setStatusText("Hurray! A Java file: " + fo.getPath());
+
+            try {
+                jsource.runUserActionTask((CompilationController p) -> {
+                    p.toPhase(JavaSource.Phase.ELEMENTS_RESOLVED);
+                    CompilationUnitTree tree = p.getCompilationUnit();
+                    MemberVisitor scanner = new MemberVisitor(p);
+                    scanner.scan(p.getCompilationUnit(), null);
+                    te = scanner.getTypeElement();
+                    Document document = p.getDocument();
+                }, true);
+            } catch (IOException ex) {
+                Exceptions.printStackTrace(ex);
+            }
+
+        }
     }
 
     @Override
-    public void actionPerformed(ActionEvent ev) {
-        // TODO use context
+    public boolean isEnabled() {
+
+        if (null == te) {
+            return false;
+        }
+        if (null != te.getSuperclass() && "io.vertx.core.AbstractVerticle".equals(te.getSuperclass().toString())) {
+            return true;
+        } else {
+            return false;
+        }
+
+        //return super.isEnabled(); 
     }
+
+    private class MemberVisitor extends TreePathScanner<Void, Void> {
+
+        private CompilationInfo info;
+
+        private TypeElement typeElement;
+
+        public MemberVisitor(CompilationInfo info) {
+            this.info = info;
+        }
+
+        @Override
+        public Void visitClass(ClassTree t, Void v) {
+            Element el = info.getTrees().getElement(getCurrentPath());
+            if (el == null) {
+                StatusDisplayer.getDefault().setStatusText("Cannot resolve class!");
+            } else {
+                typeElement = (TypeElement) el;
+            }
+            return null;
+        }
+
+        public TypeElement getTypeElement() {
+            return typeElement;
+        }
+
+    }
+
+    @Override
+    protected void performAction(Node[] nodes) {
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    protected boolean enable(Node[] nodes) {
+        return isEnabled();
+//throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    
 }
