@@ -7,8 +7,6 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.TypeElement;
-import javax.swing.AbstractAction;
-import javax.swing.Action;
 import javax.swing.text.Document;
 import org.netbeans.api.java.source.CompilationController;
 import org.netbeans.api.java.source.CompilationInfo;
@@ -17,36 +15,18 @@ import org.openide.loaders.DataObject;
 import org.openide.awt.StatusDisplayer;
 import org.openide.filesystems.FileObject;
 import org.openide.nodes.Node;
-import org.openide.util.ContextAwareAction;
 import org.openide.util.Exceptions;
-import org.openide.util.Lookup;
-import org.openide.util.LookupEvent;
-import org.openide.util.LookupListener;
+import org.openide.util.HelpCtx;
 import org.openide.util.actions.NodeAction;
 
-public abstract class AbstractVerticleBasedAction extends NodeAction implements ActionListener {
+public abstract class AbstractVerticleBasedNodeAction extends NodeAction  {
 
-    private final DataObject context;
     private TypeElement te;
 
-    public AbstractVerticleBasedAction(DataObject context) {
-        this.context = context;
-        determineSelectedClass();
-    }
-
-    public AbstractVerticleBasedAction() {
+    public AbstractVerticleBasedNodeAction() {
         super();
-        context = null;
     }
 
-    protected DataObject getContext() {
-        return context;
-    }
-
-    protected final void determineSelectedClass() throws IllegalArgumentException {
-        // context.
-        determineSelectedClass(context);
-    }
 
     protected final void determineSelectedClass(DataObject dObj) throws IllegalArgumentException {
         if (null != dObj) {
@@ -119,10 +99,6 @@ public abstract class AbstractVerticleBasedAction extends NodeAction implements 
 
     }
 
-    @Override
-    protected void performAction(Node[] nodes) {
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 
     @Override
     protected boolean enable(Node[] nodes) {
@@ -137,7 +113,12 @@ public abstract class AbstractVerticleBasedAction extends NodeAction implements 
         }
 
         return isEnabled();
-//throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    
+        @Override
+    public HelpCtx getHelpCtx() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }
