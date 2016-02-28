@@ -45,28 +45,35 @@ public abstract class AbstractVerticleBasedAction extends NodeAction implements 
 
     protected final void determineSelectedClass() throws IllegalArgumentException {
         // context.
-        FileObject fo = context.getPrimaryFile();
+        determineSelectedClass(context);
+    }
 
-        JavaSource jsource = JavaSource.forFileObject(fo);
+    protected final void determineSelectedClass(DataObject dObj) throws IllegalArgumentException {
+        if (null != dObj) {
 
-        if (jsource == null) {
-            StatusDisplayer.getDefault().setStatusText("Not a Java file: " + fo.getPath());
-        } else {
-            //StatusDisplayer.getDefault().setStatusText("Hurray! A Java file: " + fo.getPath());
+            FileObject fo = dObj.getPrimaryFile();
 
-            try {
-                jsource.runUserActionTask((CompilationController p) -> {
-                    p.toPhase(JavaSource.Phase.ELEMENTS_RESOLVED);
-                    CompilationUnitTree tree = p.getCompilationUnit();
-                    MemberVisitor scanner = new MemberVisitor(p);
-                    scanner.scan(p.getCompilationUnit(), null);
-                    te = scanner.getTypeElement();
-                    Document document = p.getDocument();
-                }, true);
-            } catch (IOException ex) {
-                Exceptions.printStackTrace(ex);
+            JavaSource jsource = JavaSource.forFileObject(fo);
+
+            if (jsource == null) {
+                StatusDisplayer.getDefault().setStatusText("Not a Java file: " + fo.getPath());
+            } else {
+                //StatusDisplayer.getDefault().setStatusText("Hurray! A Java file: " + fo.getPath());
+
+                try {
+                    jsource.runUserActionTask((CompilationController p) -> {
+                        p.toPhase(JavaSource.Phase.ELEMENTS_RESOLVED);
+                        CompilationUnitTree tree = p.getCompilationUnit();
+                        MemberVisitor scanner = new MemberVisitor(p);
+                        scanner.scan(p.getCompilationUnit(), null);
+                        te = scanner.getTypeElement();
+                        Document document = p.getDocument();
+                    }, true);
+                } catch (IOException ex) {
+                    Exceptions.printStackTrace(ex);
+                }
+
             }
-
         }
     }
 
@@ -119,9 +126,18 @@ public abstract class AbstractVerticleBasedAction extends NodeAction implements 
 
     @Override
     protected boolean enable(Node[] nodes) {
+
+        if (null != nodes) {
+            for (Node currentnode : nodes) {
+                DataObject dObj = currentnode.getLookup().lookup(DataObject.class);
+                if (null != dObj) {
+                    determineSelectedClass(dObj);
+                }
+            }
+        }
+
         return isEnabled();
 //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    
 }
