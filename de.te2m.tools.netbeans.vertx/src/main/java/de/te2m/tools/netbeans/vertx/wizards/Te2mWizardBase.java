@@ -242,6 +242,15 @@ public class Te2mWizardBase implements TemplateKeys {
         }
     }
 
+    /**
+     * Generate docker file.
+     *
+     * @param projectBaseDirFO the project base dir fo
+     * @param params the params
+     * @param fatJar the fat jar
+     * @return the data object
+     * @throws IOException Signals that an I/O exception has occurred.
+     */
     public static DataObject generateDockerFile(FileObject projectBaseDirFO, Map<String, Object> params, boolean fatJar) throws IOException {
         FileObject fo;
         if (fatJar) {

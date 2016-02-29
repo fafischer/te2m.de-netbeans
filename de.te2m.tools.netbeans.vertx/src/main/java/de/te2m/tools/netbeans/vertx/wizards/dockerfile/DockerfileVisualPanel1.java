@@ -20,13 +20,40 @@ import javax.swing.JPanel;
  */
 public final class DockerfileVisualPanel1 extends JPanel {
 
+    /**
+     * The description text area.
+     */
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextArea descriptionTextArea;
+    
+    /**
+     * The j label1.
+     */
     private javax.swing.JLabel jLabel1;
+    
+    /**
+     * The j label2.
+     */
     private javax.swing.JLabel jLabel2;
+    
+    /**
+     * The j label3.
+     */
     private javax.swing.JLabel jLabel3;
+    
+    /**
+     * The j scroll pane1.
+     */
     private javax.swing.JScrollPane jScrollPane1;
+    
+    /**
+     * The name text field.
+     */
     private javax.swing.JTextField nameTextField;
+    
+    /**
+     * The package text field.
+     */
     private javax.swing.JTextField packageTextField;
     // End of variables declaration//GEN-END:variables
 
@@ -157,6 +184,11 @@ public final class DockerfileVisualPanel1 extends JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_packageTextFieldActionPerformed
 
+    /**
+     * Name text field action performed.
+     *
+     * @param evt the evt
+     */
     private void nameTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nameTextFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_nameTextFieldActionPerformed

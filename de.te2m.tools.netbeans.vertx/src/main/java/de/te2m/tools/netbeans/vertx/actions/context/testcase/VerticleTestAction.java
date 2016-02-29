@@ -1,3 +1,12 @@
+/*
+* VerticleTestAction.java
+*   
+* Copyright 2009 - 2016 Frank Fischer (email: frank@te2m.de)
+*
+* This file is part of the de.te2m.tools.netbeans.vertx project which is a sub project of the te2m.de Netbeans modules 
+* (https://github.com/fafischer/te2m.de-netbeans).
+* 
+*/
 package de.te2m.tools.netbeans.vertx.actions.context.testcase;
 
 import de.te2m.tools.netbeans.vertx.actions.context.AbstractVerticleBasedNodeAction;
@@ -31,6 +40,13 @@ import org.openide.loaders.DataObject;
 import static org.openide.loaders.DataObject.find;
 import org.openide.nodes.Node;
 
+/**
+ * The Class VerticleTestAction.
+ *
+ * @author ffischer
+ * @version 1.0
+ * @since 1.0
+ */
 @ActionID(
         category = "Tools",
         id = "de.te2m.tools.netbeans.vertx.actions.context.testcase.VerticleTestAction"
@@ -43,16 +59,25 @@ import org.openide.nodes.Node;
 @ActionReference(path = "Loaders/text/x-java/Actions", position = 200)
 public final class VerticleTestAction extends AbstractVerticleBasedNodeAction {
 
+    /**
+     * Instantiates a new verticle test action.
+     */
     public VerticleTestAction() {
         super();
     }
 
 
+    /* (non-Javadoc)
+     * @see org.openide.util.actions.SystemAction#getName()
+     */
     public String getName() {
         return "Create Testcase for Verticle";
     }
 
     
+    /* (non-Javadoc)
+     * @see de.te2m.tools.netbeans.vertx.actions.context.AbstractVerticleBasedNodeAction#executeWizard(org.openide.nodes.Node)
+     */
     protected void executeWizard(Node currentnode) {
         DataObject dObj = currentnode.getLookup().lookup(DataObject.class);
         //Project pRoot = currentnode.getLookup().lookup(Project.class);

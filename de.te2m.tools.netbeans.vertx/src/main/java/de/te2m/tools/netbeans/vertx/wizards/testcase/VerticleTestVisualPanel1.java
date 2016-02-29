@@ -22,10 +22,25 @@ import org.openide.WizardDescriptor;
  */
 public final class VerticleTestVisualPanel1 extends JPanel {
 
+    /**
+     * The j label2.
+     */
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel2;
+    
+    /**
+     * The j label3.
+     */
     private javax.swing.JLabel jLabel3;
+    
+    /**
+     * The name text field.
+     */
     private javax.swing.JTextField nameTextField;
+    
+    /**
+     * The package text field.
+     */
     private javax.swing.JTextField packageTextField;
     // End of variables declaration//GEN-END:variables
 

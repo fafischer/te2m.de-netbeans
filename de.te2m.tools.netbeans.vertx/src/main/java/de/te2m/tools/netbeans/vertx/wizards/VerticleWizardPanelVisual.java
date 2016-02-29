@@ -30,15 +30,50 @@ public final class VerticleWizardPanelVisual extends JPanel implements DocumentL
      */
     private final VerticleWizardPanel panel;
     
+    /**
+     * The description text area.
+     */
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextArea descriptionTextArea;
+    
+    /**
+     * The j label1.
+     */
     private javax.swing.JLabel jLabel1;
+    
+    /**
+     * The j label2.
+     */
     private javax.swing.JLabel jLabel2;
+    
+    /**
+     * The j label3.
+     */
     private javax.swing.JLabel jLabel3;
+    
+    /**
+     * The j label4.
+     */
     private javax.swing.JLabel jLabel4;
+    
+    /**
+     * The j scroll pane1.
+     */
     private javax.swing.JScrollPane jScrollPane1;
+    
+    /**
+     * The name text field.
+     */
     private javax.swing.JTextField nameTextField;
+    
+    /**
+     * The package text field.
+     */
     private javax.swing.JTextField packageTextField;
+    
+    /**
+     * The test case check box.
+     */
     private javax.swing.JCheckBox testCaseCheckBox;
     // End of variables declaration//GEN-END:variables
 

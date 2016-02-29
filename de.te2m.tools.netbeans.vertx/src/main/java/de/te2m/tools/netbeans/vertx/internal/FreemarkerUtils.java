@@ -21,10 +21,9 @@ import java.util.Map;
 
 /**
  * The Class FreemarkerUtils.
- * 
- * @deprecated 
  *
  * @author ffischer
+ * @deprecated 
  */
 public class FreemarkerUtils {
 
