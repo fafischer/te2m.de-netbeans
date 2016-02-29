@@ -43,6 +43,7 @@ import static org.openide.loaders.DataObject.find;
 import org.openide.util.NbBundle.Messages;
 import static de.te2m.tools.netbeans.vertx.wizards.TemplateKeys.DN_PROPERTY_PACKAGE;
 import static de.te2m.tools.netbeans.vertx.wizards.TemplateKeys.DN_DESCRIPTION;
+import org.netbeans.api.templates.TemplateRegistrations;
 
 // TODO define position attribute
 /**
@@ -52,8 +53,11 @@ import static de.te2m.tools.netbeans.vertx.wizards.TemplateKeys.DN_DESCRIPTION;
  * @version 1.0
  * @since 1.0
  */
-@TemplateRegistration(folder = "Vertx.io", displayName = "#VerticleWizardIterator_displayName", iconBase = "de/te2m/tools/netbeans/vertx/icons/logo16.png", description = "Dockerfile.html", content = "../" + TemplateIDs.VERTX_DOCKER + ".template", scriptEngine = "freemarker")
-@Messages("VerticleWizardIterator_displayName=Dockerfile")
+@TemplateRegistrations({
+    @TemplateRegistration(folder = TemplateIDs.TEMPLATE_GROUP_VERTX, displayName = "#VerticleWizardIterator_displayName", iconBase = "de/te2m/tools/netbeans/vertx/icons/logo16.png", description = "Dockerfile.html", content = "../" + TemplateIDs.VERTX_DOCKER_FAT_JAR + ".template", scriptEngine = "freemarker"),
+    @TemplateRegistration(folder = TemplateIDs.TEMPLATE_GROUP_VERTX, content = "../" + TemplateIDs.VERTX_DOCKER_FILE + ".template", scriptEngine = "freemarker", category = "hidden")
+})
+        @Messages("VerticleWizardIterator_displayName=Dockerfile")
 public final class DockerfileWizardIterator extends Te2mWizardBase implements WizardDescriptor.InstantiatingIterator<WizardDescriptor> {
 
     /**

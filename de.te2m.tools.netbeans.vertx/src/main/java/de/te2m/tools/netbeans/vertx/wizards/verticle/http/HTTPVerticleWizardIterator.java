@@ -11,6 +11,7 @@ package de.te2m.tools.netbeans.vertx.wizards.verticle.http;
 
 import de.te2m.tools.netbeans.vertx.wizards.VerticleWizardPanel;
 import de.te2m.tools.netbeans.vertx.wizards.Te2mWizardBase;
+import de.te2m.tools.netbeans.vertx.wizards.TemplateIDs;
 import java.awt.Component;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -55,7 +56,7 @@ import static org.openide.loaders.DataObject.find;
  * @version 1.0
  * @since 1.0
  */
-@TemplateRegistration(folder = "Vertx.io", displayName = "#HTTPVerticleWizardIterator_displayName", iconBase = "de/te2m/tools/netbeans/vertx/icons/logo16.png", description = "verticleHTTP.html",
+@TemplateRegistration(folder = TemplateIDs.TEMPLATE_GROUP_VERTX, displayName = "#HTTPVerticleWizardIterator_displayName", iconBase = "de/te2m/tools/netbeans/vertx/icons/logo16.png", description = "verticleHTTP.html",
         content = "VerticleHTTP.java.template", scriptEngine = "freemarker")
 @Messages("HTTPVerticleWizardIterator_displayName=HTTP Server Verticle")
 public final class HTTPVerticleWizardIterator extends Te2mWizardBase implements WizardDescriptor.InstantiatingIterator<WizardDescriptor> {
@@ -230,7 +231,7 @@ public final class HTTPVerticleWizardIterator extends Te2mWizardBase implements 
                 mainTestRoot = lookupSubDir(pRoot.getProjectDirectory(), "src/test/java");
             }
 
-            FileObject fo = getTemplateByNameAndFolder("VerticleUnitTest.java", "Vertx.io");
+            FileObject fo = getTemplateByNameAndFolder("VerticleUnitTest.java", TemplateIDs.TEMPLATE_GROUP_VERTX);
 
             if (null != fo) {
                 res = lookupSubDir(mainTestRoot, folder.replace(".", "/"));

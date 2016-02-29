@@ -6,7 +6,7 @@
 @PaletteItemRegistrations({
     @PaletteItemRegistration(
             paletteid = "VertxIOPalette",
-            category = "vertx.io",
+            category = TemplateIDs.TEMPLATE_GROUP_VERTX,
             itemid = "HTTP-Server",
             icon16 = "de/te2m/tools/netbeans/vertx/icons/logo16.png",
             icon32 = "de/te2m/tools/netbeans/vertx/icons/logo32.png",
@@ -15,7 +15,7 @@
             name = "HTTP-Server"),
     @PaletteItemRegistration(
             paletteid = "VertxIOPalette",
-            category = "vertx.io",
+            category = TemplateIDs.TEMPLATE_GROUP_VERTX,
             itemid = "DeploymentOptions",
             icon16 = "de/te2m/tools/netbeans/vertx/icons/logo16.png",
             icon32 = "de/te2m/tools/netbeans/vertx/icons/logo32.png",
@@ -53,5 +53,6 @@
 package de.te2m.tools.netbeans.vertx.palette;
 
 import de.te2m.tools.netbeans.vertx.Templates;
+import de.te2m.tools.netbeans.vertx.wizards.TemplateIDs;
 import org.netbeans.spi.palette.PaletteItemRegistration;
 import org.netbeans.spi.palette.PaletteItemRegistrations;

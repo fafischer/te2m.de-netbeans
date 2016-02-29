@@ -6,7 +6,7 @@
 * This file is part of the de.te2m.tools.netbeans.vertx project which is a sub project of the te2m.de Netbeans modules 
 * (https://github.com/fafischer/te2m.de-netbeans).
 * 
-*/
+ */
 package de.te2m.tools.netbeans.vertx.wizards;
 
 import de.te2m.tools.netbeans.vertx.internal.model.PomInfo;
@@ -26,6 +26,13 @@ import static org.openide.util.NbPreferences.forModule;
 import java.util.StringTokenizer;
 import org.openide.filesystems.FileUtil;
 import static java.lang.System.getProperty;
+import java.util.Set;
+import org.netbeans.api.project.FileOwnerQuery;
+import org.netbeans.api.project.Project;
+import static org.openide.loaders.DataFolder.findFolder;
+import org.openide.loaders.DataObject;
+import static org.openide.loaders.DataObject.find;
+import org.openide.nodes.Node;
 
 /**
  * The Class Te2mWizardBase.
@@ -191,7 +198,7 @@ public class Te2mWizardBase implements TemplateKeys {
         if (null == folder || folder.trim().length() == 0) {
             return null;
         }
-        
+
         if (folder.contains("/")) {
             // Folder name contains subfolders
 
@@ -199,7 +206,7 @@ public class Te2mWizardBase implements TemplateKeys {
 
             String nextSubfolderName = st.nextToken();
 
-            String remainingFolderName = folder.substring(nextSubfolderName.length()+1);
+            String remainingFolderName = folder.substring(nextSubfolderName.length() + 1);
 
             FileObject subfolder = base.getFileObject(nextSubfolderName);
 
@@ -212,6 +219,44 @@ public class Te2mWizardBase implements TemplateKeys {
             return fo;
         }
 
+    }
+
+    /**
+     * Recursively searches the node hierarchy for the project that owns a node.
+     *
+     * @param node a node to test for a Project in its or its ancestor's lookup.
+     * @return the Project that owns the node, or null if not found
+     */
+    public static Project findProjectThatOwnsNode(Node node) {
+        if (node != null) {
+            Project project = node.getLookup().lookup(Project.class);
+            if (project == null) {
+                DataObject dataObject = node.getLookup().lookup(DataObject.class);
+                if (dataObject != null) {
+                    project = FileOwnerQuery.getOwner(dataObject.getPrimaryFile());
+                }
+            }
+            return (project == null) ? findProjectThatOwnsNode(node.getParentNode()) : project;
+        } else {
+            return null;
+        }
+    }
+
+    public static DataObject generateDockerFile(FileObject projectBaseDirFO, Map<String, Object> params, boolean fatJar) throws IOException {
+        FileObject fo;
+        if (fatJar) {
+            fo = getTemplateByNameAndFolder(TemplateIDs.VERTX_DOCKER_FAT_JAR, TemplateIDs.TEMPLATE_GROUP_VERTX);
+        } else {
+            fo = getTemplateByNameAndFolder(TemplateIDs.VERTX_DOCKER_FILE, TemplateIDs.TEMPLATE_GROUP_VERTX);
+        }
+        if (null != fo) {
+            FileObject dockerDir = lookupSubDir(projectBaseDirFO, "src/main/docker");
+            DataObject currentTemplateDO = find(fo);
+            DataObject dockerObj = currentTemplateDO.createFromTemplate(findFolder(dockerDir), "Dockerfile", params);
+            return dockerObj;
+            //System.out.println(">>>>>  "+i+"  >>>>> "+currentTemplate.getNameExt());
+        }
+        return null;
     }
 
 }

@@ -1,16 +1,20 @@
-FROM java:8
+# Extend vert.x image
+FROM vertx/vertx3
 
-ENV VERTICLE_FILE ${pomInfo.artifactID}-${pomInfo.version}-fat.jar
+#                                                      
+ENV VERTICLE_NAME ${TargetPackage}.${TargetClassName}
+#TODO adjust JAR file name
+ENV VERTICLE_FILE target/artifactID-version.jar
 
 # Set the location of the verticles
 ENV VERTICLE_HOME /usr/verticles
 
 EXPOSE 8080
 
-# Copy your fat jar to the container
-COPY $VERTICLE_FILE $VERTICLE_HOME/
+# Copy your verticle to the container                   
+COPY ${r"$"}VERTICLE_FILE ${r"$"}VERTICLE_HOME/
 
 # Launch the verticle
 WORKDIR ${r"$"}VERTICLE_HOME
 ENTRYPOINT ["sh", "-c"]
-CMD ["java -jar ${r"$"}VERTICLE_FILE"]  
+CMD ["vertx run ${r"$"}VERTICLE_NAME -cp ${r"$"}VERTICLE_HOME/*"]

@@ -1,8 +1,7 @@
-package de.te2m.tools.netbeans.vertx.actions.context.testcase;
+package de.te2m.tools.netbeans.vertx.actions.context.docker;
 
 import de.te2m.tools.netbeans.vertx.actions.context.AbstractVerticleBasedNodeAction;
 import de.te2m.tools.netbeans.vertx.wizards.Te2mWizardBase;
-import de.te2m.tools.netbeans.vertx.wizards.TemplateIDs;
 import de.te2m.tools.netbeans.vertx.wizards.TemplateKeys;
 import static de.te2m.tools.netbeans.vertx.wizards.TemplateKeys.DN_PROPERTY_CLASS_NAME;
 import static de.te2m.tools.netbeans.vertx.wizards.TemplateKeys.DN_PROPERTY_PACKAGE;
@@ -33,26 +32,27 @@ import org.openide.nodes.Node;
 
 @ActionID(
         category = "Tools",
-        id = "de.te2m.tools.netbeans.vertx.actions.context.testcase.VerticleTestAction"
+        id = "de.te2m.tools.netbeans.vertx.actions.context.docker.DockerAction"
 )
 @ActionRegistration(
         iconBase = "de/te2m/tools/netbeans/vertx/icons/logo16.png",
-        displayName = "#CTL_TestCaseAction",
+        displayName = "#CTL_DockerAction",
         lazy = true
-)
-@ActionReference(path = "Loaders/text/x-java/Actions", position = 200)
-public final class VerticleTestAction extends AbstractVerticleBasedNodeAction {
+) 
+@ActionReference(path = "Loaders/text/x-java/Actions", position = 300)
+public final class DockerAction extends AbstractVerticleBasedNodeAction {
 
-    public VerticleTestAction() {
+    public DockerAction() {
         super();
     }
 
 
     public String getName() {
-        return "Create Testcase for Verticle";
+        return "Create Dockerfile for Verticle";
     }
 
-    
+
+
     protected void executeWizard(Node currentnode) {
         DataObject dObj = currentnode.getLookup().lookup(DataObject.class);
         //Project pRoot = currentnode.getLookup().lookup(Project.class);
@@ -101,33 +101,8 @@ public final class VerticleTestAction extends AbstractVerticleBasedNodeAction {
 
                     params.put(DN_PROPERTY_CLASS_NAME, fName);
                     params.put(DN_PROPERTY_PACKAGE, packName);
-                    
-                    Te2mWizardBase.initializeCommonProperties(params);
 
-                    //Get the template and convert it:
-                    FileObject template = Te2mWizardBase.getTemplateByNameAndFolder("VerticleUnitTest.java", TemplateIDs.TEMPLATE_GROUP_VERTX);
-                    DataObject dTemplate = find(template);
-
-                    //Project pRoot = Utilities.actionsGlobalContext().lookup(Project.class);
-                    //Project pRoot = mainObject.getLookup().lookup(Project.class);
-                    //getProject(wiz);
-                    FileObject mainJavaRoot = null;
-
-                    Sources sources = getSources(pRoot);
-
-                    SourceGroup[] sgs = sources.getSourceGroups(SOURCES_HINT_TEST);
-
-                    if (sgs.length > 0) {
-                        mainJavaRoot = sgs[0].getRootFolder();
-                    } else {
-                        mainJavaRoot = Te2mWizardBase.lookupSubDir(pRoot.getProjectDirectory(), "src/test/java");
-                    }
-
-                    String folder = null != wiz.getProperty(DN_PROPERTY_PACKAGE) ? (String) wiz.getProperty(DN_PROPERTY_PACKAGE) : "";
-
-                    FileObject res = Te2mWizardBase.lookupSubDir(mainJavaRoot, folder.replace(".", "/"));
-
-                    DataObject dobj = dTemplate.createFromTemplate(findFolder(res), fName + "Test.java", params);
+                    DataObject dobj = Te2mWizardBase.generateDockerFile(pRoot.getProjectDirectory(), params,  true);
 
                     dobj.getLookup().lookup(OpenCookie.class).open();
                 } catch (Exception ex) {

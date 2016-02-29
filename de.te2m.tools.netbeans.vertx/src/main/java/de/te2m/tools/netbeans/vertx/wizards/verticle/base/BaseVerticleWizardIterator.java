@@ -54,7 +54,7 @@ import org.netbeans.api.java.project.JavaProjectConstants;
  * @since 1.0
  */
 @TemplateRegistrations({
-    @TemplateRegistration(folder = "Vertx.io", displayName = "#BasicVerticleWizardIterator_displayName", iconBase = "de/te2m/tools/netbeans/vertx/icons/logo16.png", description = "base_verticle.html",
+    @TemplateRegistration(folder = TemplateIDs.TEMPLATE_GROUP_VERTX, displayName = "#BasicVerticleWizardIterator_displayName", iconBase = "de/te2m/tools/netbeans/vertx/icons/logo16.png", description = "base_verticle.html",
             content = "../../" + TemplateIDs.VERTICLE_BASE + ".template", scriptEngine = "freemarker")
 })
 @Messages("BasicVerticleWizardIterator_displayName=Basic Verticle")
@@ -228,7 +228,7 @@ public final class BaseVerticleWizardIterator extends Te2mWizardBase implements 
                 mainTestRoot = lookupSubDir(pRoot.getProjectDirectory(), "src/test/java");
             }
 
-            FileObject fo = getTemplateByNameAndFolder("VerticleUnitTest.java", "Vertx.io");
+            FileObject fo = getTemplateByNameAndFolder("VerticleUnitTest.java", TemplateIDs.TEMPLATE_GROUP_VERTX);
 
             if (null != fo) {
                 res = lookupSubDir(mainTestRoot, folder.replace(".", "/"));

@@ -34,6 +34,11 @@ public interface TemplateIDs {
     /**
      * The vertx docker.
      */
-    public static String VERTX_DOCKER="dockerfile-fatjar";
+    public static String VERTX_DOCKER_FAT_JAR="dockerfile-fatjar";
+    
+    
+    public static String VERTX_DOCKER_FILE="dockerfile";
+    
+    public static String TEMPLATE_GROUP_VERTX="Vertx.io";
     
 }

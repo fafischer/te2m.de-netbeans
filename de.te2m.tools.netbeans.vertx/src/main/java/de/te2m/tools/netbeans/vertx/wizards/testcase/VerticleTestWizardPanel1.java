@@ -54,15 +54,6 @@ public class VerticleTestWizardPanel1 implements WizardDescriptor.Panel<WizardDe
         return component;
     }
 
-    /**
-     * Gets the description from visual panel.
-     *
-     * @return the description from visual panel
-     */
-    private String getDescriptionFromVisualPanel() {
-        return ((VerticleTestVisualPanel1) component).getTargetDescription();
-    }
-
     /* (non-Javadoc)
      * @see org.openide.WizardDescriptor.Panel#getHelp()
      */
@@ -72,24 +63,6 @@ public class VerticleTestWizardPanel1 implements WizardDescriptor.Panel<WizardDe
         return DEFAULT_HELP;
         // If you have context help:
         // return new HelpCtx("help.key.here");
-    }
-
-    /**
-     * Gets the name from visual panel.
-     *
-     * @return the name from visual panel
-     */
-    private String getNameFromVisualPanel() {
-        return ((VerticleTestVisualPanel1) component).getTargetName();
-    }
-
-    /**
-     * Gets the folder from visual panel.
-     *
-     * @return the folder from visual panel
-     */
-    private String getPackageFromVisualPanel() {
-        return ((VerticleTestVisualPanel1) component).getTargetPackage();
     }
 
     /* (non-Javadoc)

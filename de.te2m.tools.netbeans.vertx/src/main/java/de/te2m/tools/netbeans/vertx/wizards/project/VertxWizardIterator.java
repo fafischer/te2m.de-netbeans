@@ -218,7 +218,7 @@ public class VertxWizardIterator extends Te2mWizardBase implements WizardDescrip
 
         FileObject res;
 
-        FileObject fo = getTemplateByNameAndFolder("BaseVerticle.java", "Vertx.io");
+        FileObject fo = getTemplateByNameAndFolder("BaseVerticle.java", TemplateIDs.TEMPLATE_GROUP_VERTX);
 
         if (null != fo) {
             res = lookupSubDir(mainJavaRoot, folder.replace(".", "/"));
@@ -231,7 +231,7 @@ public class VertxWizardIterator extends Te2mWizardBase implements WizardDescrip
             
             FileObject mainTestRoot = lookupSubDir(projectBaseDirFO, "src/test/java");
             
-            fo = getTemplateByNameAndFolder("VerticleUnitTest.java", "Vertx.io");
+            fo = getTemplateByNameAndFolder("VerticleUnitTest.java", TemplateIDs.TEMPLATE_GROUP_VERTX);
 
             if (null != fo) {
                 res = lookupSubDir(mainTestRoot, folder.replace(".", "/"));
@@ -241,19 +241,17 @@ public class VertxWizardIterator extends Te2mWizardBase implements WizardDescrip
             }
         }
         if (Boolean.TRUE.equals(createDocker) && Boolean.TRUE.equals(createFatJar)) {
-            fo = getTemplateByNameAndFolder("dockerfile-fatjar", "Vertx.io");
-
-            if (null != fo) {
-                FileObject dockerDir = lookupSubDir(projectBaseDirFO, "src/main/docker");
-                DataObject currentTemplateDO = find(fo);
-                DataObject dockerObj = currentTemplateDO.createFromTemplate(findFolder(dockerDir), "Dockerfile", params);
-                resultSet.add(dockerObj.getPrimaryFile());
-                //System.out.println(">>>>>  "+i+"  >>>>> "+currentTemplate.getNameExt());
+            DataObject result = generateDockerFile(projectBaseDirFO, params,true);
+            if(null!=result)
+            {
+                resultSet.add(result.getPrimaryFile());
             }
         }
 
         return resultSet;
     }
+
+
 
     /* (non-Javadoc)
      * @see org.openide.WizardDescriptor.Iterator#name()
